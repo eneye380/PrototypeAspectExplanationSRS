@@ -25,8 +25,8 @@
 
 </script>
 <style>
-    table td{
-        width:25%;
+    table td,th{
+        width:25%;        
     }
     .a,.b,.c{
 
@@ -323,7 +323,7 @@
             <!--Side Bar End><-->
 
             <!--Main Content Start><-->
-            <%=d.size()%>
+            <%--=d.size()--%>
             <div class="col-md-10 col-sm-10 col-xs-12">
 
 
@@ -406,7 +406,7 @@
                                                 <%}%>
                                                 <%}%>
                                                 <%} else {%>                    
-                                                <td><h4 style="color:red">Sorry No Recommended Product Name</h4></td>
+                                                <td><h6 style="color:red">Sorry No Recommended Product Name</h6></td>
                                                 <%}%>
                                                 <!--/div-->
 
@@ -416,12 +416,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <h5>Aspect Sentiment Graph</h5>
+                                <h5 style="color:rgb(10,50,50)">Aspect Sentiment Graph</h5>
                                 <div style="height:200px">
                                     <div id="<%=s%>" class="explanationbar" style="height:200px"></div>  
                                 </div>
                                 <!--aspect selection-->
-                                <h5>Aspect Selection</h5>
+                                <h5 style="color:rgb(10,50,50)">Aspect Selection</h5>
                                 <div class="thumbnail">
                                     <div class="">
                                         <div class="" style="margin-top: 10px">
@@ -485,7 +485,7 @@
                                             <tr class="">
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>;  border-right:1px solid <%=colors[0]%>" >            
-                                                    <p class="text-uppercase text-primary">Star Rating</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Star Rating</p><hr>
                                                     <div class="caption">                                                         
                                                         <!--product rating-->        
                                                         <%//star rating
@@ -513,7 +513,7 @@
                                                 <%pdr_1 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>;border-right:1px solid <%=colors[m]%>" >        
-                                                    <p class="text-uppercase text-primary">Star Rating</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Star Rating</p><hr>
                                                     <div class="caption">                                                         
                                                         <!--product rating-->        
                                                         <%//star rating
@@ -537,7 +537,7 @@
                                                 <%}%>
                                                 <%}%>
                                                 <%} else {%>                    
-                                                <td><h4 style="color:red">Sorry No Recommended Product Rating</h4></td>
+                                                <td><h6 style="color:red">Sorry No Recommended Product Rating</h6></td>
                                                 <%}%>
                                                 <!--/div-->
 
@@ -550,7 +550,7 @@
                                             <tr class="text-center">
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >   
-                                                    <p class="text-uppercase text-primary">Aspect Sentiment Graph</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Aspect Sentiment Graph</p><hr>
                                                     <div class="caption">                                                         
                                                         <!--product aspect graph-->        
 
@@ -570,7 +570,7 @@
                                                 <%pdr_3 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                                    <p class="text-uppercase text-primary">Aspect Sentiment Graph</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Aspect Sentiment Graph</p><hr>
                                                     <div class="caption">                                                         
                                                         <!--product aspect graph-->        
 
@@ -586,7 +586,7 @@
                                                 <%}%>
                                                 <%}%>
                                                 <%} else {%>                    
-                                                <td><h4 style="color:red">Sorry No Recommended Product Aspect Graph</h4></td>
+                                                <td><h6 style="color:red">Sorry No Recommended Product Aspect Graph</h6></td>
                                                 <%}%>
                                                 <!--/div-->
 
@@ -597,7 +597,7 @@
                                             <tr class="text-center" >
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >
-                                                    <p class="text-uppercase text-primary">Product Details</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Details</p><hr>
                                                     <p class="top_m1"><span class="desc">Price: </span><%=pdqp.getPrice()%></p>
                                                     <p class="top_m2"><span class="desc">Rank: </span><%=pdqp.getRank()%></p>
                                                     <p class="top_m3"><span class="desc">Date: </span><%=pdqp.getDate()%></p>
@@ -620,7 +620,7 @@
                                                 <%pdr_4 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >
-                                                    <p class="text-uppercase text-primary">Product Details</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Details</p><hr>
                                                     <p class="top_m1"><span class="desc">Price: </span><%=pdr_4.getPrice()%></p>
                                                     <p class="top_m2"><span class="desc">Rank: </span><%=pdr_4.getRank()%></p>
                                                     <p class="top_m3"><span class="desc">Date: </span><%=pdr_4.getDate()%></p>
@@ -636,7 +636,7 @@
                                                 <%}%>
                                                 <%}%>
                                                 <%} else {%>                    
-                                                <td><h4 style="color:red">Sorry No Recommended Product Name</h4></td>
+                                                <td><h6 style="color:red">Sorry No Recommended Product Name</h6></td>
                                                 <%}%>
                                                 <!--/div-->
 
@@ -648,7 +648,7 @@
                                             <tr class="text-center">
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >   
-                                                    <p class="text-uppercase text-primary">Product Reviews</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Reviews</p><hr>
                                                     <div class="caption" style="height:300px;overflow: scroll">                                                         
                                                         <%
                                                             //String[] data11 = null;
@@ -717,7 +717,7 @@
                                                 <%pdr_5 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                                    <p class="text-uppercase text-primary">Product Reviews</p><hr>
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Reviews</p><hr>
                                                     <div class="caption" style="height:300px;overflow: scroll">                                                         
                                                         <%
                                                             //String[] data11 = null;
@@ -780,7 +780,7 @@
                                                 <%}%>
                                                 <%}%>
                                                 <%} else {%>                    
-                                                <td><h4 style="color:red">Sorry No Recommended Product Review</h4></td>
+                                                <td><h6 style="color:red">Sorry No Recommended Product Review</h6></td>
                                                 <%}%>
                                                 <!--/div-->
 

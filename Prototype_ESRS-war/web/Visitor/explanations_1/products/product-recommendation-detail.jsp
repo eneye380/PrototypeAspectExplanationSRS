@@ -29,6 +29,10 @@
     .c{
 
     }
+    table td,th{
+        width:25%; 
+        text-align: left;
+    }
     .recommendation{
         /**background: rgb(60,90,100);*/
         background: rgb(10,50,50);
@@ -152,7 +156,56 @@
 %>
 <!--jsp:getProperty name="aspectScore" property="scoreSet"/-->
 <!--%=scores%-->
-<body id="body" onload="retrievePRJSONDetail('<%=s%>', '2')">
+<jsp:useBean id="reviewDetail" class="aspect.bean.ProductReviewSB" scope="request"/>
+<jsp:setProperty name="reviewDetail" property="prodid" value="<%=s%>"/>
+<jsp:setProperty name="reviewDetail" property="recommSet" value="<%=myR%>"/>
+<%
+    Map<String, Map<String, Map<String, String>>> productReviewMap = new HashMap();
+    productReviewMap = reviewDetail.retrieveProductReview();
+%>
+<%
+    String[] data = null;
+    double srr = 0.0;
+    String rating1 = "";
+    int freq1 = 0, freq2 = 0, freq3 = 0,freq4 = 0, freq5 = 0, totalcomments = 0;
+    
+%>
+<%if (productReviewMap.containsKey(s)) {%>
+<%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
+    Set keyset = productReviews.keySet();
+    Iterator ite = keyset.iterator();
+    Iterator it = keyset.iterator();
+    int w = 0;
+    while (it.hasNext()) {
+        it.next();
+        w++;
+    }
+    data = new String[w];
+    while (ite.hasNext()) {
+        String key = (String) ite.next();
+        Map<String, String> value = (Map) productReviews.get(key);
+        
+        rating1 = value.get("rating");
+
+    double val = Double.parseDouble(rating1);
+                            totalcomments++;
+                            if (val == 5.0) {
+                                freq5++;
+                            } else if (val == 4.0) {
+                                freq4++;
+                            } else if (val == 3.0) {
+                                freq3++;
+                            } else if (val == 2.0) {
+                                freq2++;
+                            } else if (val == 1.0) {
+                                freq1++;
+                            }
+
+%>
+<%}%>
+<%}%>
+
+<body id="body" onload="retrievePRJSONDetail('<%=s%>', '2'), setStarRatings('<%=totalcomments%>','<%=freq1%>','<%=freq2%>','<%=freq3%>','<%=freq4%>','<%=freq5%>')">
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container-fluid" >
@@ -313,8 +366,9 @@
                         </div>
                         <!--/name-->
                         <div class="row thumbnail aspect">
-                            <div class="col-md-8 col-sm-8 col-xs-8">                                
+                            <div class="col-md-8 col-sm-8 col-xs-8">                                 
                                 <div class="well" style="height:470px;overflow:scroll">
+                                    <p style="color:rgb(10,50,50)"><strong>QUERY PRODUCT</strong></p>
                                     <!--detail of query product-->
                                     <div class="row">
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="border:1px solid <%=colors[0]%>" >
@@ -339,7 +393,7 @@
                                         </div>
                                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                             <!--description of query product-->
-                                            <table class="table text-center text-info" style="font-size: x-small;background: white">
+                                            <table class="table text-center text-info" style="font-size: small;background: white">
                                                 <tr><th><span class="desc">Price</span></th>
                                                     <th><span class="desc">Rating</span></th>
                                                     <th><span class="desc">Rank</span></th>
@@ -374,15 +428,18 @@
                                             <span id = "graphtitle" style="color:black">Aspect Graph (Query Product)</span>
                                             <div id="<%=s%>" id1="container" style="height:195px;background:white" onmouseover="showMult(this, '1')"></div>  
                                             <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div>   
-                                            
+
                                         </div>
+                                        <!--changes not permanent-->
                                         <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
-                                            <div id="rss" class="btn btn-primary btn-xs btn- pull-right" style="display:none" onclick="show(this,'<%=s%>')">reset</div>
-                                            <p style="color:black;font-weight: bold" class="text-uppercase" id="msgrss">
+                                            <div id="rss" class="btn btn-primary btn-xs btn- pull-right" style="display:none" onclick="show(this, '<%=s%>')">reset</div>
+                                            <!--p style="color:black;font-weight: bold" class="text-uppercase" id="msgrss">
                                                 Hover Over the 
                                                 Graph to Compare Product Aspects Sentiment
-                                            </p>
-<!--div id="<%=s%>_r" id1="container" style="height:150px;background:white" onmouseover="showMult(this, '2')"></div-->                            
+                                            </p-->
+                                            <span id = "graphtitler" style="color:black">Rating Distribution (Query Product)</span>
+                                            <div id="<%=s%>_r" id1="container" style="height:195px;background:white" onmouseoverj="showMult(this, '2')"></div> 
+                                            <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"></div>                            
                                         </div>
                                     </div>
 
@@ -394,7 +451,7 @@
                                     <!--recommended products-->
                                     <div class="row text-left">
                                         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-                                            <p class="" style="position: relative;top: -20px"><strong>RECOMMENDED PRODUCTS</strong><span class="pull-right"><%=count%> common aspects</span></p>
+                                            <p class="" style="position: relative;top: -20px;color:rgb(10,50,50)""><strong>RECOMMENDED PRODUCTS</strong><span class="pull-right"><%=count%> common aspects</span></p>
                                             <!--p style="position: relative;top: -20px">(<%=count%>) common aspects</p-->                                            
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -452,7 +509,7 @@
                                                 <%}%>
                                                 <%}%>
                                                 <%} else {%>                    
-                                                <h4 style="color:red">Sorry No Available Recommendations</h4>
+                                                <h5 style="color:red">Sorry No Available Recommendations</h5>
                                                 <%}%>
                                             </div>
                                         </div>
@@ -509,7 +566,7 @@
                                         <%}%>
                                         <%}%>
                                         <%} else {%>                    
-                                        <h4 style="color:red">Sorry No Information</h4>
+                                        <h5 style="color:red">Sorry No Information</h5>
                                         <%}%>
 
                                     </div>

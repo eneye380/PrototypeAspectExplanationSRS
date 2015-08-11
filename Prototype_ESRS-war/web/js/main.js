@@ -73,21 +73,110 @@ $(document).ready(function () {
 $(document).ready(function () {
 
 });
-function show(s,id){
+var stars = [];
+function setRatingArr(a) {
+    var star5 = "5 star";
+    var star4 = "4 star";
+    var star3 = "3 star";
+    var star2 = "2 star";
+    var star1 = "1 star";
+    console.log(a);
+    stars.push(star5);
+    stars.push(star4);
+    stars.push(star3);
+    stars.push(star2);
+    stars.push(star1);
+}
+function getRatingArr() {
+    var arr = stars;
+    //stars = [];
+    console.log(arr);
+    return arr;
+}
+var starVal = [];
+function setStarRatings(t, r1, r2, r3, r4, r5) {
+    starVal.push(parseInt(r5));
+    starVal.push(parseInt(r4));
+    starVal.push(parseInt(r3));
+    starVal.push(parseInt(r2));
+    starVal.push(parseInt(r1));    
+}
+function getStarRatings() {
+    var arr = starVal;
+    //starVal = [];
+    console.log(arr);
+    return arr;
+}
+function ratingGraph() {
+
+    setRatingArr();
+
+    var starr = getRatingArr();
+
+    console.log("star len: " + starr.length);
+    var s = '';
+    var id = '';
+    //var type = 'mult';
+    var type = 'sing';
+    var ytitle = 'Frequency';
+    var stitle = 'Star Rating';
+    var obj = readMe();
+    console.log('obj len'+obj.length);
+    for (var y = 0; y < obj.length; y++) {
+        
+        if (y === 0) {
+            var i = obj[y];
+            console.log(y);
+            console.log(i.productID);
+
+            var data1 = [];
+            var ticks1 = [];
+            ticks1 = starr;
+            data1 = getStarRatings();
+
+            if (type === 'sing') {
+                id = obj[0].getProductID();
+                s = id + '_r';
+                setOptions(s, data1, ticks1, ytitle, stitle);
+                myChart();
+
+            } else if (type === 'mult') {
+                setSeries(data1, y + 1);
+
+                id = obj[0].getProductID();
+                s = id + '_r_mult_rating';
+                if (y === obj.length - 1) {
+                    setOptionsS(s, ticks1,ytitle);
+                    myChartS();
+                }
+            }
+
+
+        }
+
+    }
+    return true;
+
+}
+function show(s, id) {
     console.log("hey");
     var g = id + '_mult_sentiment';
+    var q = id + '_r';
     document.getElementById("graphtitle").innerHTML = "Aspect Graph (Query Product)";
     document.getElementById("rss").style.display = 'none';
     document.getElementById(g).style.display = 'none';
+    document.getElementById(q).style.display = 'block';
+    document.getElementById("graphtitler").style.display = 'block';
     document.getElementById(id).style.display = 'block';
     document.getElementById("msgrss").style.display = 'block';
+
     //h.display = "none";
-    
+
 }
-function hide(h){
+function hide(h) {
     //alert("hey");
     //h.display = "none";
-    
+
 }
 //product-recommendation-detail getProductID for mult
 //1 for multiple bar
@@ -106,6 +195,9 @@ function showMult(m, n) {
 
         id = m.id.valueOf();
         s = id + '_mult_sentiment';
+        var q = id + "_r";
+        document.getElementById(q).style.display = 'none';
+        document.getElementById("graphtitler").style.display = 'none';
         if (h === 0) {
             writeMe("1", null, s);
             h++;
@@ -193,10 +285,10 @@ function aspectSelect(asp, s) {
             var c = document.getElementsByClassName('aspect_cb');
             console.log(c[9]);
             for (var b = 0; b < c.length; b++) {
-                c[b].disabled = true;                
-            }            
+                c[b].disabled = true;
+            }
         }
-    }    
+    }
     console.log(window.document.location.search);
 }
 
@@ -216,7 +308,7 @@ function clearSelection(a) {
     }
 }
 
-function retrievePRJSONDetail(queryProduct, u,page) {
+function retrievePRJSONDetail(queryProduct, u, page) {
 
     console.log("Testing 2: retrievePRJSONDetail() working");
     console.log("Ajax call: Function Start");
@@ -240,22 +332,24 @@ function retrievePRJSONDetail(queryProduct, u,page) {
             setProductJSONDetails(msg);
             setQRArrayOfProductList(msg);
             setQRJSONOfProductDetails(msg, queryProduct);
+            ratingGraph();
             //console.log(msg);
             //console.log("Ajax call: stop");
 
-            
-            
-            
-             if (page === 'compare'){
-                status = writeMe(u, null);
-                console.log('status: '+status);
-                if(status === true){
+
+
+
+            if (page === 'compare') {
+                status = writeMe(u, null);                
+                console.log('status: ' + status);
+                if (status === true) {
                     showGraphOnCompare(page);
                 }
-            }else if(page === undefined){
-                writeMe(u, null);
+            } else if (page === undefined) {
+                writeMe(u, null);                
             }
-            
+
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Error: " + jqXHR + " ,Status: " + textStatus + " ,ErrorThrown: " + errorThrown);
@@ -312,15 +406,16 @@ function getAspectArr() {
     var arr = aspect;
     //aspect = [];
     console.log(arr);
-    return arr;    
+    return arr;
 }
-function showGraphOnCompare(page){
-    writeMe("2", null,page);    
+function showGraphOnCompare(page) {
+    writeMe("2", null, page);
 }
 var tt = " ";
 setAspectArr();
 function writeMe(n, as, dID) {
-    
+    var ytitle = 'Score';
+    var stitle = 'Aspect';
     console.log(dID);
     if (as !== null) {
         var aspectArr = as;
@@ -359,7 +454,7 @@ function writeMe(n, as, dID) {
 
             ticks.push(xaxis);
             data.push(datum);
-            
+
             var ll = i.getJsonDetail().aspects[aspectArr[k]].score;
             var l = parseFloat(ll);
             ticks1.push(aspectArr[k]);
@@ -368,8 +463,8 @@ function writeMe(n, as, dID) {
             //nomilized
             //data1.push(v);
             console.log(i.getJsonDetail());
-            console.log('aspect name: '+aspectArr[k]+' - nomilized value: '+v);
-            console.log('aspect name: '+aspectArr[k]+' - non-nomilized value: '+l);
+            console.log('aspect name: ' + aspectArr[k] + ' - nomilized value: ' + v);
+            console.log('aspect name: ' + aspectArr[k] + ' - non-nomilized value: ' + l);
         }
         if (n === "1") {
             setSeries(data1, y + 1);
@@ -380,19 +475,19 @@ function writeMe(n, as, dID) {
                 id = dID;
             }
             if (y === obj.length - 1) {
-                setOptionsS(id, ticks1);
+                setOptionsS(id, ticks1,ytitle);
                 myChartS();
             }
         } else if (n === "2") {
             if (dID === undefined) {
-                setOptions(i.getProductID(), data1, ticks1);
-            } else if (dID === 'compare'){
+                setOptions(i.getProductID(), data1, ticks1, ytitle, stitle);
+            } else if (dID === 'compare') {
                 var id = i.getProductID() + '_comp';
                 //alert('hello');
-                setOptions(id, data1, ticks1);
-                
-            }else {
-                setOptions(dID, data1, ticks1);
+                setOptions(id, data1, ticks1, ytitle, stitle);
+
+            } else {
+                setOptions(dID, data1, ticks1, ytitle, stitle);
             }
 
             myChart();
@@ -633,7 +728,7 @@ function getSeries() {
     return s;
 }
 var options;
-function setOptions(placeholder, data, ticks) {
+function setOptions(placeholder, data, ticks, ytitle, stitle) {
     options = null;
     options = {
         chart: {
@@ -648,11 +743,11 @@ function setOptions(placeholder, data, ticks) {
         },
         yAxis: {
             title: {
-                text: 'Scores'
+                text: ytitle
             }
         },
         series: [{
-                name: 'Aspect',
+                name: stitle,
                 data: data
             }]
     };
@@ -668,7 +763,7 @@ function myChart() {
     var chart = null;
     chart = new Highcharts.Chart(getOptions());
 }
-function setOptionsS(placeholder, ticks) {
+function setOptionsS(placeholder, ticks,ytitle) {
     options = null;
     options = {
         chart: {
@@ -683,7 +778,7 @@ function setOptionsS(placeholder, ticks) {
         },
         yAxis: {
             title: {
-                text: 'Scores'
+                text: ytitle
             }
         },
         series: getSeries()

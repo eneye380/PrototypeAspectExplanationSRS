@@ -485,9 +485,9 @@
                                             <button class="btn btn-success btn-xs" style="color:black;background: yellowgreen; border:greenyellow" id=""></button-->
                                         </div>
                                         <h5>Sentiment Score</h5>
-                                        <div style="height:300px">
-                                            <div id="<%=s%>" class="explanationbar" style="height:300px"></div>  
-                                            <div id="<%=s%>scatter" class="explanationscatter" style="height:300px"></div>  
+                                        <div style="height:200px">
+                                            <div id="<%=s%>" class="explanationbar" style="height:200px"></div>  
+                                            <div id="<%=s%>scatter" class="explanationscatter" style="height:200px"></div>  
                                         </div>
                                     </div>
                                 </div>

@@ -145,7 +145,11 @@
 
         <div class="col-md-10 col-sm-10 col-xs-12">
 
+
             <div class="well text-center">   
+                <div class="caption">
+                    <h3 class="text-uppercase" style="color:rgb(10,50,50)"><%=request.getParameter("category")%></h3>
+                </div>
 
                 <%Productdetail pdr = null;%>
                 <%if ((d.size() > 1)) {%>
