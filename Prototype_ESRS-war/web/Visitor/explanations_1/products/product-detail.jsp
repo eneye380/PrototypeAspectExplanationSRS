@@ -200,7 +200,7 @@
         %>
         <!--jsp:getProperty name="reviewDetail" property="productReviewSet"/-->
         <%--=productScoresMap--%>
-        <body id="body" onload="retrievePRJSONDetail('<%=s%>', '2')">
+        <body id="body" onload="retrievePRJSONDetail('<%=s%>', '2','detail')">
 
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
                 <div class="container-fluid" >
@@ -249,7 +249,7 @@
                     }
 
                 }
-                                                                            %>
+                                                                                                                            %>
             <% ArrayList<Double> l = new ArrayList();%>
 
             <%-- Collections.sort(l); --%>
@@ -328,58 +328,129 @@
 
                 <!--Side Bar End><-->
 
-                <!--Main Content Start><-->
-                <%
-                    String[] data1 = null;
-                    int freq1 = 0;
-                    int freq2 = 0;
-                    int freq3 = 0;
-                    int freq4 = 0;
-                    int freq5 = 0;
-                    int totalcomments = 0;
-                    String author, productid, badges, helpfulranking, title, date, rating, npeopleuseful, npeoplevoted, ncomments, comment;
-                    if (productReviewMap.containsKey(s)) {
-                        Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
-                        Set keyset = productReviews.keySet();
-                        Iterator ite = keyset.iterator();
-                        Iterator it = keyset.iterator();
-                        int w = 0;
-                        while (it.hasNext()) {
-                            it.next();
-                            w++;
-                        }
-                        data = new String[w];
-                        while (ite.hasNext()) {
-                            String key = (String) ite.next();
-                            Map<String, String> value = (Map) productReviews.get(key);
-                            author = value.get("author");
-                            productid = value.get("productid");
-                            badges = value.get("badges");
-                            helpfulranking = value.get("helpfulranking");
-                            title = value.get("title");
-                            date = value.get("date");
-                            rating = value.get("rating");
-                            npeopleuseful = value.get("npeopleuseful");
-                            npeoplevoted = value.get("npeoplevoted");
-                            ncomments = value.get("ncomments");
-                            comment = value.get("comment");
+                <!--Main Content Start><--><!--finding star rating distributions-->
+<%    
+    String rating = "";
+    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
+%>
+<%if (productReviewMap.containsKey(s)) {%>
+<%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
+    Set keyset = productReviews.keySet();
+    Iterator ite = keyset.iterator();
+    Iterator it = keyset.iterator();
+    int w = 0;
+    while (it.hasNext()) {
+        it.next();
+        w++;
+    }
+    
+    while (ite.hasNext()) {
+        String key = (String) ite.next();
+        Map<String, String> value = (Map) productReviews.get(key);
 
-                            double val = Double.parseDouble(rating);
-                            totalcomments++;
-                            if (val == 5.0) {
-                                freq5++;
-                            } else if (val == 4.0) {
-                                freq4++;
-                            } else if (val == 3.0) {
-                                freq3++;
-                            } else if (val == 2.0) {
-                                freq2++;
-                            } else if (val == 1.0) {
-                                freq1++;
-                            }
-                        }
-                    }
-                %>
+        rating = value.get("rating");
+
+        double val = Double.parseDouble(rating);
+        totalcomments++;
+        if (val != 0.0) {
+            totalratings++;
+        }
+        if (val == 5.0) {
+            freq5++;
+        } else if (val == 4.0) {
+            freq4++;
+        } else if (val == 3.0) {
+            freq3++;
+        } else if (val == 2.0) {
+            freq2++;
+        } else if (val == 1.0) {
+            freq1++;
+        }
+
+%>
+<%}%>
+<%}%>
+<!--saving star rating value-->
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=s%>" name="prodid">
+        <input type="hidden" value="<%=freq5%>" name="star5">
+        <input type="hidden" value="<%=freq4%>" name="star4">
+        <input type="hidden" value="<%=freq3%>" name="star3">
+        <input type="hidden" value="<%=freq2%>" name="star2">
+        <input type="hidden" value="<%=freq1%>" name="star1">
+        <input type="hidden" value="<%=totalratings%>">
+    </form>
+    <!--/saving-->
+    <!--getting sum of recommendation star rating-->
+    <%Productdetail pdr_5 = null;%>
+    <%if ((d.size() > 1)) {%>
+    <%--for (int m = 0; m < d.size(); m++) {--%>
+    <%for (int m = 0; m < 4; m++) {%>
+    <%if (m != 0) {%>
+    <%pdr_5 = d.get(m);%>
+
+    <%        
+        String rating2 = "";
+        int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
+    %>
+    <%if (productReviewMap.containsKey(pdr_5.getProdid())) {%>
+    <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_5.getProdid());
+        Set keyset = productReviews.keySet();
+        Iterator ite = keyset.iterator();
+        Iterator it = keyset.iterator();
+        int w = 0;
+        while (it.hasNext()) {
+            it.next();
+            w++;
+        }
+
+        while (ite.hasNext()) {
+            String key = (String) ite.next();
+            Map<String, String> value = (Map) productReviews.get(key);
+
+            rating2 = value.get("rating");
+
+            double val = Double.parseDouble(rating2);
+            totalcomments++;
+            if (val != 0.0) {
+                totalratings++;
+            }
+            if (val == 5.0) {
+                freq51++;
+            } else if (val == 4.0) {
+                freq41++;
+            } else if (val == 3.0) {
+                freq31++;
+            } else if (val == 2.0) {
+                freq21++;
+            } else if (val == 1.0) {
+                freq11++;
+            }
+
+
+    %>
+    
+    <%}%>
+    
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=pdr_5.getProdid()%>" name="prodid">
+        <input type="hidden" value="<%=freq51%>" name="star5">
+        <input type="hidden" value="<%=freq41%>" name="star4">
+        <input type="hidden" value="<%=freq31%>" name="star3">
+        <input type="hidden" value="<%=freq21%>" name="star2">
+        <input type="hidden" value="<%=freq11%>" name="star1">
+        <input type="hidden" value="<%=totalratings1%>">
+    </form>
+    <%freq51=0;freq41=0;freq31=0;freq21=0;freq11=0;%>
+    <%}%> 
+
+    <%}%>
+    <%}%>
+    <%} else {%>                    
+
+    <%}%>
+    <!--/getting-->
+
 
                 <div class="col-md-10 col-sm-10 col-xs-12">
 
@@ -648,6 +719,7 @@
 
                                 <h4>Customer Review</h4>
                                 <h5>Total Number of Reviews: <%=totalcomments%></h5>
+                                <h5>Total Number of Ratings: <%=totalratings%></h5>
                                 <div class='thumbnail'>
                                     <p style='color:rosybrown'>anony</p>
                                     <p class='text-right'>great product</p>
@@ -656,32 +728,39 @@
                                     <p style='color:rosybrown'>pxstar</p>
                                     <p class='text-right'>This is an awesome camera for an entry level DSLR, in my mind Nikon's the best</p>
                                 </div>
-                                <table>
-                                    <tr>
-                                        <th>Rating</th>
-                                        <th>Frequency</th>
-                                    </tr>
-                                    <tr>
-                                        <td>5.0</td>
-                                        <td><%=freq5%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.0</td>
-                                        <td><%=freq4%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.0</td>
-                                        <td><%=freq3%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.0</td>
-                                        <td><%=freq2%></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.0</td>
-                                        <td><%=freq1%></td>
-                                    </tr>
-                                </table>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <table>
+                                            <tr>
+                                                <th>Rating</th>
+                                                <th>Frequency</th>
+                                            </tr>
+                                            <tr>
+                                                <td>5.0</td>
+                                                <td><%=freq5%></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4.0</td>
+                                                <td><%=freq4%></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3.0</td>
+                                                <td><%=freq3%></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2.0</td>
+                                                <td><%=freq2%></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1.0</td>
+                                                <td><%=freq1%></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div id="<%=s%>_r" style="height:150px;background: white"></div>
+                                    </div>
+                                </div>
                                 <%
                                     //String[] data11 = null;
                                     double srr = 0.0;

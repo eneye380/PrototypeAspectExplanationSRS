@@ -70,8 +70,12 @@ $(document).ready(function () {
 
 
 });
+var form = null;
+var formarray;
 $(document).ready(function () {
 
+    var x = document.getElementsByClassName('starsfreq');
+    form = x;
 });
 var stars = [];
 function setRatingArr(a) {
@@ -99,61 +103,87 @@ function setStarRatings(t, r1, r2, r3, r4, r5) {
     starVal.push(parseInt(r4));
     starVal.push(parseInt(r3));
     starVal.push(parseInt(r2));
-    starVal.push(parseInt(r1));    
+    starVal.push(parseInt(r1));
 }
 function getStarRatings() {
     var arr = starVal;
-    //starVal = [];
+    starVal = [];
     console.log(arr);
     return arr;
 }
-function ratingGraph() {
+var graphStat = false;
+function callRatingGraph(p) {
+    alert('hello');
+    var graphStat = ratingGraph('sing', p);
+    if (graphStat === true) {
+        ratingGraph('mult', p);
+        graphStat = false;
+    }
+}
+function ratingGraph(type, p) {
 
     setRatingArr();
-
+    //type - false/true
     var starr = getRatingArr();
 
     console.log("star len: " + starr.length);
     var s = '';
     var id = '';
-    //var type = 'mult';
-    var type = 'sing';
+
     var ytitle = 'Frequency';
     var stitle = 'Star Rating';
     var obj = readMe();
-    console.log('obj len'+obj.length);
+    console.log('obj graph size ' + obj.length);
+    console.log('obj len' + obj.length);
+    //alert("cont: "+form[0].prodid.value+'obj: '+obj[0].getProductID());
     for (var y = 0; y < obj.length; y++) {
-        
-        if (y === 0) {
-            var i = obj[y];
-            console.log(y);
-            console.log(i.productID);
+        var i = obj[y];
+        for (var w = 0; w < form.length; w++) {
+            if (obj[y].getProductID() === form[w].prodid.value) {
 
-            var data1 = [];
-            var ticks1 = [];
-            ticks1 = starr;
-            data1 = getStarRatings();
+                console.log("cont: " + form[0].prodid.value + 'obj: ' + obj[0].getProductID());
 
-            if (type === 'sing') {
-                id = obj[0].getProductID();
-                s = id + '_r';
-                setOptions(s, data1, ticks1, ytitle, stitle);
-                myChart();
+                var data1 = [];
+                var ticks1 = [];
+                ticks1 = starr;
+                //alert(form[w].star1.value);
+                var t = parseInt(form[w].prodid.value);
+                var r5 = parseInt(form[w].star5.value);
+                var r4 = parseInt(form[w].star4.value);
+                var r3 = parseInt(form[w].star3.value);
+                var r2 = parseInt(form[w].star2.value);
+                var r1 = parseInt(form[w].star1.value);
+                setStarRatings(t, r1, r2, r3, r4, r5);
+                data1 = getStarRatings();
+                if (type === 'sing') {
+                    id = obj[0].getProductID();
+                    if (p === undefined) {
+                        s = id + '_r';
+                    } else if(p === 'star'){
+                        id = obj[y].getProductID();
+                        s = id + '_r_comp';
+                    }
+                    setOptions(s, data1, ticks1, ytitle, stitle);
+                    myChart();
+                    if (y === obj.length - 1) {
+                        return true;
+                    }
 
-            } else if (type === 'mult') {
-                setSeries(data1, y + 1);
+                } else if (type === 'mult') {
+                    setSeries(data1, y + 1);
 
-                id = obj[0].getProductID();
-                s = id + '_r_mult_rating';
-                if (y === obj.length - 1) {
-                    setOptionsS(s, ticks1,ytitle);
-                    myChartS();
+                    id = obj[0].getProductID();
+                    
+                        s = id + '_r_mult_rating';
+                    
+                    if (y === obj.length - 1) {
+                        setOptionsS(s, ticks1, ytitle);
+                        myChartS();
+                        return true;
+                    }
                 }
             }
-
-
         }
-
     }
     return true;
 
@@ -162,7 +192,9 @@ function show(s, id) {
     console.log("hey");
     var g = id + '_mult_sentiment';
     var q = id + '_r';
+    var f = id + '_r_mult_rating';
     document.getElementById("graphtitle").innerHTML = "Aspect Graph (Query Product)";
+    document.getElementById(f).style.display = 'none';
     document.getElementById("rss").style.display = 'none';
     document.getElementById(g).style.display = 'none';
     document.getElementById(q).style.display = 'block';
@@ -182,13 +214,13 @@ function hide(h) {
 //1 for multiple bar
 //2 for single bar
 var h = 0;
+var queryP = '';
 function showMult(m, n) {
     var id, s;
     var c = document.getElementsByClassName('product_graph_d');
-    console.log(c[9]);
     m.style.display = 'none';
     for (var b = 0; b < c.length; b++) {
-        c[b].style.display = 'none';
+        // c[b].style.display = 'none';
     }
 
     if (n === '1') {
@@ -198,22 +230,27 @@ function showMult(m, n) {
         var q = id + "_r";
         document.getElementById(q).style.display = 'none';
         document.getElementById("graphtitler").style.display = 'none';
+        //document.getElementById("rss").innerHTML = 'reset';
+        document.getElementById("graphtitle").innerHTML = 'Aspect Graph (Comparison)';
         if (h === 0) {
             writeMe("1", null, s);
             h++;
         }
 
+
     } else if (n === '2') {
         id = m.id.valueOf();
         s = id + '_mult_rating';
-        console.log(s);
+        document.getElementById(queryP).style.display = 'none';
+        document.getElementById("graphtitler").style.display = 'none';
+        document.getElementById("graphtitle").innerHTML = 'Rating Distribution Graph (Comparison)';
     }
 
 
     var e = document.getElementById(s);
 
     e.style.display = 'block';
-    document.getElementById("graphtitle").innerHTML = "Aspect Graph (Product Comparison)";
+
     document.getElementById("rss").style.display = 'block';
     document.getElementById("msgrss").style.display = 'none';
 
@@ -307,9 +344,10 @@ function clearSelection(a) {
         writeMe("1", null);
     }
 }
-
-function retrievePRJSONDetail(queryProduct, u, page) {
-
+var grStatus = false;
+var rtSt = false;
+function retrievePRJSONDetail(queryProduct, opt, page, rate) {
+    //alert('hello');
     console.log("Testing 2: retrievePRJSONDetail() working");
     console.log("Ajax call: Function Start");
     var ext = "recommendation";
@@ -328,25 +366,43 @@ function retrievePRJSONDetail(queryProduct, u, page) {
         datatype: dtype,
         success: function (msg) {
             console.log("Ajax call: start");
-
+            queryP = queryProduct;
             setProductJSONDetails(msg);
             setQRArrayOfProductList(msg);
             setQRJSONOfProductDetails(msg, queryProduct);
-            ratingGraph();
+
             //console.log(msg);
             //console.log("Ajax call: stop");
 
 
+            if (page === 'detail') {
+                status = writeMe(opt, null);
+                //grStatus = callRatingGraph()();
+                //status = writeMe(opt, null);
 
+                if (status === true) {
+                    grStatus = callRatingGraph();
+                    //status = writeMe(opt, null);
+                }
+            }
 
             if (page === 'compare') {
-                status = writeMe(u, null);                
+
+                status = writeMe(opt, null);
+
                 console.log('status: ' + status);
                 if (status === true) {
-                    showGraphOnCompare(page);
+                    grStatus = showGraphOnCompare(page);
+                    if (grStatus === true) {
+                        if (rate === 'star') {
+                            callRatingGraph(rate);
+                        }
+                    }
                 }
+
             } else if (page === undefined) {
-                writeMe(u, null);                
+
+                writeMe(opt, null);
             }
 
 
@@ -409,7 +465,9 @@ function getAspectArr() {
     return arr;
 }
 function showGraphOnCompare(page) {
+    //alert('nnoo');
     writeMe("2", null, page);
+    return true;
 }
 var tt = " ";
 setAspectArr();
@@ -428,7 +486,7 @@ function writeMe(n, as, dID) {
     var datum;
 
     var obj = readMe();
-
+    //alert(obj.length);
     for (var y = 0; y < obj.length; y++) {
 
         var i = obj[y];
@@ -465,6 +523,7 @@ function writeMe(n, as, dID) {
             console.log(i.getJsonDetail());
             console.log('aspect name: ' + aspectArr[k] + ' - nomilized value: ' + v);
             console.log('aspect name: ' + aspectArr[k] + ' - non-nomilized value: ' + l);
+
         }
         if (n === "1") {
             setSeries(data1, y + 1);
@@ -475,15 +534,16 @@ function writeMe(n, as, dID) {
                 id = dID;
             }
             if (y === obj.length - 1) {
-                setOptionsS(id, ticks1,ytitle);
+                setOptionsS(id, ticks1, ytitle);
                 myChartS();
+                return true;
             }
         } else if (n === "2") {
             if (dID === undefined) {
                 setOptions(i.getProductID(), data1, ticks1, ytitle, stitle);
             } else if (dID === 'compare') {
                 var id = i.getProductID() + '_comp';
-                //alert('hello');
+                //alert(id);
                 setOptions(id, data1, ticks1, ytitle, stitle);
 
             } else {
@@ -491,7 +551,12 @@ function writeMe(n, as, dID) {
             }
 
             myChart();
+            //exits this loop
+            if (y === obj.length - 1) {
+                return true;
+            }
         }
+
         //var createPlot = "c";
         //createPlot += y;
         //var m = new CreatePlot(data, ticks, i.productID, createPlot);
@@ -502,7 +567,7 @@ function writeMe(n, as, dID) {
         //setOptions(i.getProductID(), data1, ticks1);
         //myChart();
     }
-    return true;
+
 }
 
 var qandrPList = [];
@@ -763,7 +828,7 @@ function myChart() {
     var chart = null;
     chart = new Highcharts.Chart(getOptions());
 }
-function setOptionsS(placeholder, ticks,ytitle) {
+function setOptionsS(placeholder, ticks, ytitle) {
     options = null;
     options = {
         chart: {

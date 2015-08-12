@@ -163,12 +163,10 @@
     Map<String, Map<String, Map<String, String>>> productReviewMap = new HashMap();
     productReviewMap = reviewDetail.retrieveProductReview();
 %>
-<%
-    String[] data = null;
-    double srr = 0.0;
+<!--finding star rating distributions-->
+<%    
     String rating1 = "";
-    int freq1 = 0, freq2 = 0, freq3 = 0,freq4 = 0, freq5 = 0, totalcomments = 0;
-    
+    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
 %>
 <%if (productReviewMap.containsKey(s)) {%>
 <%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
@@ -180,32 +178,116 @@
         it.next();
         w++;
     }
-    data = new String[w];
+    
     while (ite.hasNext()) {
         String key = (String) ite.next();
         Map<String, String> value = (Map) productReviews.get(key);
-        
+
         rating1 = value.get("rating");
 
-    double val = Double.parseDouble(rating1);
-                            totalcomments++;
-                            if (val == 5.0) {
-                                freq5++;
-                            } else if (val == 4.0) {
-                                freq4++;
-                            } else if (val == 3.0) {
-                                freq3++;
-                            } else if (val == 2.0) {
-                                freq2++;
-                            } else if (val == 1.0) {
-                                freq1++;
-                            }
+        double val = Double.parseDouble(rating1);
+        totalcomments++;
+        if (val != 0.0) {
+            totalratings++;
+        }
+        if (val == 5.0) {
+            freq5++;
+        } else if (val == 4.0) {
+            freq4++;
+        } else if (val == 3.0) {
+            freq3++;
+        } else if (val == 2.0) {
+            freq2++;
+        } else if (val == 1.0) {
+            freq1++;
+        }
 
 %>
 <%}%>
 <%}%>
 
-<body id="body" onload="retrievePRJSONDetail('<%=s%>', '2'), setStarRatings('<%=totalcomments%>','<%=freq1%>','<%=freq2%>','<%=freq3%>','<%=freq4%>','<%=freq5%>')">
+<body id="body" onload="retrievePRJSONDetail('<%=s%>', '2','detail')">
+
+    <!--saving star rating value-->
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=s%>" name="prodid">
+        <input type="hidden" value="<%=freq5%>" name="star5">
+        <input type="hidden" value="<%=freq4%>" name="star4">
+        <input type="hidden" value="<%=freq3%>" name="star3">
+        <input type="hidden" value="<%=freq2%>" name="star2">
+        <input type="hidden" value="<%=freq1%>" name="star1">
+        <input type="hidden" value="<%=totalratings%>">
+    </form>
+    <!--/saving-->
+    <!--getting sum of recommendation star rating-->
+    <%Productdetail pdr_5 = null;%>
+    <%if ((d.size() > 1)) {%>
+    <%--for (int m = 0; m < d.size(); m++) {--%>
+    <%for (int m = 0; m < 4; m++) {%>
+    <%if (m != 0) {%>
+    <%pdr_5 = d.get(m);%>
+
+    <%        
+        String rating2 = "";
+        int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
+    %>
+    <%if (productReviewMap.containsKey(pdr_5.getProdid())) {%>
+    <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_5.getProdid());
+        Set keyset = productReviews.keySet();
+        Iterator ite = keyset.iterator();
+        Iterator it = keyset.iterator();
+        int w = 0;
+        while (it.hasNext()) {
+            it.next();
+            w++;
+        }
+
+        while (ite.hasNext()) {
+            String key = (String) ite.next();
+            Map<String, String> value = (Map) productReviews.get(key);
+
+            rating2 = value.get("rating");
+
+            double val = Double.parseDouble(rating2);
+            totalcomments++;
+            if (val != 0.0) {
+                totalratings++;
+            }
+            if (val == 5.0) {
+                freq51++;
+            } else if (val == 4.0) {
+                freq41++;
+            } else if (val == 3.0) {
+                freq31++;
+            } else if (val == 2.0) {
+                freq21++;
+            } else if (val == 1.0) {
+                freq11++;
+            }
+
+
+    %>
+    
+    <%}%>
+    
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=pdr_5.getProdid()%>" name="prodid">
+        <input type="hidden" value="<%=freq51%>" name="star5">
+        <input type="hidden" value="<%=freq41%>" name="star4">
+        <input type="hidden" value="<%=freq31%>" name="star3">
+        <input type="hidden" value="<%=freq21%>" name="star2">
+        <input type="hidden" value="<%=freq11%>" name="star1">
+        <input type="hidden" value="<%=totalratings1%>">
+    </form>
+    <%freq51=0;freq41=0;freq31=0;freq21=0;freq11=0;%>
+    <%}%> 
+
+    <%}%>
+    <%}%>
+    <%} else {%>                    
+
+    <%}%>
+    <!--/getting-->
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container-fluid" >
@@ -427,7 +509,8 @@
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <span id = "graphtitle" style="color:black">Aspect Graph (Query Product)</span>
                                             <div id="<%=s%>" id1="container" style="height:195px;background:white" onmouseover="showMult(this, '1')"></div>  
-                                            <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div>   
+                                            <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div> 
+                                            <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"></div>                            
 
                                         </div>
                                         <!--changes not permanent-->
@@ -438,8 +521,8 @@
                                                 Graph to Compare Product Aspects Sentiment
                                             </p-->
                                             <span id = "graphtitler" style="color:black">Rating Distribution (Query Product)</span>
-                                            <div id="<%=s%>_r" id1="container" style="height:195px;background:white" onmouseoverj="showMult(this, '2')"></div> 
-                                            <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"></div>                            
+                                            <div id="<%=s%>_r" id1="container" style="height:195px;background:white" onmouseover="showMult(this, '2')"></div> 
+                                            <!--div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"></div-->                            
                                         </div>
                                     </div>
 

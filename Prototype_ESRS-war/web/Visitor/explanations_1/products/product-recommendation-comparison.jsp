@@ -175,7 +175,129 @@
     Map<String, Map<String, Map<String, String>>> productReviewMap = new HashMap();
     productReviewMap = reviewDetail.retrieveProductReview();
 %>
-<body id="body" onload="retrievePRJSONDetail('<%=s%>', '1', 'compare')">
+<%    
+    String rating = "";
+    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
+%>
+<%if (productReviewMap.containsKey(s)) {%>
+<%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
+    Set keyset = productReviews.keySet();
+    Iterator ite = keyset.iterator();
+    Iterator it = keyset.iterator();
+    int w = 0;
+    while (it.hasNext()) {
+        it.next();
+        w++;
+    }
+    
+    while (ite.hasNext()) {
+        String key = (String) ite.next();
+        Map<String, String> value = (Map) productReviews.get(key);
+
+        rating = value.get("rating");
+
+        double val = Double.parseDouble(rating);
+        totalcomments++;
+        if (val != 0.0) {
+            totalratings++;
+        }
+        if (val == 5.0) {
+            freq5++;
+        } else if (val == 4.0) {
+            freq4++;
+        } else if (val == 3.0) {
+            freq3++;
+        } else if (val == 2.0) {
+            freq2++;
+        } else if (val == 1.0) {
+            freq1++;
+        }
+
+%>
+<%}%>
+<%}%>
+    <!--saving star rating value-->
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=s%>" name="prodid">
+        <input type="hidden" value="<%=freq5%>" name="star5">
+        <input type="hidden" value="<%=freq4%>" name="star4">
+        <input type="hidden" value="<%=freq3%>" name="star3">
+        <input type="hidden" value="<%=freq2%>" name="star2">
+        <input type="hidden" value="<%=freq1%>" name="star1">
+        <input type="hidden" value="<%=totalratings%>">
+    </form>
+    <!--/saving-->
+    <!--getting sum of recommendation star rating-->
+    <%Productdetail pdr_cr = null;%>
+    <%if ((d.size() > 1)) {%>
+    <%--for (int m = 0; m < d.size(); m++) {--%>
+    <%for (int m = 0; m < 4; m++) {%>
+    <%if (m != 0) {%>
+    <%pdr_cr = d.get(m);%>
+
+    <%        
+        String rating2 = "";
+        int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
+    %>
+    <%if (productReviewMap.containsKey(pdr_cr.getProdid())) {%>
+    <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());
+        Set keyset = productReviews.keySet();
+        Iterator ite = keyset.iterator();
+        Iterator it = keyset.iterator();
+        int w = 0;
+        while (it.hasNext()) {
+            it.next();
+            w++;
+        }
+
+        while (ite.hasNext()) {
+            String key = (String) ite.next();
+            Map<String, String> value = (Map) productReviews.get(key);
+
+            rating2 = value.get("rating");
+
+            double val = Double.parseDouble(rating2);
+            totalcomments++;
+            if (val != 0.0) {
+                totalratings++;
+            }
+            if (val == 5.0) {
+                freq51++;
+            } else if (val == 4.0) {
+                freq41++;
+            } else if (val == 3.0) {
+                freq31++;
+            } else if (val == 2.0) {
+                freq21++;
+            } else if (val == 1.0) {
+                freq11++;
+            }
+
+
+    %>
+    
+    <%}%>
+    
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=pdr_cr.getProdid()%>" name="prodid">
+        <input type="hidden" value="<%=freq51%>" name="star5">
+        <input type="hidden" value="<%=freq41%>" name="star4">
+        <input type="hidden" value="<%=freq31%>" name="star3">
+        <input type="hidden" value="<%=freq21%>" name="star2">
+        <input type="hidden" value="<%=freq11%>" name="star1">
+        <input type="hidden" value="<%=totalratings1%>">
+    </form>
+    <%freq51=0;freq41=0;freq31=0;freq21=0;freq11=0;%>
+    <%}%> 
+
+    <%}%>
+    <%}%>
+    <%} else {%>                    
+
+    <%}%>
+    <!--/getting-->
+
+<body id="body" onload="retrievePRJSONDetail('<%=s%>', '1', 'compare','star')">
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container-fluid" >
@@ -476,9 +598,9 @@
                             <!--/explanation-->
 
                             <!--Table of product comparison-->
-                            <div class="well">
+                            <div class="well" style="">
                                 <div class="thumbnail">
-                                    <table class="table text-center">
+                                    <table class="table text-center" style="">
                                         <tbody>
                                             <!--product rating-->
                                             <!--tr-->
@@ -576,6 +698,54 @@
 
                                                         <!--/td-->                                                        
                                                         <div id="<%=pdr_3.getProdid()%>_comp" id1="container" style="height:150px;background:white"></div>                            
+                                                        <!--/td-->
+                                                        <!--/product-->                                                    
+                                                    </div>
+                                                    <span class="" style="color:black"></span>
+                                                </td> 
+                                                <!--/td-->
+                                                <!--hr-->
+                                                <%}%>
+                                                <%}%>
+                                                <%} else {%>                    
+                                                <td><h6 style="color:red">Sorry No Recommended Product Aspect Graph</h6></td>
+                                                <%}%>
+                                                <!--/div-->
+
+                                                <!--/td-->
+                                            </tr>
+                                            <!--/product aspect graph-->
+                                            <!--product aspect graph-->
+                                            <!--tr-->
+                                            <tr class="text-center">
+                                                <!--td-->
+                                                <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >   
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Rating Distribution Graph</p><hr>
+                                                    <div class="caption">                                                         
+                                                        <!--product aspect graph-->        
+
+                                                        <div id="<%=s%>_r_comp" id1="container" style="height:150px;background:white"></div>
+                                                        <!--/product-->                                                        
+                                                    </div>
+                                                    <span class="" style="color:black"></span>
+                                                </td>
+                                                <!--/td-->
+                                                <!--td-->
+                                                <!--div class="row text-center "-->
+                                                <%Productdetail pdr_x = null;%>
+                                                <%if ((d.size() > 1)) {%>
+                                                <%--for (int m = 0; m < d.size(); m++) {--%>
+                                                <%for (int m = 0; m < 4; m++) {%>
+                                                <%if (m != 0) {%>
+                                                <%pdr_x = d.get(m);%>
+                                                <!--td-->
+                                                <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
+                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Rating Distribution Graph</p><hr>
+                                                    <div class="caption">                                                         
+                                                        <!--product aspect graph-->        
+
+                                                        <!--/td-->                                                        
+                                                        <div id="<%=pdr_x.getProdid()%>_r_comp" id1="container" style="height:150px;background:white"></div>                            
                                                         <!--/td-->
                                                         <!--/product-->                                                    
                                                     </div>
