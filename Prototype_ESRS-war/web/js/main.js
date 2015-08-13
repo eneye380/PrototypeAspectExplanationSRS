@@ -113,11 +113,12 @@ function getStarRatings() {
 }
 var graphStat = false;
 function callRatingGraph(p) {
-    alert('hello');
+    //alert('hello');
     var graphStat = ratingGraph('sing', p);
     if (graphStat === true) {
         ratingGraph('mult', p);
         graphStat = false;
+        //return true;
     }
 }
 function ratingGraph(type, p) {
@@ -147,7 +148,7 @@ function ratingGraph(type, p) {
                 var ticks1 = [];
                 ticks1 = starr;
                 //alert(form[w].star1.value);
-                var t = parseInt(form[w].prodid.value);
+                var t = parseInt(form[w].tot.value);
                 var r5 = parseInt(form[w].star5.value);
                 var r4 = parseInt(form[w].star4.value);
                 var r3 = parseInt(form[w].star3.value);
@@ -162,6 +163,8 @@ function ratingGraph(type, p) {
                     } else if(p === 'star'){
                         id = obj[y].getProductID();
                         s = id + '_r_comp';
+                        var r = 'no_r_'+(y+1);
+                        document.getElementById(r).innerHTML = t;
                     }
                     setOptions(s, data1, ticks1, ytitle, stitle);
                     myChart();
@@ -992,8 +995,3 @@ function scatterChart(data, p) {
     });
 }
 
-da = [{
-        name: 'aspect',
-        color: 'rgba(223, 50, 50, .5)',
-        data: data
-    }];

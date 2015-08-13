@@ -145,6 +145,40 @@ public class DBUpdate {
 
         System.out.println(conn);
     }
+    public void createRecommendation() {
+        String sqlString
+                = "CREATE TABLE IF NOT EXISTS ProductRecommendation("
+                + "queryproduct varchar(12), "
+                + "recommendation varchar(12),"
+                + "PRIMARY KEY(queryproduct,recommendation)"
+                + ")";
+
+        try {
+            conn = dbConnect.getDbConnection();
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sqlString);
+            System.out.println("successfull");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println(conn);
+    }
+    public void insertRecommendation(String[] s) {
+
+        String sqlString = "INSERT INTO ProductRecommendation VALUES('" + s[0] + "'," + s[1] + ")";
+
+        try {
+            conn = dbConnect.getDbConnection();
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sqlString);
+            statement.executeUpdate(sqlString);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
     public void insertRecordA(String[] s) {
 

@@ -175,7 +175,7 @@
     Map<String, Map<String, Map<String, String>>> productReviewMap = new HashMap();
     productReviewMap = reviewDetail.retrieveProductReview();
 %>
-<%    
+<%
     String rating = "";
     int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
 %>
@@ -189,7 +189,7 @@
         it.next();
         w++;
     }
-    
+
     while (ite.hasNext()) {
         String key = (String) ite.next();
         Map<String, String> value = (Map) productReviews.get(key);
@@ -216,88 +216,94 @@
 %>
 <%}%>
 <%}%>
-    <!--saving star rating value-->
-    <form  class="starsfreq">
-        <input type="hidden" value="<%=s%>" name="prodid">
-        <input type="hidden" value="<%=freq5%>" name="star5">
-        <input type="hidden" value="<%=freq4%>" name="star4">
-        <input type="hidden" value="<%=freq3%>" name="star3">
-        <input type="hidden" value="<%=freq2%>" name="star2">
-        <input type="hidden" value="<%=freq1%>" name="star1">
-        <input type="hidden" value="<%=totalratings%>">
-    </form>
-    <!--/saving-->
-    <!--getting sum of recommendation star rating-->
-    <%Productdetail pdr_cr = null;%>
-    <%if ((d.size() > 1)) {%>
-    <%--for (int m = 0; m < d.size(); m++) {--%>
-    <%for (int m = 0; m < 4; m++) {%>
-    <%if (m != 0) {%>
-    <%pdr_cr = d.get(m);%>
+<!--saving star rating value-->
+<form  class="starsfreq">
+    <input type="hidden" value="<%=s%>" name="prodid">
+    <input type="hidden" value="<%=freq5%>" name="star5">
+    <input type="hidden" value="<%=freq4%>" name="star4">
+    <input type="hidden" value="<%=freq3%>" name="star3">
+    <input type="hidden" value="<%=freq2%>" name="star2">
+    <input type="hidden" value="<%=freq1%>" name="star1">
+    <input type="hidden" value="<%=totalcomments%>" name="tot">
+</form>
+<!--/saving-->
+<!--getting sum of recommendation star rating-->
+<%Productdetail pdr_cr = null;%>
+<%if ((d.size() > 1)) {%>
+<%--for (int m = 0; m < d.size(); m++) {--%>
+<%for (int m = 0; m < 4; m++) {%>
+<%if (m != 0) {%>
+<%pdr_cr = d.get(m);%>
 
-    <%        
-        String rating2 = "";
-        int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
-    %>
-    <%if (productReviewMap.containsKey(pdr_cr.getProdid())) {%>
-    <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());
-        Set keyset = productReviews.keySet();
-        Iterator ite = keyset.iterator();
-        Iterator it = keyset.iterator();
-        int w = 0;
-        while (it.hasNext()) {
-            it.next();
-            w++;
+<%
+    String rating2 = "";
+    int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
+%>
+<%if (productReviewMap.containsKey(pdr_cr.getProdid())) {%>
+<%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());
+    Set keyset = productReviews.keySet();
+    Iterator ite = keyset.iterator();
+    Iterator it = keyset.iterator();
+    int w = 0;
+    while (it.hasNext()) {
+        it.next();
+        w++;
+    }
+
+    while (ite.hasNext()) {
+        String key = (String) ite.next();
+        Map<String, String> value = (Map) productReviews.get(key);
+
+        rating2 = value.get("rating");
+
+        double val = Double.parseDouble(rating2);
+        totalcomments1++;
+        if (val != 0.0) {
+            totalratings1++;
+        }
+        if (val == 5.0) {
+            freq51++;
+        } else if (val == 4.0) {
+            freq41++;
+        } else if (val == 3.0) {
+            freq31++;
+        } else if (val == 2.0) {
+            freq21++;
+        } else if (val == 1.0) {
+            freq11++;
         }
 
-        while (ite.hasNext()) {
-            String key = (String) ite.next();
-            Map<String, String> value = (Map) productReviews.get(key);
+%>
 
-            rating2 = value.get("rating");
+<%}%>
 
-            double val = Double.parseDouble(rating2);
-            totalcomments++;
-            if (val != 0.0) {
-                totalratings++;
-            }
-            if (val == 5.0) {
-                freq51++;
-            } else if (val == 4.0) {
-                freq41++;
-            } else if (val == 3.0) {
-                freq31++;
-            } else if (val == 2.0) {
-                freq21++;
-            } else if (val == 1.0) {
-                freq11++;
-            }
+<form  class="starsfreq">
+    <input type="hidden" value="<%=pdr_cr.getProdid()%>" name="prodid">
+    <input type="hidden" value="<%=freq51%>" name="star5">
+    <input type="hidden" value="<%=freq41%>" name="star4">
+    <input type="hidden" value="<%=freq31%>" name="star3">
+    <input type="hidden" value="<%=freq21%>" name="star2">
+    <input type="hidden" value="<%=freq11%>" name="star1">
+    <input type="hidden" value="<%=totalcomments1%>" name="tot">
+</form>
+<%freq51 = 0;
+    freq41 = 0;
+    freq31 = 0;
+    freq21 = 0;
+    freq11 = 0;
+    totalcomments1 = 0;
+    totalratings1 = 0;
+%>
+<%}%> 
 
+<%}%>
+<%}%>
+<%} else {%>                    
 
-    %>
-    
-    <%}%>
-    
-    <form  class="starsfreq">
-        <input type="hidden" value="<%=pdr_cr.getProdid()%>" name="prodid">
-        <input type="hidden" value="<%=freq51%>" name="star5">
-        <input type="hidden" value="<%=freq41%>" name="star4">
-        <input type="hidden" value="<%=freq31%>" name="star3">
-        <input type="hidden" value="<%=freq21%>" name="star2">
-        <input type="hidden" value="<%=freq11%>" name="star1">
-        <input type="hidden" value="<%=totalratings1%>">
-    </form>
-    <%freq51=0;freq41=0;freq31=0;freq21=0;freq11=0;%>
-    <%}%> 
+<%}%>
+<!--/getting-->
 
-    <%}%>
-    <%}%>
-    <%} else {%>                    
-
-    <%}%>
-    <!--/getting-->
-
-<body id="body" onload="retrievePRJSONDetail('<%=s%>', '1', 'compare','star')">
+<body id="body" onload="retrievePRJSONDetail('<%=s%>', '1', 'compare', 'star')">
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container-fluid" >
@@ -313,7 +319,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">                    
                     <!--li>
                         <a href="#">Products</a>
                     </li>
@@ -324,7 +330,10 @@
                         <a href="#" onclick="">About</a>
                     </li-->
                 </ul>
+
                 <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
+                <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                    <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -342,17 +351,21 @@
             <!--Side Bar Start><-->
 
 
-            <div class="col-md-2 col-sm-2 col-xs-12 well aspect">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 well aspect">
                 <jsp:useBean id="category_1" class="aspect.bean.CategorySB" scope="request"/>
                 <%--jsp:getProperty name="category" property="catSet"/--%>
                 <%
                     ArrayList<CategorySB> cc = category_1.getCatSet();
 
                 %>
-
+                <div class="row">
+                    <div class="col-lg-12 text-center">                                
+                        <h5 style="color: whitesmoke"><strong>Product Comparison</strong></h5>
+                    </div>
+                </div>
 
                 <div class="btn-group" style="margin-top: 5px;">
-                    <button type="button" class="btn btn-primary" id="button_category">Category</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="button_category">Category</button>
                 </div>
                 <div class="category_selection" style="margin-top: 5px;display1:none">
                     <div class="list-group ">
@@ -363,7 +376,7 @@
                         <a href="../products/category.jsp?category=<%=ct.getCategory()%>" class="list-group-item "><%=ct.getCategory()%></a>                    
                         <%}%>
                     </div>
-
+                    <a href="product-recommendation-comparison_1.jsp?product=<%=pdqp.getProdid()%>" style="background: black" class="btn btn-success btn-xs btn- pull-right">Change View</a>
                 </div>
                 <!-- Algorithm to finds common aspects-->
                 <% ArrayList<Double> l = new ArrayList();%>
@@ -446,104 +459,23 @@
 
             <!--Main Content Start><-->
             <%--=d.size()--%>
-            <div class="col-md-10 col-sm-10 col-xs-12">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 
 
                 <div class="thumbnail">
-                    <div class="well" style="height: 550px;overflow: scroll">
+                    <div class="well">
                         <!--name container of query product-->
-                        <div class="row">
-                            <div class="col-lg-12 text-center">
-                                <!--h4 style="color:royalblue"><%=pdqp.getName()%></h4-->
-                                <h4 style="color: #101010">Product Comparison</h4>
-                            </div>
-                        </div>
+                        
                         <!--/name-->
-                        <div class="row thumbnail aspect">
+                        <div class="row thumbnail aspect" style="height: 550px;overflow: scroll">
                             <!--explantion interface-->
-                            <div class="well">
-                                <div class="thumbnail">
-                                    <table class="table text-center">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" style="border-right:1px solid <%=colors[0]%>;color:rgb(10,50,50)">
-                                                    Query Product
-                                                </th>
-                                                <!--td-->
-                                                <!--div class="row text-center "-->
-                                                <%Productdetail pdrr = null;%>
-                                                <%if ((d.size() > 1)) {%>
-                                                <%--for (int m = 0; m < d.size(); m++) {--%>
-                                                <%for (int m = 0; m < 4; m++) {%>
-                                                <%if (m != 0) {%>
-                                                <%pdrr = d.get(m);%>
-                                                <!--td-->
-
-                                                <!--/td-->
-                                                <!--hr-->
-                                                <%}%>
-                                                <%}%>
-                                                <th colspan="<%=d.size() - 1%>" class="text-center" style="color:rgb(10,50,50)">
-                                                    Recommended Products
-                                                </th> 
-                                                <%} else {%>                    
-                                                <th><h4 style="color:red">Sorry No Recommended Product</h4></th>
-                                                <%}%>                                                
-                                        <!--/div-->
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!--product image and name-->
-                                            <tr class="text-center">
-                                                <!--td-->
-                                                <td style="border-bottom:1px solid <%=colors[0]%>;border-right:1px solid <%=colors[0]%>">
-                                                    <span class="pull-left" style="color:<%=colors[0]%>">1</span>
-                                                    <a href="product-recommendation-detail.jsp?product=<%=pdqp.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" name="<%=pdqp.getProdid()%>" src="../../../img/<%=pdqp.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
-                                                    <div class="caption"> 
-                                                        <div style=""><h6><%=pdqp.getName()%></h6></div>                                                                                                          
-                                                    </div>
-                                                    <span class="pull-left" style="color:white"></span>
-                                                </td>
-                                                <!--/td-->
-
-                                                <!--td-->
-                                                <!--div class="row text-center "-->
-                                                <%Productdetail pdr = null;%>
-                                                <%if ((d.size() > 1)) {%>
-                                                <%--for (int m = 0; m < d.size(); m++) {--%>
-                                                <%for (int m = 0; m < 4; m++) {%>
-                                                <%if (m != 0) {%>
-                                                <%pdr = d.get(m);%>
-                                                <!--td-->
-                                                <td style="border-bottom:1px solid <%=colors[m]%>;border-right:1px solid <%=colors[m]%>">
-                                                    <span class="pull-left" style="color:<%=colors[m]%>"><%=(m + 1)%></span>
-                                                    <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" name="<%=pdr.getProdid()%>" src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
-                                                    <div class="caption">
-                                                        <div style=""><h6><%=pdr.getName()%></h6></div>                                                                                                            
-                                                    </div>
-                                                    <span class="pull-left" style="color:white"></span>
-                                                </td> 
-                                                <!--/td-->
-                                                <!--hr-->
-                                                <%}%>
-                                                <%}%>
-                                                <%} else {%>                    
-                                                <td><h6 style="color:red">Sorry No Recommended Product Name</h6></td>
-                                                <%}%>
-                                                <!--/div-->
-
-                                                <!--/td-->
-                                            </tr>
-                                            <!--/product image and name-->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <h5 style="color:rgb(10,50,50)">Aspect Sentiment Graph</h5>
+                            <div class="well">                               
+                                <h6 style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h6>
                                 <div style="height:200px">
                                     <div id="<%=s%>" class="explanationbar" style="height:200px"></div>  
                                 </div>
                                 <!--aspect selection-->
-                                <h5 style="color:rgb(10,50,50)">Aspect Selection</h5>
+                                <h6 style="color:rgb(10,50,50)"><em>Aspect Selection</em></h6>
                                 <div class="thumbnail">
                                     <div class="">
                                         <div class="" style="margin-top: 10px">
@@ -601,13 +533,85 @@
                             <div class="well" style="">
                                 <div class="thumbnail">
                                     <table class="table text-center" style="">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="border-right:1px solid <%=colors[0]%>;color:rgb(10,50,50)">
+                                                    <em>Query Product</em>
+                                                </th>
+                                                <!--td-->
+                                                <!--div class="row text-center "-->
+                                                <%Productdetail pdrr = null;%>
+                                                <%if ((d.size() > 1)) {%>
+                                                <%--for (int m = 0; m < d.size(); m++) {--%>
+                                                <%for (int m = 0; m < 4; m++) {%>
+                                                <%if (m != 0) {%>
+                                                <%pdrr = d.get(m);%>
+                                                <!--td-->
+
+                                                <!--/td-->
+                                                <!--hr-->
+                                                <%}%>
+                                                <%}%>
+                                                <th colspan="<%=d.size() - 1%>" class="text-center" style="color:rgb(10,50,50)">
+                                                    <em>Recommended Products</em>
+                                                </th> 
+                                                <%} else {%>                    
+                                                <th><h4 style="color:red">Sorry No Recommended Product</h4></th>
+                                                <%}%>                                                
+                                        <!--/div-->
+                                        </tr>
+                                        </thead>
                                         <tbody>
+                                            <!--product image and name-->
+                                            <tr class="text-center">
+                                                <!--td-->
+                                                <td style="border-bottom:1px solid <%=colors[0]%>;border-right:1px solid <%=colors[0]%>">
+                                                    <span class="pull-left" style="color:<%=colors[0]%>">1</span>
+                                                    <a href="product-recommendation-detail.jsp?product=<%=pdqp.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" name="<%=pdqp.getProdid()%>" src="../../../img/<%=pdqp.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
+                                                    <div class="caption"> 
+                                                        <div style=""><h6><%=pdqp.getName()%></h6></div>                                                                                                          
+                                                    </div>
+                                                    <span class="pull-left" style="color:white"></span>
+                                                </td>
+                                                <!--/td-->
+
+                                                <!--td-->
+                                                <!--div class="row text-center "-->
+                                                <%Productdetail pdr = null;%>
+                                                <%if ((d.size() > 1)) {%>
+                                                <%--for (int m = 0; m < d.size(); m++) {--%>
+                                                <%for (int m = 0; m < 4; m++) {%>
+                                                <%if (m != 0) {%>
+                                                <%pdr = d.get(m);%>
+                                                <!--td-->
+                                                <td style="border-bottom:1px solid <%=colors[m]%>;border-right:1px solid <%=colors[m]%>">
+                                                    <span class="pull-left" style="color:<%=colors[m]%>"><%=(m + 1)%></span>
+                                                    <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" name="<%=pdr.getProdid()%>" src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
+                                                    <div class="caption">
+                                                        <div style=""><h6><%=pdr.getName()%></h6></div>                                                                                                            
+                                                    </div>
+                                                    <span class="pull-left" style="color:white"></span>
+                                                </td> 
+                                                <!--/td-->
+                                                <!--hr-->
+                                                <%}%>
+                                                <%}%>
+                                                <%} else {%>                    
+                                                <td><h6 style="color:red">Sorry No Recommended Product Name</h6></td>
+                                                <%}%>
+                                                <!--/div-->
+
+                                                <!--/td-->
+                                            </tr>
+                                            <!--/product image and name-->
+
+
                                             <!--product rating-->
                                             <!--tr-->
                                             <tr class="">
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>;  border-right:1px solid <%=colors[0]%>" >            
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Star Rating</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Star Rating</em></h6><hr>
                                                     <div class="caption">                                                         
                                                         <!--product rating-->        
                                                         <%//star rating
@@ -635,7 +639,7 @@
                                                 <%pdr_1 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>;border-right:1px solid <%=colors[m]%>" >        
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Star Rating</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Star Rating</em></h6><hr>
                                                     <div class="caption">                                                         
                                                         <!--product rating-->        
                                                         <%//star rating
@@ -672,7 +676,7 @@
                                             <tr class="text-center">
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >   
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Aspect Sentiment Graph</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h6><hr>
                                                     <div class="caption">                                                         
                                                         <!--product aspect graph-->        
 
@@ -692,7 +696,7 @@
                                                 <%pdr_3 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Aspect Sentiment Graph</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h6><hr>
                                                     <div class="caption">                                                         
                                                         <!--product aspect graph-->        
 
@@ -720,7 +724,7 @@
                                             <tr class="text-center">
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >   
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Rating Distribution Graph</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Rating Distribution Graph</em></h6><hr>
                                                     <div class="caption">                                                         
                                                         <!--product aspect graph-->        
 
@@ -740,7 +744,7 @@
                                                 <%pdr_x = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Rating Distribution Graph</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Rating Distribution Graph</em></h6><hr>
                                                     <div class="caption">                                                         
                                                         <!--product aspect graph-->        
 
@@ -767,7 +771,7 @@
                                             <tr class="text-center" >
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Details</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
                                                     <p class="top_m1"><span class="desc">Price: </span><%=pdqp.getPrice()%></p>
                                                     <p class="top_m2"><span class="desc">Rank: </span><%=pdqp.getRank()%></p>
                                                     <p class="top_m3"><span class="desc">Date: </span><%=pdqp.getDate()%></p>
@@ -790,7 +794,7 @@
                                                 <%pdr_4 = d.get(m);%>
                                                 <!--td-->
                                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Details</p><hr>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
                                                     <p class="top_m1"><span class="desc">Price: </span><%=pdr_4.getPrice()%></p>
                                                     <p class="top_m2"><span class="desc">Rank: </span><%=pdr_4.getRank()%></p>
                                                     <p class="top_m3"><span class="desc">Date: </span><%=pdr_4.getDate()%></p>
@@ -817,8 +821,9 @@
                                             <!--tr-->
                                             <tr class="text-center">
                                                 <!--td-->
-                                                <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >   
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Reviews</p><hr>
+                                                <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >  
+                                                    <em><span id="no_r_1" style="color:rgb(10,50,50)"></span></em>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Product Reviews</em></h6><hr>
                                                     <div class="caption" style="height:300px;overflow: scroll">                                                         
                                                         <%
                                                             //String[] data11 = null;
@@ -886,8 +891,9 @@
                                                 <%if (m != 0) {%>
                                                 <%pdr_5 = d.get(m);%>
                                                 <!--td-->
-                                                <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                                    <p class="text-uppercase" style="color:rgb(10,50,50)">Product Reviews</p><hr>
+                                                <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >   
+                                                    <em><span id="no_r_<%=m + 1%>" style="color:rgb(10,50,50)"></span></em>
+                                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Product Reviews</em></h6><hr>
                                                     <div class="caption" style="height:300px;overflow: scroll">                                                         
                                                         <%
                                                             //String[] data11 = null;
@@ -899,7 +905,7 @@
                                                             Set keyset = productReviews.keySet();
                                                             Iterator ite = keyset.iterator();
                                                             Iterator it = keyset.iterator();
-                                                            int w = 0;
+                                                            int w = 0, sentinel = 0;
                                                             while (it.hasNext()) {
                                                                 it.next();
                                                                 w++;
@@ -921,7 +927,10 @@
                                                                 comment2 = value.get("comment");
 
                                                                 srr2 = Double.parseDouble(rating2);
-
+                                                                sentinel++;
+                                                                if (sentinel == 20) {
+                                                                    break;
+                                                                }
 
                                                         %>
                                                         <div class='thumbnail'>

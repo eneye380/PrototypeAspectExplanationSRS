@@ -228,6 +228,8 @@
                             </li-->
                         </ul>
                         <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
+                        <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                    <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>
@@ -272,10 +274,14 @@
                         ArrayList<CategorySB> cc = category_1.getCatSet();
 
                     %>
-
+                    <div class="row">
+                            <div class="col-lg-12 text-center">                                
+                                <h5 style="color: whitesmoke"><strong>Product Detail</strong></h5>
+                            </div>
+                        </div>
 
                     <div class="btn-group" style="margin-top: 5px;">
-                        <button type="button" class="btn btn-primary" id="button_category">Category</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="button_category">Category</button>
                     </div>
                     <div class="category_selection" style="margin-top: 5px;display1:none">
                         <div class="list-group ">
@@ -289,8 +295,8 @@
 
                     </div>
                     <div class="btn-group" style="margin-top: 10px">
-                        <button type="button" class="btn btn-primary" id="button_aspect">Aspects</button>
-                        <button type="button" class="btn btn-primary" id="button_aspect_reset" onclick="clearSelection('2')">Reset</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="button_aspect">Aspects</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="button_aspect_reset" onclick="clearSelection('2')">Reset</button>
                     </div>
                     <div class="aspect_selection" style="display1:none;height:300px;overflow: auto">
                         <form onclick1="showMe()">
@@ -370,6 +376,7 @@
 %>
 <%}%>
 <%}%>
+
 <!--saving star rating value-->
     <form  class="starsfreq">
         <input type="hidden" value="<%=s%>" name="prodid">
@@ -411,9 +418,9 @@
             rating2 = value.get("rating");
 
             double val = Double.parseDouble(rating2);
-            totalcomments++;
+            totalcomments1++;
             if (val != 0.0) {
-                totalratings++;
+                totalratings1++;
             }
             if (val == 5.0) {
                 freq51++;

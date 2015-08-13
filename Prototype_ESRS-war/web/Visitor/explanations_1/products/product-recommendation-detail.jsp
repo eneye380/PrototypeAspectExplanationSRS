@@ -315,6 +315,8 @@
                     </li-->
                 </ul>
                 <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
+                <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                    <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -339,10 +341,14 @@
                     ArrayList<CategorySB> cc = category_1.getCatSet();
 
                 %>
-
+                <div class="row">
+                    <div class="col-lg-12 text-center">                                
+                        <h5 style="color: whitesmoke"><strong>Product Recommendations</strong></h5>
+                    </div>
+                </div>
 
                 <div class="btn-group" style="margin-top: 5px;">
-                    <button type="button" class="btn btn-primary" id="button_category">Category</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="button_category">Category</button>
                 </div>
                 <div class="category_selection" style="margin-top: 5px;display1:none">
                     <div class="list-group ">
@@ -441,13 +447,14 @@
                 <div class="thumbnail">
                     <div class="well">
                         <!--name container of query product-->
-                        <div class="row">
-                            <div class="col-lg-12 text-center">
-                                <h5 style="color:royalblue"><%=pdqp.getName()%></h5>
-                            </div>
-                        </div>
+                        
                         <!--/name-->
                         <div class="row thumbnail aspect">
+                            <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h5 style="color:sienna"><em><%=pdqp.getName()%></em></h5>
+                            </div>
+                        </div>
                             <div class="col-md-8 col-sm-8 col-xs-8">                                 
                                 <div class="well" style="height:470px;overflow:scroll">
                                     <p style="color:rgb(10,50,50)"><strong>QUERY PRODUCT</strong></p>
