@@ -411,7 +411,7 @@ function retrievePRJSONDetail(queryProduct, opt, page, rate) {
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("Error: " + jqXHR + " ,Status: " + textStatus + " ,ErrorThrown: " + errorThrown);
+            console.log("Error: " + jqXHR.status + " ,Status: " + textStatus + " ,ErrorThrown: " + errorThrown);
         }
 
     });

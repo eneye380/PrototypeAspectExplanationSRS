@@ -6,6 +6,7 @@
 package aspect.db_connection;
 
 import aspect.model.Productdetail;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -180,9 +181,10 @@ public class DBUpdate {
         }
     }
 
-    public void insertRecordA(String[] s) {
-
-        String sqlString = "INSERT INTO ProductAspectSentiment VALUES('B00427Z7NM','" + s[0] + "'," + s[1] + "," + s[2] + "," + s[3] + ")";
+    public void insertRecordA(String[] s, File file) {
+        //System.out.println("name-|- "+file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf(".")));
+        String productid = file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf("."));
+        String sqlString = "INSERT INTO ProductAspectSentiment VALUES('"+productid+"','" + s[0] + "'," + s[1] + "," + s[2] + "," + s[3] + ")";
 
         try {
             conn = dbConnect.getDbConnection();

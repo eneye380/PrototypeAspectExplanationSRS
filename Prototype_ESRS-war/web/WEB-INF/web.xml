@@ -8,6 +8,10 @@
         <servlet-name>Recommendation</servlet-name>
         <servlet-class>aspect.controller.Recommendation</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>aspect.controller.Search</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductSearch</servlet-name>
         <url-pattern>/productsearch</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Recommendation</servlet-name>
         <url-pattern>/recommendation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

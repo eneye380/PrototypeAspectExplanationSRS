@@ -121,24 +121,24 @@
 
 
 
-
+<%----%>
 <jsp:useBean id="recommend" class="aspect.bean.ProductSetSB" scope="request"/>
 <jsp:setProperty name="recommend" property="queryProduct" param="product" />
 <%
 %>
 
-<%    String s = recommend.getQueryProduct();
-    //String r1,r2,r3;
-    //r1 = recommend.getProduct1();
-    //r2 = recommend.getProduct2();
-    //r3 = recommend.getProduct3();
-    ArrayList<ProductSetSB> p = recommend.getSet();
-    ArrayList<String> myR = new ArrayList();
+<%    
+    
+    String s = recommend.getQueryProduct();    //fetch query Product
+    /**
+     * getting Recommendation Set
+     */
+    ArrayList<ProductSetSB> p = recommend.getSet(); //ArrayList of type ProductSetSB
+    ArrayList<String> myR = new ArrayList();   //ArrayList of type String
     if (p.size() > 1) {
         for (int i = 0; i < p.size(); i++) {
-            ProductSetSB l = p.get(i);
-            //out.println(l.getProduct());
-            myR.add(l.getProduct());
+            ProductSetSB l = p.get(i);  //ProductSetSB Object
+            myR.add(l.getProduct());    //Populating ArrayList myR with recommended products
         }
     }
 
@@ -148,40 +148,39 @@
 <jsp:setProperty name="detail" property="recommSet" value="<%=myR%>"/>
 
 <%
-    ArrayList<Productdetail> d = detail.retrieveDetail();
+    ArrayList<Productdetail> d = detail.retrieveDetail(); //ArrayList of type Productdetail
 %>  
 
 <%
-    Productdetail pdqp = d.get(0);
+    Productdetail pdqp = d.get(0); //declaration and initialization of entity class Productdetail object representing the details of the query product
 %>
 
 <jsp:useBean id="aspectScore" class="aspect.bean.AspectScoreSB" scope="request"/>
 <jsp:setProperty name="aspectScore" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="aspectScore" property="recommSet" value="<%=myR%>"/>
-<%--
-    Map<String, Map<String, Map<String, Number>>> scores = new HashMap();
-    scores = aspectScore.retrieveAspectScores();
---%>
+
 <%
-    Map<String, Map<String, Map<String, Number>>> productScoresMap = new HashMap();
-    productScoresMap = aspectScore.retrieveAspectScores();
+    Map<String, Map<String, Map<String, Number>>> productScoresMap = new HashMap(); //declares and instantiate a Map object productScoresMap
+    productScoresMap = aspectScore.retrieveAspectScores();  //initialise the Map object productScoresMap
 %>
-<!--jsp:getProperty name="aspectScore" property="scoreSet"/-->
-<!--%=scores%-->
+
 <jsp:useBean id="reviewDetail" class="aspect.bean.ProductReviewSB" scope="request"/>
 <jsp:setProperty name="reviewDetail" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="reviewDetail" property="recommSet" value="<%=myR%>"/>
+
 <%
-    Map<String, Map<String, Map<String, String>>> productReviewMap = new HashMap();
-    productReviewMap = reviewDetail.retrieveProductReview();
+    Map<String, Map<String, Map<String, String>>> productReviewMap = new HashMap(); //declares and instantiate a Map object productReviewMap
+    productReviewMap = reviewDetail.retrieveProductReview();    //initialise the Map object productReviewMap
 %>
+
 <%
-    String rating = "";
-    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
+    String rating = ""; //declaration and initialization
+    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0; //declaration and initialization
 %>
+
 <%if (productReviewMap.containsKey(s)) {%>
-<%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
-    Set keyset = productReviews.keySet();
+<%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);// returns a map of the product reviews details associated with a productid
+    Set keyset = productReviews.keySet(); //retrieves the set of keys representing a particular author
     Iterator ite = keyset.iterator();
     Iterator it = keyset.iterator();
     int w = 0;
@@ -191,8 +190,8 @@
     }
 
     while (ite.hasNext()) {
-        String key = (String) ite.next();
-        Map<String, String> value = (Map) productReviews.get(key);
+        String key = (String) ite.next();   //sets the authors name
+        Map<String, String> value = (Map) productReviews.get(key);  //returns a authors reviews detail
 
         rating = value.get("rating");
 
@@ -240,8 +239,8 @@
     int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
 %>
 <%if (productReviewMap.containsKey(pdr_cr.getProdid())) {%>
-<%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());
-    Set keyset = productReviews.keySet();
+<%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());   // returns a map of the product reviews details associated with a productid
+    Set keyset = productReviews.keySet();   //retrieves the set of keys representing a particular author
     Iterator ite = keyset.iterator();
     Iterator it = keyset.iterator();
     int w = 0;
@@ -251,8 +250,8 @@
     }
 
     while (ite.hasNext()) {
-        String key = (String) ite.next();
-        Map<String, String> value = (Map) productReviews.get(key);
+        String key = (String) ite.next();   //sets the authors name
+        Map<String, String> value = (Map) productReviews.get(key);  //returns a authors reviews detail
 
         rating2 = value.get("rating");
 
@@ -449,9 +448,9 @@
                 <%}%>
                 <%}%>
 
-                </form>
+                <!--/form-->
 
-                </div-->
+                <!--/div-->
                 <!--/end of aspect selection-->
             </div>
             <%--=e--%>
@@ -835,7 +834,7 @@
                                                             Set keyset = productReviews.keySet();
                                                             Iterator ite = keyset.iterator();
                                                             Iterator it = keyset.iterator();
-                                                            int w = 0;
+                                                            int w = 0, sentinel = 0;
                                                             while (it.hasNext()) {
                                                                 it.next();
                                                                 w++;
@@ -857,6 +856,10 @@
                                                                 comment1 = value.get("comment");
 
                                                                 srr = Double.parseDouble(rating1);
+                                                                sentinel++;
+                                                                if (sentinel == 20) {
+                                                                    break;
+                                                                }
 
 
                                                         %>

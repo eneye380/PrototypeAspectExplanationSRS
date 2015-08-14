@@ -149,8 +149,14 @@
 
 <%
     ArrayList<Productdetail> d = detail.retrieveDetail();
+    Productdetail q = new Productdetail();
+    Productdetail rttr = new Productdetail();
+    q.setProdid("qqqq");
+    rttr.setProdid("bcncn");
+    d.add(q);
+    d.add(rttr);
 %>  
-
+<%=d.size()%>
 <%
     Productdetail pdqp = d.get(0);
 %>
@@ -477,7 +483,7 @@
                                     <%Productdetail pdrr = null;%>
                                     <%if ((d.size() > 1)) {%>
                                     <%--for (int m = 0; m < d.size(); m++) {--%>
-                                    <%for (int m = 0; m < 4; m++) {%>
+                                    <%for (int m = 0; m < d.size(); m++) {%>
                                     <%if (m != 0) {%>
                                     <%pdrr = d.get(m);%>
                                     <!--td-->
@@ -838,7 +844,7 @@
                                                         Set keyset = productReviews.keySet();
                                                         Iterator ite = keyset.iterator();
                                                         Iterator it = keyset.iterator();
-                                                        int w = 0;
+                                                        int w = 0, sentinel = 0;
                                                         while (it.hasNext()) {
                                                             it.next();
                                                             w++;
@@ -860,6 +866,10 @@
                                                             comment1 = value.get("comment");
 
                                                             srr = Double.parseDouble(rating1);
+                                                            sentinel++;
+                                                            if (sentinel == 20) {
+                                                                break;
+                                                            }
 
 
                                                     %>
