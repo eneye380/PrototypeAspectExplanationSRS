@@ -106,7 +106,7 @@ public class ReadFromFilleToDB {
 
     public void readProductSentimentAspectFile(String p, File file) {
 
-        //int i = 1;
+        int i = 1;
         int n = 1;
         //path += "C:\\Users\\eneye380\\Documents\\MSc RGU Project\\New folder\\Product Aspect Sentiment\\Product Aspect Sentiment\\AspectsScores-B00427Z7NM.txt";
         path += p;
@@ -127,10 +127,14 @@ public class ReadFromFilleToDB {
             try (Scanner aspinput = new Scanner(aspects)) {
 
                 while (aspinput.hasNext()) {
-
+                    
+                    if(i==n-1){
+                        sentinel  = true;
+                    }
                     line = aspinput.nextLine();
                     processAspects(line, file);
                     check++;
+                    i++;
                     //break;
                 }
             }
@@ -250,10 +254,10 @@ public class ReadFromFilleToDB {
             //System.out.println(nm +" = "+vl);
         }
 
-        sentinel = true;
+        //sentinel = true;
         if (sentinel == false) {
             msg += ",\n";
-            sentinel = true;
+            //sentinel = true;
         } else {
             msg += "]}\n";
         }
