@@ -9,15 +9,15 @@
 <%--Visitor/explanations/products/products.jsp--%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="aspect.bean.CategorySB"%>
-<%@page import="aspect.bean.ProductSetSB"%>
+<%@page import="aspect.controller_bean.CategorySB"%>
+<%@page import="aspect.controller_bean.ProductSetSB"%>
 <%@page import="aspect.model.Productdetail"%>
-<%@page import="aspect.bean.ProductReviewSB" %>
+<%@page import="aspect.controller_bean.ProductReviewSB" %>
 <%@page import="aspect.model.Productreview"%>
-<%@page import="aspect.bean.ProductSB"%>
+<%@page import="aspect.controller_bean.ProductSB"%>
 <%@page import="aspect.model.Queryproductandrecommendation"%>
 <%@page import="java.util.ArrayList"%>
-<%@page  import="aspect.bean.ProductSBLocal"%>
+<%@page  import="aspect.controller_bean.ProductSBLocal"%>
 <%@include file="../header/headerproductview.jsp" %>
 <!-- Page Content -->
 <script>
@@ -122,7 +122,7 @@
 
 
 
-<jsp:useBean id="recommend" class="aspect.bean.ProductSetSB" scope="request"/>
+<jsp:useBean id="recommend" class="aspect.controller_bean.ProductSetSB" scope="request"/>
 <jsp:setProperty name="recommend" property="queryProduct" param="product" />
 <%
 %>
@@ -143,7 +143,7 @@
     }
 
 %>
-<jsp:useBean id="detail" class="aspect.bean.ProductDetailSB" scope="request"/>
+<jsp:useBean id="detail" class="aspect.controller_bean.ProductDetailSB" scope="request"/>
 <jsp:setProperty name="detail" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="detail" property="recommSet" value="<%=myR%>"/>
 
@@ -156,12 +156,12 @@
     d.add(q);
     d.add(rttr);
 %>  
-<%=d.size()%>
+<%--=d.size()--%>
 <%
     Productdetail pdqp = d.get(0);
 %>
 
-<jsp:useBean id="aspectScore" class="aspect.bean.AspectScoreSB" scope="request"/>
+<jsp:useBean id="aspectScore" class="aspect.controller_bean.AspectScoreSB" scope="request"/>
 <jsp:setProperty name="aspectScore" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="aspectScore" property="recommSet" value="<%=myR%>"/>
 <%--
@@ -174,7 +174,7 @@
 %>
 <!--jsp:getProperty name="aspectScore" property="scoreSet"/-->
 <!--%=scores%-->
-<jsp:useBean id="reviewDetail" class="aspect.bean.ProductReviewSB" scope="request"/>
+<jsp:useBean id="reviewDetail" class="aspect.controller_bean.ProductReviewSB" scope="request"/>
 <jsp:setProperty name="reviewDetail" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="reviewDetail" property="recommSet" value="<%=myR%>"/>
 <%
@@ -358,7 +358,7 @@
 
 
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 well aspect">
-                <jsp:useBean id="category_1" class="aspect.bean.CategorySB" scope="request"/>
+                <jsp:useBean id="category_1" class="aspect.controller_bean.CategorySB" scope="request"/>
                 <%--jsp:getProperty name="category" property="catSet"/--%>
                 <%
                     ArrayList<CategorySB> cc = category_1.getCatSet();

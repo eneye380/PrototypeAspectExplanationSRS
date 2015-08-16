@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import aspect.model.Queryproductandrecommendation;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ import javax.sql.DataSource;
  * @author eneye380
  */
 @Stateless
-public class ProductSB implements ProductSBLocal {
+public class ProductSB implements ProductSBLocal , Serializable{
 
     @Resource(name = "esrs")
     private DataSource esrs;

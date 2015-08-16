@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.controller;
+package aspect.servlet;
 
-import aspect.bean.RecommendationSBLocal;
+import aspect.controller_bean.RecommendationSB;
+import aspect.controller_bean.RecommendationSBLocal;
 import aspect.model.ProductrecommendationPK;
 import aspect.model.Queryproductandrecommendation;
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class Search extends HttpServlet {
             String keyword = request.getParameter("product");
             System.out.println(keyword);
             //list = recommendationSB.retrieveRecommendation(keyword);
+            recommendationSB = new RecommendationSB();
             list1 = recommendationSB.retrieveRecommendation1(keyword);
             JSONObject json = new JSONObject();
             JSONObject recomm = new JSONObject();

@@ -3,6 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 console.log("Testing 1:- am working");
 $(document).ready(function () {
 
@@ -76,22 +81,15 @@ $(document).ready(function () {
 
     var x = document.getElementsByClassName('starsfreq');
     form = x;
-    var y = document.getElementById('js');
-    var object = {};
-
-    object = $("#js").data("object");
-
-
 });
 var stars = [];
 function setRatingArr(a) {
-    console.log('M:setRatingArr()-AC');
     var star5 = "5 star";
     var star4 = "4 star";
     var star3 = "3 star";
     var star2 = "2 star";
     var star1 = "1 star";
-
+    console.log(a);
     stars.push(star5);
     stars.push(star4);
     stars.push(star3);
@@ -99,15 +97,13 @@ function setRatingArr(a) {
     stars.push(star1);
 }
 function getRatingArr() {
-    console.log('M:getRatingArr()-AD');
     var arr = stars;
     //stars = [];
-
+    console.log(arr);
     return arr;
 }
 var starVal = [];
 function setStarRatings(t, r1, r2, r3, r4, r5) {
-    console.log('M:setStarRatings()-AE');
     starVal.push(parseInt(r5));
     starVal.push(parseInt(r4));
     starVal.push(parseInt(r3));
@@ -115,16 +111,14 @@ function setStarRatings(t, r1, r2, r3, r4, r5) {
     starVal.push(parseInt(r1));
 }
 function getStarRatings() {
-    console.log('M:getStarRatings()-AF');
     var arr = starVal;
     starVal = [];
-
+    console.log(arr);
     return arr;
 }
 var graphStat = false;
 function callRatingGraph(p) {
-    console.log('M:callRatingGraph()-AG');
-
+    //alert('hello');
     var graphStat = ratingGraph('sing', p);
     if (graphStat === true) {
         ratingGraph('mult', p);
@@ -133,7 +127,6 @@ function callRatingGraph(p) {
     }
 }
 function ratingGraph(type, p) {
-    console.log('M:ratingGraph()-AH');
 
     setRatingArr();
     //type - false/true
@@ -146,15 +139,15 @@ function ratingGraph(type, p) {
     var ytitle = 'Frequency';
     var stitle = 'Star Rating';
     var obj = readMe();
-
-
+    console.log('obj graph size ' + obj.length);
+    console.log('obj len' + obj.length);
     //alert("cont: "+form[0].prodid.value+'obj: '+obj[0].getProductID());
     for (var y = 0; y < obj.length; y++) {
         var i = obj[y];
         for (var w = 0; w < form.length; w++) {
             if (obj[y].getProductID() === form[w].prodid.value) {
 
-                //console.log("cont: " + form[0].prodid.value + 'obj: ' + obj[0].getProductID());
+                console.log("cont: " + form[0].prodid.value + 'obj: ' + obj[0].getProductID());
 
                 var data1 = [];
                 var ticks1 = [];
@@ -171,12 +164,11 @@ function ratingGraph(type, p) {
                 if (type === 'sing') {
                     id = obj[0].getProductID();
                     if (p === undefined) {
-                        alert('yes');
                         s = id + '_r';
-                    } else if (p === 'star') {
+                    } else if(p === 'star'){
                         id = obj[y].getProductID();
                         s = id + '_r_comp';
-                        var r = 'no_r_' + (y + 1);
+                        var r = 'no_r_'+(y+1);
                         document.getElementById(r).innerHTML = t;
                     }
                     setOptions(s, data1, ticks1, ytitle, stitle);
@@ -189,9 +181,9 @@ function ratingGraph(type, p) {
                     setSeries(data1, y + 1);
 
                     id = obj[0].getProductID();
-
-                    s = id + '_r_mult_rating';
-
+                    
+                        s = id + '_r_mult_rating';
+                    
                     if (y === obj.length - 1) {
                         setOptionsS(s, ticks1, ytitle);
                         myChartS();
@@ -205,7 +197,7 @@ function ratingGraph(type, p) {
 
 }
 function show(s, id) {
-    console.log('M:show()-AI');
+    console.log("hey");
     var g = id + '_mult_sentiment';
     var q = id + '_r';
     var f = id + '_r_mult_rating';
@@ -222,7 +214,6 @@ function show(s, id) {
 
 }
 function hide(h) {
-    console.log('M:hide()-AJ');
     //alert("hey");
     //h.display = "none";
 
@@ -233,7 +224,6 @@ function hide(h) {
 var h = 0;
 var queryP = '';
 function showMult(m, n) {
-    console.log('M:showMult()-AK');
     var id, s;
     var c = document.getElementsByClassName('product_graph_d');
     m.style.display = 'none';
@@ -275,18 +265,16 @@ function showMult(m, n) {
 }
 //product-recommendation-detail getProductID for desc
 function showDes(m) {
-    console.log('M:showDes()-AL');
     var id = m.name.valueOf();
     displayDes(id);
 }
 //product-recommendation-detail display desProductID  
 function displayDes(id) {
-    console.log('M:displayDes()-AM');
     var s = 'i_';
     s += id;
 
     var c = document.getElementsByClassName('product_desc_d');
-
+    console.log(c[9]);
     for (var b = 0; b < c.length; b++) {
         c[b].style.display = 'none';
     }
@@ -297,14 +285,13 @@ function displayDes(id) {
 }
 
 $(document).ready(function () {
-    
+
     $('span.stars').stars();
-    console.log('M:onready()-AN');
+
 
 });
 
 $.fn.stars = function () {
-    console.log('M:stars()-AO');
     return $(this).each(function () {
         // Get the value
         var val = parseFloat($(this).html());
@@ -323,7 +310,6 @@ var asarr = [];
 
 var iii = 0;
 function aspectSelect(asp, s) {
-    console.log('M:aspectSelect()-AP');
     var asarrele = [];
     tempobj = asp;
     asarrele.push(tempobj);
@@ -342,7 +328,7 @@ function aspectSelect(asp, s) {
             iii++;
         } else {
             var c = document.getElementsByClassName('aspect_cb');
-
+            console.log(c[9]);
             for (var b = 0; b < c.length; b++) {
                 c[b].disabled = true;
             }
@@ -352,7 +338,6 @@ function aspectSelect(asp, s) {
 }
 
 function clearSelection(a) {
-    console.log('M:clearSelection()-AQ');
     var c = document.getElementsByClassName('aspect_cb');
 
     for (var b = 0; b < c.length; b++) {
@@ -367,62 +352,64 @@ function clearSelection(a) {
         writeMe("1", null);
     }
 }
-
-var status = false;
-function retrievePRJSONDetail(queryProduct, opt, page, rate) {    
-    console.log('M:retrievePRJSONDetail()-R');
-    var ext = "search";
-    var url = "/Prototype_ESRS-war/" + ext;
+var grStatus = false;
+var rtSt = false;
+function retrievePRJSONDetail(queryProduct, opt, page, rate) {
+    //alert('hello');
+    console.log("Testing 2: retrievePRJSONDetail() working");
+    console.log("Ajax call: Function Start");
+    var ext = "recommendation";
+    var url = "/TestESRS-war/" + ext;
+    console.log("URL: " + url);
     var type = "GET";
-    var data = "product=" + queryProduct;      
+    var data = "product=" + queryProduct;
+    console.log("Data: " + data);
+    var status = false;
     var dtype = 'json';
-    console.log('url:- '+url);
+
     $.ajax({
         type: type,
         url: url,
         data: data,
         datatype: dtype,
         success: function (msg) {
-            console.log("Ajax Call Successful");
-            
+            console.log("Ajax call: start");
             queryP = queryProduct;
             setProductJSONDetails(msg);
             setQRArrayOfProductList(msg);
             setQRJSONOfProductDetails(msg, queryProduct);
 
+            //console.log(msg);
+            //console.log("Ajax call: stop");
+
+
             if (page === 'detail') {
-                console.log('R1');
                 status = writeMe(opt, null);
-                console.log('R2');
+                //grStatus = callRatingGraph()();
+                //status = writeMe(opt, null);
+
                 if (status === true) {
-                    console.log('R3');
                     grStatus = callRatingGraph();
                     //status = writeMe(opt, null);
-                    console.log('R4');
                 }
             }
 
             if (page === 'compare') {
-                console.log('R5');
+
                 status = writeMe(opt, null);
-                console.log('R6');
+
                 console.log('status: ' + status);
                 if (status === true) {
-                    console.log('R7');
                     grStatus = showGraphOnCompare(page);
-                    console.log('R8');
                     if (grStatus === true) {
-                        console.log('R9');
                         if (rate === 'star') {
-                            console.log('R10');
                             callRatingGraph(rate);
-                            console.log('R11');
                         }
                     }
                 }
 
             } else if (page === undefined) {
-                console.log('R12');
+
                 writeMe(opt, null);
             }
 
@@ -438,11 +425,9 @@ function retrievePRJSONDetail(queryProduct, opt, page, rate) {
 }
 var completeDetail = null;
 function setProductJSONDetails(msg) {
-    console.log('M:setProductJSONDetails()-A');
     completeDetail = msg;
 }
 function getProductJSONDetails() {
-    console.log('M:getProductJSONDetails()-B');
     return completeDetail;
 }
 function displayScores() {
@@ -451,7 +436,6 @@ function displayScores() {
 //important
 var p = [];
 function readMe() {
-    console.log('M:readMe()-C');
     var array = getQRArrayOfProductList();
     var details = getQRJSONOfProductDetails();
     for (var i = 0; i < array.length; i++) {
@@ -467,7 +451,6 @@ function readMe() {
 }
 var aspect = [];
 function setAspectArr(a) {
-     console.log('M:setAspectArr()-D');
     var aspect1 = "camera";
     var aspect2 = "lens";
     var aspect3 = "quality";
@@ -484,21 +467,19 @@ function setAspectArr(a) {
     aspect.push(aspect5);
 }
 function getAspectArr() {
-     console.log('M:getAspectArr()-E');
     var arr = aspect;
     //aspect = [];
-
+    console.log(arr);
     return arr;
 }
 function showGraphOnCompare(page) {
-    console.log('M:showGraphOnCompare()-F');
+    //alert('nnoo');
     writeMe("2", null, page);
     return true;
 }
 var tt = " ";
 setAspectArr();
 function writeMe(n, as, dID) {
-    console.log('M:writeMe()-G');
     var ytitle = 'Score';
     var stitle = 'Aspect';
     console.log(dID);
@@ -507,27 +488,38 @@ function writeMe(n, as, dID) {
     } else {
         var aspectArr = getAspectArr();
     }
-
-
+    console.log("len: " + aspectArr.length);
+    console.log(aspectArr);
+    var xaxis;
+    var datum;
 
     var obj = readMe();
-    alert('size' + obj.length);
+    //alert(obj.length);
     for (var y = 0; y < obj.length; y++) {
 
         var i = obj[y];
-
-
-
+        console.log(y);
+        console.log(i.productID);
+        var data = [];
+        var ticks = [];
         var data1 = [];
         var ticks1 = [];
 
         var s = sum(i, aspectArr);
-
+        console.log(s);
         for (var k = 0; k < aspectArr.length; k++) {
-
             var q = 0.0;
             q = value(i.getJsonDetail().aspects[aspectArr[k]].score, s);
             var v = parseFloat(q);
+            xaxis = [];
+            datum = [];
+            xaxis.push(k);
+            xaxis.push(aspectArr[k]);
+            datum.push(k);
+            datum.push(i.jsonDetail.aspects[aspectArr[k]].score);
+
+            ticks.push(xaxis);
+            data.push(datum);
 
             var ll = i.getJsonDetail().aspects[aspectArr[k]].score;
             var l = parseFloat(ll);
@@ -536,94 +528,84 @@ function writeMe(n, as, dID) {
             data1.push(l);
             //nomilized
             //data1.push(v);
-
+            console.log(i.getJsonDetail());
+            console.log('aspect name: ' + aspectArr[k] + ' - nomilized value: ' + v);
+            console.log('aspect name: ' + aspectArr[k] + ' - non-nomilized value: ' + l);
 
         }
         if (n === "1") {
-
             setSeries(data1, y + 1);
             var id;
             if (dID === undefined) {
-
                 id = obj[0].getProductID();
             } else {
-
                 id = dID;
             }
             if (y === obj.length - 1) {
-
                 setOptionsS(id, ticks1, ytitle);
                 myChartS();
-
                 return true;
             }
         } else if (n === "2") {
-
             if (dID === undefined) {
-
                 setOptions(i.getProductID(), data1, ticks1, ytitle, stitle);
             } else if (dID === 'compare') {
-
                 var id = i.getProductID() + '_comp';
                 //alert(id);
                 setOptions(id, data1, ticks1, ytitle, stitle);
 
             } else {
-
                 setOptions(dID, data1, ticks1, ytitle, stitle);
             }
 
-
             myChart();
-
             //exits this loop
             if (y === obj.length - 1) {
-
                 return true;
             }
         }
 
-
+        //var createPlot = "c";
+        //createPlot += y;
+        //var m = new CreatePlot(data, ticks, i.productID, createPlot);
+        //var p = "#";
+        //p += i.productID;
+        //loadChart(p, data, ticks);
+        //setOptions(i.productID,data, ticks);
+        //setOptions(i.getProductID(), data1, ticks1);
+        //myChart();
     }
 
 }
 
 var qandrPList = [];
 function setQRArrayOfProductList(msg) {
-    console.log('M:setQRArrayOfProductList()-H');
     qandrPList = msg.productlist.arrayrecomm;
 }
 function getQRArrayOfProductList() {
-    console.log('M:getQRArrayOfProductList()-I');
     return qandrPList;
 }
 var qandrPDetail = {};
 function setQRJSONOfProductDetails(msg, productid) {
-    console.log('M:setQRJSONOfProductDetails()-J');
     qandrPDetail = msg.productdetails;
     //generateScatterGrapgh(productid);
 }
 function getQRJSONOfProductDetails() {
-    console.log('M:getQRJSONOfProductDetails()-K');
     return qandrPDetail;
 }
 
 var ProductDetail = function (productid, detail) {
-    console.log('C:ProductDetail()-L');
     this.productID = productid;
     this.jsonDetail = detail;
     console.log("ProductDetail Object Created");
 };
 ProductDetail.prototype.displayProductID = function () {
-    console.log('CM:displayProductID()-M');
     console.log("Object representing " + this.productID + " has been created...");
 };
 ProductDetail.prototype.getProductID = function () {
-    console.log('CM:getProductID()-N');
     return this.productID;
 };
 ProductDetail.prototype.getJsonDetail = function () {
-    console.log('CM:getJsonDetail()-O');
     return this.jsonDetail;
 };
 
@@ -635,14 +617,152 @@ var n = function (name) {
     console.log(name);
 };
 
+var CreatePlot = function (data1, ticks1, prodid1, chart) {
+    //var data = [[0, 81], [1, 19]];
+    var data = [];
+    var ticks = [];
+    var prodid = "";
+    var label = "Aspects";
+    data = data1;
+    ticks = ticks1;
+    prodid = prodid1;
+    //var data2 = [[0, 85], [1, 15]];
+    //var data3 = [[0, 82], [1, 18]];
+    //var data4 = [[0, 100], [1, 0]];
+    var dataset = [{label: label, data: data, color: "#5482FF"}];
+    //var dataset2 = [{label: "Aspects", data: data2, color: "#5482FF"}];
+    //var dataset3 = [{label: "Aspects", data: data3, color: "#5482FF"}];
+    //var dataset4 = [{label: "Aspects", data: data4, color: "#5482FF"}];
 
+    //var ticks = [[0, "camera"], [1, "picture"]];
+
+    var options = {
+        series: {
+            bars: {
+                show: true
+            }
+        },
+        bars: {
+            align: "center",
+            barWidth: 0.5
+        },
+        xaxis: {
+            axisLabel: "Aspect",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial',
+            axisLabelPadding: 10,
+            ticks: ticks
+        },
+        yaxis: {
+            axisLabel: "S-score",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 12,
+            axisLabelFontFamily: 'Verdana, Arial',
+            axisLabelPadding: 3,
+            minTickSize: 0.5,
+            tickFormatter: function (v, axis) {
+                return v + "";
+            }
+        },
+        legend: {
+            noColumns: 0,
+            labelBoxBorderColor: "#000000",
+            position: "nw"
+        },
+        grid: {
+            hoverable: true,
+            borderWidth: 2,
+            backgroundColor: {colors: ["#ffffff", "#EDF5FF"]}
+        }
+    };
+
+    $(document).ready(function () {
+
+    });
+
+    function start() {
+        console.log("kknnkk");
+        var p = "#";
+        p += prodid;
+
+        console.log("y:" + chart);
+
+        var Dis = function (placeholder, dataset) {
+            this.name = "Abdulmumin Eneye Abdulkarim";
+            this.q = placeholder;
+            this.datase = dataset;
+        };
+        Dis.prototype.sayHello = function () {
+            console.log("Hello, I'm " + this.name + " " + this.q + " " + this.datase);
+            chart = $.plot($(this.q), this.datase, options);
+            $(this.q).UseTooltip();
+
+        };
+        var x = new Dis(p, dataset);
+        x.sayHello();
+
+    }
+    ;
+
+    function gd(year, month, day) {
+        return new Date(year, month, day).getTime();
+    }
+    ;
+
+    var previousPoint = null, previousLabel = null;
+
+    $.fn.UseTooltip = function () {
+        $(this).bind("plothover", function (event, pos, item) {
+            if (item) {
+                if ((previousLabel !== item.series.label) || (previousPoint !== item.dataIndex)) {
+                    previousPoint = item.dataIndex;
+                    previousLabel = item.series.label;
+                    $("#tooltip").remove();
+
+                    var x = item.datapoint[0];
+                    var y = item.datapoint[1];
+
+                    var color = item.series.color;
+
+                    //console.log(item.series.xaxis.ticks[x].label);                
+
+                    showTooltip(item.pageX,
+                            item.pageY,
+                            color,
+                            "<strong>" + item.series.label + "</strong><br>" + item.series.xaxis.ticks[x].label + " : <strong>" + y + "</strong> ");
+                }
+            } else {
+                $("#tooltip").remove();
+                previousPoint = null;
+            }
+        });
+    };
+
+    function showTooltip(x, y, color, contents) {
+        $('<div id="tooltip">' + contents + '</div>').css({
+            position: 'absolute',
+            display: 'none',
+            top: y - 40,
+            left: x - 120,
+            border: '2px solid ' + color,
+            padding: '3px',
+            'font-size': '9px',
+            'border-radius': '5px',
+            'background-color': '#fff',
+            'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+            opacity: 0.9
+        }).appendTo("body").fadeIn(200);
+    }
+    ;
+    start();
+};
 $(document).ready(function () {
 
 
 });
 
 function loadChart(o, data, ticks) {
-     console.log('M:loadChart()-P');
     $(o).highcharts({
         chart: {
             type: 'column'
@@ -667,7 +787,6 @@ function loadChart(o, data, ticks) {
 ;
 var series = [];
 function setSeries(data, p) {
-    console.log('M:setSeries()-Q');
     var input = {};
     input = {
         name: p,
@@ -676,7 +795,6 @@ function setSeries(data, p) {
     series.push(input);
 }
 function getSeries() {
-    console.log('M:getSeries()-R');
     //newly added
     var s = series;
     series = [];
@@ -684,7 +802,6 @@ function getSeries() {
 }
 var options;
 function setOptions(placeholder, data, ticks, ytitle, stitle) {
-    console.log('M:setOptions()-S');
     options = null;
     options = {
         chart: {
@@ -712,18 +829,14 @@ function setOptions(placeholder, data, ticks, ytitle, stitle) {
 }
 //
 function getOptions() {
-    console.log('M:getOptions()-T');
     return options;
 }
 //
 function myChart() {
-    console.log('M:myChart()-U');
     var chart = null;
     chart = new Highcharts.Chart(getOptions());
-    return true;
 }
 function setOptionsS(placeholder, ticks, ytitle) {
-    console.log('M:setOptionsS()-V');
     options = null;
     options = {
         chart: {
@@ -745,36 +858,31 @@ function setOptionsS(placeholder, ticks, ytitle) {
     };
 }
 function getOptionsS() {
-    console.log('M:getOptionsS()-W');
     return options;
 }
 function myChartS() {
-    console.log('M:myChartS()-X');
     var chart = null;
     chart = new Highcharts.Chart(getOptionsS());
-    return true;
 }
 function sum(i, aspect) {
-     console.log('M:sum()-Y');
 
     var sum = 0;
     for (var h = 0; h < aspect.length; h++) {
         var score = i.getJsonDetail().aspects[aspect[h]].score;
         var absScore = Math.abs(score);
-
+        console.log(absScore);
         sum += absScore;
     }
     //var s = sum.toFixed(2);
     return sum;
 }
 function value(n, sum) {
-    console.log('M:value()-Z');
     var value = 0.0;
     var v = 0.0;
     var q = 0.0;
     value = (n / sum);
     v = value.toFixed(2);
-    //q = value.toPrecision(2);
+    q = value.toPrecision(2);
     //console.log(v);
     return v;
 
@@ -782,13 +890,16 @@ function value(n, sum) {
 var ob = {};
 var ar = [];
 
-function generateScatterGraph(productid, scatter) {
-    console.log('M:generateScatterGraph()-AA');
+function generateScattergraph() {
+    var obj = readMe();
+}
+function generateScatterGrapgh(productid, scatter) {
+    console.log("qpq: " + productid);
     //var obj = readMe();
     var details = getQRJSONOfProductDetails();
-
+    console.log("qpq: " + details);
     ob = details[productid];
-
+    console.log(details);
     ar = ob.aspectList;
     var a = [];
     var b;
@@ -797,7 +908,9 @@ function generateScatterGraph(productid, scatter) {
     for (var i = 0; i < ar.length; i++) {
         b = {};
         c = [];
-
+        console.log(ar[i]);
+        console.log(ob.aspects[ar[i]].score);
+        console.log(ob.aspects[ar[i]].freq);
         var v = parseFloat(ob.aspects[ar[i]].score);
         var w = parseInt(ob.aspects[ar[i]].freq);
         //console.log(v);
@@ -816,11 +929,10 @@ function generateScatterGraph(productid, scatter) {
     var p = "#";
     p += productid + scatter;
     scatterChart(d, p);
-
+    console.log(d);
 }
 
 function scatterChart(data, p) {
-    console.log('M:scatterChart()-AB');
     $(p).highcharts({
         chart: {
             type: 'scatter',
@@ -887,4 +999,7 @@ function scatterChart(data, p) {
             }]
     });
 }
+
+
+
 

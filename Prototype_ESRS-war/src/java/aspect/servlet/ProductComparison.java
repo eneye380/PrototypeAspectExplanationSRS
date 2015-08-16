@@ -3,21 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.controller;
+package aspect.servlet;
 
-import aspect.bean.ProductSBLocal;
+import aspect.controller_bean.ProductSBLocal;
+import aspect.controller_bean.RecommendationSB;
+import aspect.controller_bean.RecommendationSBLocal;
+import aspect.model.ProductrecommendationPK;
 import aspect.model.Queryproductandrecommendation;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,10 +30,13 @@ import org.json.JSONObject;
  *
  * @author eneye380
  */
-public class ProductSearch extends HttpServlet {
+public class ProductComparison extends HttpServlet {
 
     @EJB
-    private ProductSBLocal productSB;
+    private RecommendationSBLocal recommendationSB;
+    private List<String> productForComparison;
+    private ArrayList<Queryproductandrecommendation> list;
+    private ArrayList<ProductrecommendationPK> list1;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,33 +49,64 @@ public class ProductSearch extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("121");
-        response.setContentType("text/html;charset=UTF-8");
+        //response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
+        //response.setCharacterEncoding("UTF-8");
+        System.out.println("787");
+
         //response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String keyword = request.getParameter("search");
-            ArrayList<Queryproductandrecommendation> list = productSB.findProduct(keyword);
-            System.out.println("Product Search: " + keyword);
+            String keyword1 = request.getParameter("product1");
+            String keyword2 = request.getParameter("product2");
+            String keyword3 = request.getParameter("product3");
+            System.out.println(keyword1);
+            System.out.println(keyword2);
+            System.out.println(keyword3);
+           
             JSONObject json = new JSONObject();
-            try {
-                json.put("hello", "hi");
-            } catch (JSONException ex) {
-                out.println("JSON Error: " + ex);
-            }
-            out.println("KEY: " + keyword);
-            out.println("ArraySize: " + list.size());
-            out.println(json.toString());
+            JSONObject recomm = new JSONObject();
+            JSONObject jsonrecomm = new JSONObject();
+            JSONObject jsonDetailComplete = new JSONObject();
+            List<String> arrayrecomm = new ArrayList<>();
+            
+            productForComparison = new ArrayList<>();
+            if (keyword1!=null) {                
+                productForComparison.add(keyword1);
+            } 
+            if (keyword2!=null) {                
+                productForComparison.add(keyword2);
+            } 
+            if (keyword3!=null) {                
+                productForComparison.add(keyword3);
+            } 
+                
+            JSONObject myJson = recommendationSB.convertToJSON(productForComparison);
 
-            for (int i = 0; i < list.size(); i++) {
-                Queryproductandrecommendation pr = list.get(i);
-                out.println("Product Name: " + pr.getQueryProduct() + "<br>");
-                out.println("Name: " + pr.getName() + "<br>");
-                out.println("Recomm1: " + pr.getRecommProduct1() + "<br>");
-                out.println("Recomm2: " + pr.getRecommProduct2() + "<br>");
-                out.println("Recomm3: " + pr.getRecommProduct3() + "<br>");
-                out.println("<br>");
+            try {
+                int i = 1;
+                
+                for (int j = 0; j < productForComparison.size(); j++) {
+                    String r = "s";
+                    r += i;                    
+                    jsonrecomm.put(r,productForComparison.get(j));
+                    arrayrecomm.add(j,productForComparison.get(j));
+                    i++;
+                    System.out.println("You're welcome ");
+                }
+                JSONArray jsonarray = new JSONArray(arrayrecomm);
+                recomm.put("jsonrecomm",jsonrecomm);
+                recomm.put("arrayrecomm",jsonarray);
+               
+                jsonDetailComplete.put("productlist", recomm);
+                jsonDetailComplete.put("productdetails", myJson);
+                out.println(jsonDetailComplete);
+                //out.println("1erer1");
+            } catch (JSONException ex) {
+                System.out.println("Error: " + ex);
             }
+
+           
         } finally {
             out.close();
         }

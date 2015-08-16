@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import aspect.db_connection.DatabaseConnection;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import javax.ejb.Stateless;
  * @author eneye380
  */
 @Stateless
-public class CategorySB implements CategorySBLocal {
+public class CategorySB implements CategorySBLocal, Serializable {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import javax.ejb.Local;
 
@@ -12,6 +12,6 @@ import javax.ejb.Local;
  * @author eneye380
  */
 @Local
-public interface ProductDetailSBLocal {
+public interface AspectScoreSBLocal {
     
 }

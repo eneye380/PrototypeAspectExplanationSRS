@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.controller;
+package aspect.servlet;
 
-import aspect.bean.RecommendationSBLocal;
+import aspect.controller_bean.RecommendationSBLocal;
 import aspect.model.Productrecommendation;
 import aspect.model.ProductrecommendationPK;
 import aspect.model.Queryproductandrecommendation;
@@ -63,56 +63,46 @@ public class Recommendation extends HttpServlet {
             JSONObject jsonrecomm = new JSONObject();
             JSONObject jsonDetailComplete = new JSONObject();
             List<String> arrayrecomm = new ArrayList<>();
-            ProductrecommendationPK m =null;
+            ProductrecommendationPK m = null;
             if (list1.size() >= 1) {
                 querywithrecommendedProduct = new ArrayList<>();
                 //Queryproductandrecommendation q = list.get(0);
-                 m = list1.get(0);
+                m = list1.get(0);
                 querywithrecommendedProduct.add(0, m.getQueryproduct());
                 for (int j = 0; j < list1.size(); j++) {
                     ProductrecommendationPK p = list1.get(j);
                     querywithrecommendedProduct.add(j + 1, p.getRecommendation());
                 }
             } else {
-                querywithrecommendedProduct = new ArrayList<>();                
+                querywithrecommendedProduct = new ArrayList<>();
                 querywithrecommendedProduct.add(0, keyword);
                 //out.println("Unable to carry out request");
             }
-                //String name = q.getName();
-            //String queryProduct = q.getQueryProduct();
-            //String recommendedProduct1 = q.getRecommProduct1();
-            //String recommendedProduct2 = q.getRecommProduct2();
-            //String recommendedProduct3 = q.getRecommProduct3();
-            //querywithrecommendedProduct.add(0, queryProduct);
-            //querywithrecommendedProduct.add(1, recommendedProduct1);
-            //querywithrecommendedProduct.add(2, recommendedProduct2);
-            //querywithrecommendedProduct.add(3, recommendedProduct3);
+          
             JSONObject myJson = recommendationSB.convertToJSON(querywithrecommendedProduct);
 
             try {
                 int i = 1;
-                if(m!=null){
-                jsonrecomm.put("q", m.getQueryproduct());
-                arrayrecomm.add(0,m.getQueryproduct());
-                }else{
-                jsonrecomm.put("q", keyword);
-                arrayrecomm.add(0,keyword);
+                if (m != null) {
+                    jsonrecomm.put("q", m.getQueryproduct());
+                    arrayrecomm.add(0, m.getQueryproduct());
+                } else {
+                    jsonrecomm.put("q", keyword);
+                    arrayrecomm.add(0, keyword);
                 }
                 for (int j = 0; j < list1.size(); j++) {
                     String r = "s";
                     r += i;
                     ProductrecommendationPK p = list1.get(j);
                     jsonrecomm.put(r, p.getRecommendation());
-                    arrayrecomm.add(j+1,p.getRecommendation());
+                    arrayrecomm.add(j + 1, p.getRecommendation());
                     i++;
                     System.out.println("You're welcome ");
                 }
                 JSONArray jsonarray = new JSONArray(arrayrecomm);
-                recomm.put("jsonrecomm",jsonrecomm);
-                recomm.put("arrayrecomm",jsonarray);
-                    //jsonrecomm.put("r1", recommendedProduct1);
-                //jsonrecomm.put("r2", recommendedProduct1);
-                //jsonrecomm.put("r3", recommendedProduct1);
+                recomm.put("jsonrecomm", jsonrecomm);
+                recomm.put("arrayrecomm", jsonarray);
+                
                 jsonDetailComplete.put("productlist", recomm);
                 jsonDetailComplete.put("productdetails", myJson);
                 out.println(jsonDetailComplete);
@@ -120,44 +110,6 @@ public class Recommendation extends HttpServlet {
             } catch (JSONException ex) {
                 System.out.println("Error: " + ex);
             }
-
-            /**
-             * if (list.size() == 1) { querywithrecommendedProduct = new
-             * ArrayList<>(); Queryproductandrecommendation q = list.get(0);
-             *
-             * String name = q.getName(); String queryProduct =
-             * q.getQueryProduct(); String recommendedProduct1 =
-             * q.getRecommProduct1(); String recommendedProduct2 =
-             * q.getRecommProduct2(); String recommendedProduct3 =
-             * q.getRecommProduct3(); querywithrecommendedProduct.add(0,
-             * queryProduct); querywithrecommendedProduct.add(1,
-             * recommendedProduct1); querywithrecommendedProduct.add(2,
-             * recommendedProduct2); querywithrecommendedProduct.add(3,
-             * recommendedProduct3); JSONObject myJson =
-             * recommendationSB.convertToJSON(querywithrecommendedProduct);
-             *
-             * try { jsonrecomm.put("q",queryProduct); jsonrecomm.put("r1",
-             * recommendedProduct1); jsonrecomm.put("r2", recommendedProduct1);
-             * jsonrecomm.put("r3", recommendedProduct1);
-             * jsonDetailComplete.put("productlist", jsonrecomm);
-             * jsonDetailComplete.put("productdetails",myJson);
-             * out.println(jsonDetailComplete); //out.println("1erer1"); } catch
-             * (JSONException ex) { System.out.println("Error: "+ex); }
-             *
-             *
-             * } else { out.println("Unable to carry out request"); } if
-             * (list.size() > 1) { for (int j = 0; j < list.size(); j++) {
-             * Queryproductandrecommendation q = list.get(j); try {
-             * json.put("name", q.getName()); json.put("query",
-             * q.getQueryProduct()); json.put("r1", q.getRecommProduct1());
-             * json.put("r2", q.getRecommProduct2()); json.put("r3",
-             * q.getRecommProduct3()); out.println(json);
-             *
-             * } catch (JSONException ex) {
-             *
-             * }
-             * //Json. System.out.println(q.getName()); } }
-             */
         } finally {
             out.close();
         }

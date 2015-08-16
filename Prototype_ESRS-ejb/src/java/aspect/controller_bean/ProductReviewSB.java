@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import aspect.db_connection.DatabaseConnection;
 import aspect.model.Productreview;
 import aspect.model.ProductreviewPK;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

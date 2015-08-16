@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import aspect.db_connection.DatabaseConnection;
 import java.io.Serializable;
@@ -61,7 +61,7 @@ public class CategoryChoiceSB implements CategoryChoiceSBLocal, Serializable {
                 this.setSet(a);
                 i++;
                 if (i == 12) {
-                    break;
+                    //break;
                 }
 
             }

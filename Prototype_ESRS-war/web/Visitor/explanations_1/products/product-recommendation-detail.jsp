@@ -3,19 +3,21 @@
     Created on : Jul 16, 2015, 1:30:21 PM
     Author     : eneye380
 --%>
-
+<%@taglib prefix="json" uri="http://www.atg.com/taglibs/json"%>
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Iterator"%>
 <%--Visitor/explanations/products/product-recommendation-detail.jsp--%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="aspect.bean.CategorySB"%>
-<%@page import="aspect.bean.ProductSetSB"%>
+<%@page import="aspect.controller_bean.CategorySB"%>
+<%@page import="aspect.controller_bean.ProductSetSB"%>
+<%@page import="aspect.controller_bean.AspectScoreJSONSB"%>
 <%@page import="aspect.model.Productdetail"%>
-<%@page import="aspect.bean.ProductSB"%>
+<%@page import="aspect.controller_bean.ProductSB"%>
 <%@page import="aspect.model.Queryproductandrecommendation"%>
 <%@page import="java.util.ArrayList"%>
-<%@page  import="aspect.bean.ProductSBLocal"%>
+<%@page  import="aspect.controller_bean.ProductSBLocal"%>
 <%@include file="../header/headerproductview.jsp" %>
 <!-- Page Content -->
 <script>
@@ -110,7 +112,7 @@
 
 
 
-<jsp:useBean id="recommend" class="aspect.bean.ProductSetSB" scope="request"/>
+<jsp:useBean id="recommend" class="aspect.controller_bean.ProductSetSB" scope="request"/>
 <jsp:setProperty name="recommend" property="queryProduct" param="product" />
 <%
 %>
@@ -131,7 +133,7 @@
     }
 
 %>
-<jsp:useBean id="detail" class="aspect.bean.ProductDetailSB" scope="request"/>
+<jsp:useBean id="detail" class="aspect.controller_bean.ProductDetailSB" scope="request"/>
 <jsp:setProperty name="detail" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="detail" property="recommSet" value="<%=myR%>"/>
 
@@ -143,7 +145,7 @@
     Productdetail pdqp = d.get(0);
 %>
 
-<jsp:useBean id="aspectScore" class="aspect.bean.AspectScoreSB" scope="request"/>
+<jsp:useBean id="aspectScore" class="aspect.controller_bean.AspectScoreSB" scope="request"/>
 <jsp:setProperty name="aspectScore" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="aspectScore" property="recommSet" value="<%=myR%>"/>
 <%--
@@ -156,7 +158,20 @@
 %>
 <!--jsp:getProperty name="aspectScore" property="scoreSet"/-->
 <!--%=scores%-->
-<jsp:useBean id="reviewDetail" class="aspect.bean.ProductReviewSB" scope="request"/>
+
+<!--jsp:useBean id="aspectScoreJSON" class="aspect.controller_bean.AspectScoreJSONSB" scope="request"/-->
+<!--jsp:setProperty name="aspectScoreJSON" property="queryProdID" value="<%=s%>"/-->
+
+<%
+
+    JSONObject aspectJSONDetail = aspectScore.fetchAspectJSON();
+
+%>
+<!--em><%=aspectJSONDetail%></em-->
+
+
+
+<jsp:useBean id="reviewDetail" class="aspect.controller_bean.ProductReviewSB" scope="request"/>
 <jsp:setProperty name="reviewDetail" property="prodid" value="<%=s%>"/>
 <jsp:setProperty name="reviewDetail" property="recommSet" value="<%=myR%>"/>
 <%
@@ -164,7 +179,7 @@
     productReviewMap = reviewDetail.retrieveProductReview();
 %>
 <!--finding star rating distributions-->
-<%    
+<%
     String rating1 = "";
     int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
 %>
@@ -178,7 +193,7 @@
         it.next();
         w++;
     }
-    
+
     while (ite.hasNext()) {
         String key = (String) ite.next();
         Map<String, String> value = (Map) productReviews.get(key);
@@ -206,8 +221,14 @@
 <%}%>
 <%}%>
 
-<body id="body" onload="retrievePRJSONDetail('<%=s%>', '2','detail')">
+<body id="body" onload="retrievePRJSONDetail('<%=s%>', '2', 'detail')">
+<!--JSON OBJECT>
 
+<form enctype="application/json">
+    <input type="hidden"  id="json" value='<%=aspectJSONDetail%>'/>
+</form>
+<div data-object="<%=aspectJSONDetail%> " id='js'/>
+<!--/-->
     <!--saving star rating value-->
     <form  class="starsfreq">
         <input type="hidden" value="<%=s%>" name="prodid">
@@ -227,7 +248,7 @@
     <%if (m != 0) {%>
     <%pdr_5 = d.get(m);%>
 
-    <%        
+    <%
         String rating2 = "";
         int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
     %>
@@ -265,11 +286,10 @@
                 freq11++;
             }
 
-
     %>
-    
+
     <%}%>
-    
+
     <form  class="starsfreq">
         <input type="hidden" value="<%=pdr_5.getProdid()%>" name="prodid">
         <input type="hidden" value="<%=freq51%>" name="star5">
@@ -279,7 +299,11 @@
         <input type="hidden" value="<%=freq11%>" name="star1">
         <input type="hidden" value="<%=totalratings1%>">
     </form>
-    <%freq51=0;freq41=0;freq31=0;freq21=0;freq11=0;%>
+    <%freq51 = 0;
+        freq41 = 0;
+        freq31 = 0;
+        freq21 = 0;
+        freq11 = 0;%>
     <%}%> 
 
     <%}%>
@@ -335,7 +359,7 @@
 
 
             <div class="col-md-2 col-sm-2 col-xs-12 well aspect">
-                <jsp:useBean id="category_1" class="aspect.bean.CategorySB" scope="request"/>
+                <jsp:useBean id="category_1" class="aspect.controller_bean.CategorySB" scope="request"/>
                 <%--jsp:getProperty name="category" property="catSet"/--%>
                 <%
                     ArrayList<CategorySB> cc = category_1.getCatSet();
@@ -447,14 +471,14 @@
                 <div class="thumbnail">
                     <div class="well">
                         <!--name container of query product-->
-                        
+
                         <!--/name-->
                         <div class="row thumbnail aspect">
                             <div class="row">
-                            <div class="col-lg-12 text-center">
-                                <h5 style="color:sienna"><em><%=pdqp.getName()%></em></h5>
+                                <div class="col-lg-12 text-center">
+                                    <h5 style="color:sienna"><em><%=pdqp.getName()%></em></h5>
+                                </div>
                             </div>
-                        </div>
                             <div class="col-md-8 col-sm-8 col-xs-8">                                 
                                 <div class="well" style="height:470px;overflow:scroll">
                                     <p style="color:rgb(10,50,50)"><strong>QUERY PRODUCT</strong></p>

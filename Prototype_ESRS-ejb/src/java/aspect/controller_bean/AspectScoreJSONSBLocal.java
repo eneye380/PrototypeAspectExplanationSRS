@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import javax.ejb.Local;
+import org.json.JSONObject;
 
 /**
  *
  * @author eneye380
  */
 @Local
-public interface CategorySBLocal {
-    
+public interface AspectScoreJSONSBLocal {
+    JSONObject fetchAspectJSON(); 
 }

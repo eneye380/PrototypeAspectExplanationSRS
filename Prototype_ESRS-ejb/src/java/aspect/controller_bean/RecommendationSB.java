@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
+import aspect.db_connection.DatabaseConnection;
 import aspect.model.Productaspectsentiment;
 import aspect.model.ProductaspectsentimentPK;
 import aspect.model.Productboughtafter;
 import aspect.model.Productdetail;
 import aspect.model.ProductrecommendationPK;
 import aspect.model.Queryproductandrecommendation;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,13 +32,14 @@ import org.json.JSONObject;
  * @author eneye380
  */
 @Stateless
-public class RecommendationSB implements RecommendationSBLocal {
+public class RecommendationSB implements RecommendationSBLocal, Serializable {
 
     @Resource(name = "esrs")
     private DataSource esrs;
     private Connection conn = null;
     private ResultSet rs = null;
     private PreparedStatement ps = null, pp = null;
+    DatabaseConnection dbConnect;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -44,7 +47,9 @@ public class RecommendationSB implements RecommendationSBLocal {
     public ArrayList<Queryproductandrecommendation> retrieveRecommendation(String productid) {
 
         try {
-            conn = esrs.getConnection();
+            //conn = esrs.getConnection();
+            dbConnect = new DatabaseConnection();
+            conn = dbConnect.getDbConnection();
             
             System.out.println("Connection: "+conn);
             System.out.println("Datasource: "+esrs);
@@ -69,32 +74,12 @@ public class RecommendationSB implements RecommendationSBLocal {
                 //p.setRecommendation(rs.getString(2));
                 collec.add(p);
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
+            
             return collec;
         } catch (SQLException ex) {
             System.out.println("Error: " + ex);
         } finally {
-
+            dbConnect.closeDbConnection(conn, rs, ps);
         }
         return null;
     }
@@ -102,8 +87,9 @@ public class RecommendationSB implements RecommendationSBLocal {
     public ArrayList<ProductrecommendationPK> retrieveRecommendation1(String productid) {
 
         try {
-            conn = esrs.getConnection();
-            
+            //conn = esrs.getConnection();
+            dbConnect = new DatabaseConnection();
+            conn = dbConnect.getDbConnection();
             System.out.println("Connection: "+conn);
             System.out.println("Datasource: "+esrs);
             //ps = conn.prepareStatement("SELECT * FROM queryproductandrecommendation WHERE queryProduct = ?");
@@ -127,32 +113,12 @@ public class RecommendationSB implements RecommendationSBLocal {
                 p.setRecommendation(rs.getString(2));
                 collec.add(p);
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
+            
             return collec;
         } catch (SQLException ex) {
             System.out.println("Error: " + ex);
         } finally {
-
+            dbConnect.closeDbConnection(conn, rs, ps);
         }
         return null;
     }
@@ -162,7 +128,9 @@ public class RecommendationSB implements RecommendationSBLocal {
         System.out.println("getdetail_101");
 
         try {
-            conn = esrs.getConnection();
+            //conn = esrs.getConnection();
+            dbConnect = new DatabaseConnection();
+            conn = dbConnect.getDbConnection();
             System.out.println(conn);
             ps = conn.prepareStatement("SELECT * FROM productdetail WHERE prodid = ?");
 
@@ -186,32 +154,12 @@ public class RecommendationSB implements RecommendationSBLocal {
                 p.setUrl(rs.getString(11));
                 collec.add(p);
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
+            
             return collec;
         } catch (SQLException ex) {
             System.out.println("Error: " + ex);
         } finally {
-
+            dbConnect.closeDbConnection(conn, rs, ps);
         }
         return null;
 
@@ -221,7 +169,9 @@ public class RecommendationSB implements RecommendationSBLocal {
     public ArrayList<Productaspectsentiment> retrieveAspectSentimentScores(String productid) {
          System.out.println("getdetail_201");
         try {
-            conn = esrs.getConnection();
+            //conn = esrs.getConnection();
+            dbConnect = new DatabaseConnection();
+            conn = dbConnect.getDbConnection();
             System.out.println(conn);
             ps = conn.prepareStatement("SELECT * FROM productaspectsentiment WHERE prodid = ?");
 
@@ -241,27 +191,7 @@ public class RecommendationSB implements RecommendationSBLocal {
 
                 collec.add(q);
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
+            
             return collec;
 
         } catch (SQLException ex) {
@@ -270,7 +200,7 @@ public class RecommendationSB implements RecommendationSBLocal {
             return null;
 
         } finally {
-
+            dbConnect.closeDbConnection(conn, rs, ps);
         }
 
     }
@@ -279,7 +209,9 @@ public class RecommendationSB implements RecommendationSBLocal {
     public ArrayList<Productboughtafter> retrieveBoughtAfterURL(String productid) {
          System.out.println("getdetail_301");
         try {
-            conn = esrs.getConnection();
+            //conn = esrs.getConnection();
+            dbConnect = new DatabaseConnection();
+            conn = dbConnect.getDbConnection();
             System.out.println(conn);
             ps = conn.prepareStatement("SELECT * FROM productboughtafter WHERE prodid = ?");
 
@@ -297,33 +229,13 @@ public class RecommendationSB implements RecommendationSBLocal {
 
                 collec.add(p);
             }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
+            
             return collec;
         } catch (SQLException ex) {
             System.out.println("Error: " + ex);
             return null;
         } finally {
-
+            dbConnect.closeDbConnection(conn, rs, ps);
         }
     }
 

@@ -12,15 +12,15 @@
 <%--Visitor/explanations/products/product-detail.jsp--%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="aspect.bean.CategorySB"%>
-<%@page import="aspect.bean.ProductSetSB"%>
+<%@page import="aspect.controller_bean.CategorySB"%>
+<%@page import="aspect.controller_bean.ProductSetSB"%>
 <%@page import="aspect.model.Productdetail"%>
-<%@page import="aspect.bean.ProductSB"%>
-<%@page import="aspect.bean.ProductReviewSB" %>
+<%@page import="aspect.controller_bean.ProductSB"%>
+<%@page import="aspect.controller_bean.ProductReviewSB" %>
 <%@page import="aspect.model.Productreview"%>
 <%@page import="aspect.model.Queryproductandrecommendation"%>
 <%@page import="java.util.ArrayList"%>
-<%@page  import="aspect.bean.ProductSBLocal"%>
+<%@page  import="aspect.controller_bean.ProductSBLocal"%>
 <%@include file="../header/headerproductview.jsp" %>
 <!-- Page Content -->
 <script>
@@ -118,7 +118,7 @@
 
 <div class="container" id="pbody">
 
-    <jsp:useBean id="recommend" class="aspect.bean.ProductSetSB" scope="request"/>
+    <jsp:useBean id="recommend" class="aspect.controller_bean.ProductSetSB" scope="request"/>
     <jsp:setProperty name="recommend" property="queryProduct" param="product" />
     <%
     %>
@@ -139,7 +139,7 @@
         }
 
     %>
-    <jsp:useBean id="detail" class="aspect.bean.ProductDetailSB" scope="request"/>
+    <jsp:useBean id="detail" class="aspect.controller_bean.ProductDetailSB" scope="request"/>
     <jsp:setProperty name="detail" property="prodid" value="<%=s%>"/>
     <jsp:setProperty name="detail" property="recommSet" value="<%=myR%>"/>
     <jsp
@@ -151,7 +151,7 @@
             Productdetail pdqp = d.get(0);
         %>
 
-        <jsp:useBean id="aspectScore" class="aspect.bean.AspectScoreSB" scope="request"/>
+        <jsp:useBean id="aspectScore" class="aspect.controller_bean.AspectScoreSB" scope="request"/>
         <jsp:setProperty name="aspectScore" property="prodid" value="<%=s%>"/>
         <jsp:setProperty name="aspectScore" property="recommSet" value="<%=myR%>"/>
         <%
@@ -191,7 +191,7 @@
             }
         %>
         <%--=data[0]--%>
-        <jsp:useBean id="reviewDetail" class="aspect.bean.ProductReviewSB" scope="request"/>
+        <jsp:useBean id="reviewDetail" class="aspect.controller_bean.ProductReviewSB" scope="request"/>
         <jsp:setProperty name="reviewDetail" property="prodid" value="<%=s%>"/>
         <jsp:setProperty name="reviewDetail" property="recommSet" value="<%=myR%>"/>
         <%
@@ -268,7 +268,7 @@
                 <!--Side Bar Start><-->
 
                 <div class="col-md-2 col-sm-2 col-xs-12 well aspect">
-                    <jsp:useBean id="category_1" class="aspect.bean.CategorySB" scope="request"/>
+                    <jsp:useBean id="category_1" class="aspect.controller_bean.CategorySB" scope="request"/>
                     <%--jsp:getProperty name="category" property="catSet"/--%>
                     <%
                         ArrayList<CategorySB> cc = category_1.getCatSet();
@@ -298,6 +298,7 @@
                         <button type="button" class="btn btn-primary btn-sm" id="button_aspect">Aspects</button>
                         <button type="button" class="btn btn-primary btn-sm" id="button_aspect_reset" onclick="clearSelection('2')">Reset</button>
                     </div>
+                        <p class='text-primary' style="color:white">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
                     <div class="aspect_selection" style="display1:none;height:300px;overflow: auto">
                         <form onclick1="showMe()">
                             <%if (productScoresMap.containsKey(s)) {%>
@@ -492,17 +493,17 @@
                                                 <h6 style="color:black">Recommended Products</h6>
                                             </div>
                                         </div>
-                                        <div class="row text-center">
+                                        <div class="text-center">
 
-                                            <div style="height:50px;overflow: scroll">
+                                            <div style="height:100px;overflow: auto">
                                                 <%Productdetail pdr1 = null;%>
                                                 <%if ((d.size() > 1)) {%>
                                                 <%for (int m = 0; m < d.size(); m++) {%>
                                                 <%if (m != 0) {%>
                                                 <%pdr1 = d.get(m);%>
 
-                                                <div class="col-md-3 col-sm-6 col-xs-6 thumbnaill" >
-                                                    <a href="detail.jsp?product=<%=pdr1.getProdid()%>"><img src="../../../img/<%=pdr1.getProdid()%>.jpg" alt="" class="img-thumbnail" style="height:50px;">
+                                                <div class="thumbnaill" >
+                                                    <a href="product-detail.jsp?product=<%=pdr1.getProdid()%>"><img src="../../../img/<%=pdr1.getProdid()%>.jpg" alt="" class="img-thumbnail" style="height:50px;">
                                                     </a>
                                                     <div class="caption">                                            
                                                         <div style="height: 20px;overflow: hidden"><h6 style="color:grey"><%=pdr1.getName()%></h6></div>                                            
@@ -554,13 +555,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
-                                        <div class="btn-group text-center" style="margin-bottom:5px">
-                                            <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="bar">bar</button>
-                                            <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="line">line</button>
-                                            <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="scatter" onclick="generateScatterGrapgh('<%=s%>', 'scatter')">scatter</button>
-                                            <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="hide">hide</button>
-                                            <!--button class="btn btn-success btn-xs" style="color:black;background: yellowgreen; border:greenyellow" id=""></button>
-                                            <button class="btn btn-success btn-xs" style="color:black;background: yellowgreen; border:greenyellow" id=""></button-->
+                                        <div class=" text-center" style="margin-bottom:5px">
+                                            <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="bar">bar</button>                                            
+                                            <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="scatter" onclick="generateScatterGraph('<%=s%>', 'scatter')">scatter</button>
+                                            <!--button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="hide">hide</button-->
+                                            
                                         </div>
                                         <h5>Sentiment Score</h5>
                                         <div style="height:200px">
@@ -727,14 +726,7 @@
                                 <h4>Customer Review</h4>
                                 <h5>Total Number of Reviews: <%=totalcomments%></h5>
                                 <h5>Total Number of Ratings: <%=totalratings%></h5>
-                                <div class='thumbnail'>
-                                    <p style='color:rosybrown'>anony</p>
-                                    <p class='text-right'>great product</p>
-                                </div>
-                                <div class='thumbnail'>
-                                    <p style='color:rosybrown'>pxstar</p>
-                                    <p class='text-right'>This is an awesome camera for an entry level DSLR, in my mind Nikon's the best</p>
-                                </div>
+                                
                                 <div class="row">
                                     <div class="col-md-7">
                                         <table>

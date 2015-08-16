@@ -3,17 +3,17 @@
     Created on : Aug 9, 2015, 9:56:27 AM
     Author     : eneye380
 --%>
-<%@page import="aspect.bean.CategoryChoiceSB"%>
+<%@page import="aspect.controller_bean.CategoryChoiceSB"%>
 <%--Visitor/explanations/products/products.jsp--%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="aspect.bean.CategorySB"%>
-<%@page import="aspect.bean.ProductSetSB"%>
+<%@page import="aspect.controller_bean.CategorySB"%>
+<%@page import="aspect.controller_bean.ProductSetSB"%>
 <%@page import="aspect.model.Productdetail"%>
-<%@page import="aspect.bean.ProductSB"%>
+<%@page import="aspect.controller_bean.ProductSB"%>
 <%@page import="aspect.model.Queryproductandrecommendation"%>
 <%@page import="java.util.ArrayList"%>
-<%@page  import="aspect.bean.ProductSBLocal"%>
+<%@page  import="aspect.controller_bean.ProductSBLocal"%>
 <%@include file="../header/headerproductview.jsp" %>
 <!-- Page Content -->
 <script>
@@ -55,7 +55,7 @@
 
 <div class="container" id="pbody">
 
-    <jsp:useBean id="productcategory" class="aspect.bean.CategoryChoiceSB" scope="request"/>
+    <jsp:useBean id="productcategory" class="aspect.controller_bean.CategoryChoiceSB" scope="request"/>
     <jsp:setProperty name="productcategory" property="category" param="category" />
     <%
     %>
@@ -72,7 +72,7 @@
 
     %>
     <!--%=myR%--!>
-    <jsp:useBean id="detail" class="aspect.bean.ProductDetailSB" scope="request"/>
+    <jsp:useBean id="detail" class="aspect.controller_bean.ProductDetailSB" scope="request"/>
     <jsp:setProperty name="detail" property="prodid" value="<%=s%>"/>
     <jsp:setProperty name="detail" property="recommSet" value="<%=myR%>"/>
 
@@ -84,7 +84,7 @@
         Productdetail pdqp = d.get(0);
     %>
 
-    <jsp:useBean id="aspectScore" class="aspect.bean.AspectScoreSB" scope="request"/>
+    <jsp:useBean id="aspectScore" class="aspect.controller_bean.AspectScoreSB" scope="request"/>
     <jsp:setProperty name="aspectScore" property="prodid" value="<%=s%>"/>
     <jsp:setProperty name="aspectScore" property="recommSet" value="<%=myR%>"/>
     <%

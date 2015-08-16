@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aspect.bean;
+package aspect.controller_bean;
 
 import aspect.db_connection.DatabaseConnection;
 import aspect.model.Productdetail;
@@ -28,8 +28,8 @@ public class ProductDetailSB implements ProductDetailSBLocal, Serializable {
     private ResultSet rs;
     private PreparedStatement ps, pp;
     private ArrayList<Productdetail> collec;
-    private ArrayList<String> recommSet;
-    private String prodid;
+    private ArrayList<String> recommSet = null;
+    private String prodid =null;
     private int index = 0;
     private DatabaseConnection dbConnect;
 
@@ -121,6 +121,20 @@ public class ProductDetailSB implements ProductDetailSBLocal, Serializable {
                     }
 
                 }
+            }else if(recommSet!=null){
+                if (recommSet.size() >= 1) {
+
+                        for (String s : recommSet) {
+
+                            Productdetail q = null;
+                            try {
+                                q = this.processsDetail(s);
+                            } catch (SQLException ex) {
+                                System.out.println("Error: " + ex);
+                            }
+                            this.setCollec(q);
+                        }
+                    }
             }
 
             return this.getCollec();

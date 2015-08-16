@@ -4,9 +4,9 @@
     Author     : eneye380
 --%>
 
-<%@page import="aspect.bean.CategorySB"%>
+<%@page import="aspect.controller_bean.CategorySB"%>
 <%@page import="java.util.ArrayList"%>
-<jsp:useBean id="category" class="aspect.bean.CategorySB" scope="request"/>
+<jsp:useBean id="category" class="aspect.controller_bean.CategorySB" scope="request"/>
 <%--jsp:getProperty name="category" property="catSet"/--%>
 <%
     ArrayList<CategorySB> c = category.getCatSet();
