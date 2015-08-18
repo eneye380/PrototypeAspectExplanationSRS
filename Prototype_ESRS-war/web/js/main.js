@@ -115,8 +115,8 @@ var form1 = null;
 var formarray;
 
 $(document).ready(function () {
-    //alert("j");
-    //alert('hhhh');
+    
+    
     var x = document.getElementsByClassName('starsfreq');
     form = x;
 
@@ -205,7 +205,7 @@ function ratingGraph(type, p) {
         
         for (var w = 0; w < form.length; w++) {
             if (obj[y].getProductID() === form[w].prodid.value) {
-                alert('n'+form.length);
+                
                 //console.log("cont: " + form[0].prodid.value + 'obj: ' + obj[0].getProductID());
 
                 var data1 = [];
