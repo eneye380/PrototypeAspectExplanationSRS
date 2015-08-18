@@ -38,8 +38,9 @@ public class ReadFromFilleToDB {
         ReadFromFilleToDB r = new ReadFromFilleToDB();
         //r.testReadFile();
         ArrayList<File> files = new ArrayList<>();
+        // specify folder directory to load files and insert into the db
         String directory = "C:\\Users\\eneye380\\Documents\\MSc RGU Project\\New folder\\Product Aspect Sentiment\\Product Aspect Sentiment";
-        r.listf(directory, files);
+        r.ReadFolderFiles(directory, files);
     }
 
     public void readProductReviewFile(String p) {
@@ -98,7 +99,7 @@ public class ReadFromFilleToDB {
         for (int nn = 0; nn < dataValue.length; nn++) {
             System.out.println(dataKey[nn] + " : " + dataValue[nn]);
         }
-
+        //uncomment to use
         //dbupdate.insertRecordR(dataValue);
         path = "";
 
@@ -302,9 +303,8 @@ public class ReadFromFilleToDB {
      * @param directoryName
      * @param files
      */
-    public void listf(String directoryName, ArrayList<File> files) {
+    public void ReadFolderFiles(String directoryName, ArrayList<File> files) {
         File directory = new File(directoryName);
-
         // get all the files from a directory
         File[] fList = directory.listFiles();
         for (File file : fList) {
@@ -314,22 +314,24 @@ public class ReadFromFilleToDB {
                 String p = file.getAbsolutePath(); // file absolute path
                 //System.out.println("name--"+file.getName().substring(0, file.getName().lastIndexOf(".")));
                 //System.out.println("name--"+file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf(".")));
-                
+                //only one methed can be used at a time(uncomment to use)
                 //this.readProductDetailFile(p); //for product details only
                 //this.readProductReviewFile(p); //for product review only
                 this.readProductSentimentAspectFile(p, file); //for product sentiment aspects
                 iii++;
             } else if (file.isDirectory()) {
-                listf(file.getAbsolutePath(), files);
+                ReadFolderFiles(file.getAbsolutePath(), files);
                 iii++;
             } else if (file.isFile()) {
 
                 File fi = new File(file.getAbsolutePath() + ".txt"); //renames the file to with an extension of .txt
                 if (file.renameTo(fi)) {
-
+                    
+                    //only one methed can be used at a time(uncomment to use)
                     //this.readProductDetailFile(fi.getAbsolutePath()); //for product details only
                     //this.readProductReviewFile(fi.getAbsolutePath()); //for product review only
-                    this.readProductSentimentAspectFile(fi.getAbsolutePath(), file); //for product sentiment aspects
+                    //this.readProductSentimentAspectFile(fi.getAbsolutePath(), file); //for product sentiment aspects
+                    
                     iii++;
                 }
 

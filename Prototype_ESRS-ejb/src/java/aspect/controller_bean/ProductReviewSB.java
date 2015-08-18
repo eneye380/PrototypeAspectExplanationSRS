@@ -31,8 +31,8 @@ public class ProductReviewSB implements ProductReviewSBLocal, Serializable {
     private ResultSet rs;
     private PreparedStatement ps, pp;
     DatabaseConnection dbConnect;
-    private ArrayList<String> recommSet;
-    private String prodid;
+    private ArrayList<String> recommSet = null;
+    private String prodid = null;
     private ArrayList<String> myProducts;
     private Map<String, String> productReviewValues;
     private Map<String, Map<String, String>> reviewSet;
@@ -106,6 +106,48 @@ public class ProductReviewSB implements ProductReviewSBLocal, Serializable {
             if (recommSet.size() > 0) {
                 for (int e = 0; e < recommSet.size(); e++) {
                     myProducts.add(e + 1, recommSet.get(e));
+                }
+            }
+            for (int f = 0; f < myProducts.size(); f++) {
+                ArrayList<Productreview> p = this.processReview(myProducts.get(f));
+                reviewSet = new HashMap<>();
+                for (int k = 0; k < p.size(); k++) {
+                    productReviewValues = new HashMap<>();
+                    Productreview pas = p.get(k);
+                    author = pas.getProductreviewPK().getAuthor();
+                    productid = pas.getProductreviewPK().getProdid();
+                    badges = pas.getBadges();
+                    helpfulranking = pas.getHelpfulranking();
+                    title = pas.getTitle();
+                    date = pas.getDate();
+                    rating = pas.getRating();
+                    npeopleuseful = pas.getNpeopleuseful();
+                    npeoplevoted = pas.getNpeoplevoted();
+                    ncomments = pas.getNcomments();
+                    comment = pas.getComments();
+
+                    productReviewValues.put("author", author);
+                    productReviewValues.put("productid", productid);
+                    productReviewValues.put("badges", badges);
+                    productReviewValues.put("helpfulranking", helpfulranking);
+                    productReviewValues.put("title", title);
+                    productReviewValues.put("date", date);
+                    productReviewValues.put("rating", rating);
+                    productReviewValues.put("npeopleuseful", npeopleuseful);
+                    productReviewValues.put("npeoplevoted", npeoplevoted);
+                    productReviewValues.put("ncomments", ncomments);
+                    productReviewValues.put("comment", comment);
+
+                    reviewSet.put(author, productReviewValues);
+                }
+                productReviewSet.put(myProducts.get(f), reviewSet);
+            }
+
+        } else if(recommSet!=null){
+                        
+            if (recommSet.size() > 0) {
+                for (int e = 0; e < recommSet.size(); e++) {
+                    myProducts.add(e, recommSet.get(e));
                 }
             }
             for (int f = 0; f < myProducts.size(); f++) {

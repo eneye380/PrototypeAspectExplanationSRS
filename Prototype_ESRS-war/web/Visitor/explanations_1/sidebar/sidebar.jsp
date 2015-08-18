@@ -26,6 +26,13 @@
         <a href="../products/category.jsp?category=<%=ct.getCategory()%>" class="list-group-item "><%=ct.getCategory()%></a>                    
         <%}%>
     </div>
+    <!--div>
+        <span id="num"></span>
+        <p>
+            At least two products can be selected for comparison. maximum - 3
+        </p>
+        
+    </div-->
 
 </div>
 <!--div class="btn-group" style="margin-top: 10px">

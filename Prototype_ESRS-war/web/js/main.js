@@ -70,12 +70,56 @@ $(document).ready(function () {
 
 
 });
-var form = null;
-var formarray;
-$(document).ready(function () {
 
+
+function processAspect() {
+    
+    var mm = document.getElementsByClassName('comparisonaspects');
+    formaspects = mm;
+    
+    for (var y = 0; y < formaspects.length; y++) {
+        y++;
+
+        if (y < 10) {
+            var v = formaspects[y].value;
+            formarraspect.push(v);
+        }
+
+    }
+    isCompare = true;
+     
+}
+var formarr = [];
+var formarraspect = [];
+var formaspects;
+var isCompare = false;
+function compare() {
+    
+    var yy = document.getElementsByClassName('productsid');
+    form1 = yy;
+    isCompare = true;
+
+    for (var t = 0; t < form1.length; t++) {
+       
+        var v = form1[t].value;
+        formarr.push(v);
+    }
+    var p = form1[0].value;
+    cStatus = true;
+    retrievePRJSONDet(p, '1', 'compare', 'star');
+     
+
+}
+var form = null;
+var form1 = null;
+var formarray;
+
+$(document).ready(function () {
+    //alert("j");
+    //alert('hhhh');
     var x = document.getElementsByClassName('starsfreq');
     form = x;
+
     var y = document.getElementById('js');
     var object = {};
 
@@ -125,16 +169,22 @@ var graphStat = false;
 function callRatingGraph(p) {
     console.log('M:callRatingGraph()-AG');
 
+
+if(cStatus===true){
     var graphStat = ratingGraph('sing', p);
-    if (graphStat === true) {
-        ratingGraph('mult', p);
-        graphStat = false;
-        //return true;
+    
     }
+    if(dStatus===true){
+        
+        ratingGraph('sing',p);
+         ratingGraph('mult',p);
+        
+    }
+    
 }
 function ratingGraph(type, p) {
     console.log('M:ratingGraph()-AH');
-
+    
     setRatingArr();
     //type - false/true
     var starr = getRatingArr();
@@ -150,30 +200,42 @@ function ratingGraph(type, p) {
 
     //alert("cont: "+form[0].prodid.value+'obj: '+obj[0].getProductID());
     for (var y = 0; y < obj.length; y++) {
+        
         var i = obj[y];
+        
         for (var w = 0; w < form.length; w++) {
             if (obj[y].getProductID() === form[w].prodid.value) {
-
+                alert('n'+form.length);
                 //console.log("cont: " + form[0].prodid.value + 'obj: ' + obj[0].getProductID());
 
                 var data1 = [];
                 var ticks1 = [];
                 ticks1 = starr;
+                
                 //alert(form[w].star1.value);
-                var t = parseInt(form[w].tot.value);
+                //var t = parseInt(form[w].tot.value);
+                var t;
+                if(cStatus===true){
+                    t = parseInt(form[w].tot.value);
+                }
                 var r5 = parseInt(form[w].star5.value);
                 var r4 = parseInt(form[w].star4.value);
                 var r3 = parseInt(form[w].star3.value);
                 var r2 = parseInt(form[w].star2.value);
                 var r1 = parseInt(form[w].star1.value);
                 setStarRatings(t, r1, r2, r3, r4, r5);
+                
                 data1 = getStarRatings();
+                
                 if (type === 'sing') {
                     id = obj[0].getProductID();
+                    
                     if (p === undefined) {
-                        alert('yes');
+                        
+                        //alert('yes');
                         s = id + '_r';
                     } else if (p === 'star') {
+                        
                         id = obj[y].getProductID();
                         s = id + '_r_comp';
                         var r = 'no_r_' + (y + 1);
@@ -181,20 +243,26 @@ function ratingGraph(type, p) {
                     }
                     setOptions(s, data1, ticks1, ytitle, stitle);
                     myChart();
+                    
                     if (y === obj.length - 1) {
+                        
                         return true;
                     }
 
                 } else if (type === 'mult') {
+                    
                     setSeries(data1, y + 1);
 
                     id = obj[0].getProductID();
 
                     s = id + '_r_mult_rating';
-
+                    
                     if (y === obj.length - 1) {
+                        
                         setOptionsS(s, ticks1, ytitle);
-                        myChartS();
+                        
+                        var n = myChartS();
+                        //alert(n);                        
                         return true;
                     }
                 }
@@ -297,7 +365,7 @@ function displayDes(id) {
 }
 
 $(document).ready(function () {
-    
+
     $('span.stars').stars();
     console.log('M:onready()-AN');
 
@@ -350,6 +418,29 @@ function aspectSelect(asp, s) {
     }
     console.log(window.document.location.search);
 }
+function productSelect(produ){
+    console.log('M:aspectSelect()-AP');
+    var asarrele = [];
+    tempobj = produ;
+    asarrele.push(tempobj);
+    var aspect = produ.value;
+
+    asarr.push(aspect);
+    tempobj.disabled = true;
+
+    if (asarr.length > 0) {
+        if (iii < 2) {
+            
+            iii++;
+        } else {
+            var c = document.getElementsByClassName('productComp');
+
+            for (var b = 0; b < c.length; b++) {
+                c[b].disabled = true;
+            }
+        }
+    }
+}
 
 function clearSelection(a) {
     console.log('M:clearSelection()-AQ');
@@ -367,16 +458,30 @@ function clearSelection(a) {
         writeMe("1", null);
     }
 }
-
-var status = false;
-function retrievePRJSONDetail(queryProduct, opt, page, rate) {    
-    console.log('M:retrievePRJSONDetail()-R');
-    var ext = "search";
+//var queryP;
+var stat = false;
+function retrievePRJSONDet(queryProduct, opt, page, rate) {
+    
+    console.log('M:retrievePRJSONDet()-RR');
+    var arr = [];
+    arr = formarr;
+    var data = "";
+    //data = "s=" + s1 + '&s=' + s2 + '&s=' + s3;
+    if (arr.length > 0) {
+        for (var n = 0; n < arr.length; n++) {
+            if (n === 0) {
+                data += 's=' + arr[n];
+            } else {
+                data += '&s=' + arr[n];
+            }
+        }
+    }
+    var ext = "pcomparison";
     var url = "/Prototype_ESRS-war/" + ext;
     var type = "GET";
-    var data = "product=" + queryProduct;      
+
     var dtype = 'json';
-    console.log('url:- '+url);
+    console.log('url:- ' + url);
     $.ajax({
         type: type,
         url: url,
@@ -384,17 +489,18 @@ function retrievePRJSONDetail(queryProduct, opt, page, rate) {
         datatype: dtype,
         success: function (msg) {
             console.log("Ajax Call Successful");
-            
-            queryP = queryProduct;
+            console.log("RR1" + msg);
             setProductJSONDetails(msg);
             setQRArrayOfProductList(msg);
             setQRJSONOfProductDetails(msg, queryProduct);
-
+            queryP = queryProduct;
+            processAspect();
+            
             if (page === 'detail') {
                 console.log('R1');
-                status = writeMe(opt, null);
+                stat = writeMe(opt, null);
                 console.log('R2');
-                if (status === true) {
+                if (stat === true) {
                     console.log('R3');
                     grStatus = callRatingGraph();
                     //status = writeMe(opt, null);
@@ -404,14 +510,113 @@ function retrievePRJSONDetail(queryProduct, opt, page, rate) {
 
             if (page === 'compare') {
                 console.log('R5');
-                status = writeMe(opt, null);
+                writeMe(opt, null);
+                //alert('1');
+                showGraphOnCompare(page);
+                //alert('2');
+                callRatingGraph(rate);
+                
                 console.log('R6');
                 console.log('status: ' + status);
-                if (status === true) {
+                
+                if (stat === true) {
+                   
                     console.log('R7');
                     grStatus = showGraphOnCompare(page);
                     console.log('R8');
                     if (grStatus === true) {
+                         
+                        console.log('R9');
+                        if (rate === 'star') {
+                            
+                            console.log('R10');
+                            callRatingGraph(rate);
+                            
+                            console.log('R11');
+                        }
+                    }
+                }
+
+            } else if (page === undefined) {
+                console.log('R12');
+                writeMe(opt, null);
+            }
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Error: " + jqXHR.status + " ,Status: " + textStatus + " ,ErrorThrown: " + errorThrown);
+        }
+
+    });
+    console.log("Ajax call: Function End");
+    return stat;
+}
+
+var cStatus = false;
+var dStatus = false;
+var status = false;
+function retrievePRJSONDetail(queryProduct, opt, page, rate) {
+    console.log('M:retrievePRJSONDetail()-R');
+    var ext = "search";
+    var url = "/Prototype_ESRS-war/" + ext;
+    var type = "GET";
+    var data = "product=" + queryProduct;
+    var dtype = 'json';
+    console.log('url:- ' + url);
+    $.ajax({
+        type: type,
+        url: url,
+        data: data,
+        datatype: dtype,
+        success: function (msg) {
+            console.log("Ajax Call Successful");
+
+            queryP = queryProduct;
+            setProductJSONDetails(msg);
+            setQRArrayOfProductList(msg);
+            setQRJSONOfProductDetails(msg, queryProduct);
+            processAspect();//overrides the default aspect selections
+            if (page === 'detail') {
+
+                console.log('R1');
+                
+                dStatus = true;
+                status = writeMe(opt, null);
+                
+                grStatus = callRatingGraph();
+                
+                console.log('R2');
+                if (status === true) {
+
+                    console.log('R3');
+                    grStatus = callRatingGraph();
+                    //status = writeMe(opt, null);
+                    console.log('R4');
+                }
+            }
+
+            if (page === 'compare') {
+                console.log('R5');
+                writeMe(opt, null);
+                
+                showGraphOnCompare(page);
+                
+                cStatus = true;
+                callRatingGraph(rate);
+                
+                console.log('R6');
+                
+                console.log('status: ' + status);
+                
+                if (status === true) {
+                    
+                    console.log('R7');
+                    grStatus = showGraphOnCompare(page);
+
+                    console.log('R8');
+                    if (grStatus === true) {
+
                         console.log('R9');
                         if (rate === 'star') {
                             console.log('R10');
@@ -467,7 +672,7 @@ function readMe() {
 }
 var aspect = [];
 function setAspectArr(a) {
-     console.log('M:setAspectArr()-D');
+    console.log('M:setAspectArr()-D');
     var aspect1 = "camera";
     var aspect2 = "lens";
     var aspect3 = "quality";
@@ -484,7 +689,7 @@ function setAspectArr(a) {
     aspect.push(aspect5);
 }
 function getAspectArr() {
-     console.log('M:getAspectArr()-E');
+    console.log('M:getAspectArr()-E');
     var arr = aspect;
     //aspect = [];
 
@@ -493,9 +698,11 @@ function getAspectArr() {
 function showGraphOnCompare(page) {
     console.log('M:showGraphOnCompare()-F');
     writeMe("2", null, page);
+    //alert('5');
     return true;
 }
 var tt = " ";
+//alert(isCompare);
 setAspectArr();
 function writeMe(n, as, dID) {
     console.log('M:writeMe()-G');
@@ -504,14 +711,17 @@ function writeMe(n, as, dID) {
     console.log(dID);
     if (as !== null) {
         var aspectArr = as;
-    } else {
+    } else if (isCompare === false) {
         var aspectArr = getAspectArr();
+    } else if (isCompare === true) {
+        var aspectArr = formarraspect;
     }
 
 
 
+
     var obj = readMe();
-    alert('size' + obj.length);
+    //alert('size' + obj.length);
     for (var y = 0; y < obj.length; y++) {
 
         var i = obj[y];
@@ -540,42 +750,46 @@ function writeMe(n, as, dID) {
 
         }
         if (n === "1") {
-
+           
             setSeries(data1, y + 1);
             var id;
             if (dID === undefined) {
-
+                 
                 id = obj[0].getProductID();
             } else {
-
+                
                 id = dID;
             }
             if (y === obj.length - 1) {
-
+                
                 setOptionsS(id, ticks1, ytitle);
-                myChartS();
-
-                return true;
+                var st = myChartS();
+                //alert(st);
+                return st;
             }
+            
+
         } else if (n === "2") {
-
+            
             if (dID === undefined) {
-
+                
                 setOptions(i.getProductID(), data1, ticks1, ytitle, stitle);
             } else if (dID === 'compare') {
-
+                
                 var id = i.getProductID() + '_comp';
                 //alert(id);
                 setOptions(id, data1, ticks1, ytitle, stitle);
-
+                
             } else {
-
+                
                 setOptions(dID, data1, ticks1, ytitle, stitle);
             }
 
 
             myChart();
-
+            if(dStatus === true){
+                return true;
+            }            
             //exits this loop
             if (y === obj.length - 1) {
 
@@ -642,7 +856,7 @@ $(document).ready(function () {
 });
 
 function loadChart(o, data, ticks) {
-     console.log('M:loadChart()-P');
+    console.log('M:loadChart()-P');
     $(o).highcharts({
         chart: {
             type: 'column'
@@ -755,7 +969,7 @@ function myChartS() {
     return true;
 }
 function sum(i, aspect) {
-     console.log('M:sum()-Y');
+    console.log('M:sum()-Y');
 
     var sum = 0;
     for (var h = 0; h < aspect.length; h++) {

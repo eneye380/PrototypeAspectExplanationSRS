@@ -297,7 +297,7 @@
         <input type="hidden" value="<%=freq31%>" name="star3">
         <input type="hidden" value="<%=freq21%>" name="star2">
         <input type="hidden" value="<%=freq11%>" name="star1">
-        <input type="hidden" value="<%=totalratings1%>">
+        <input type="hidden" value="<%=totalratings1%>" name="tot">
     </form>
     <%freq51 = 0;
         freq41 = 0;
@@ -312,6 +312,9 @@
 
     <%}%>
     <!--/getting-->
+    
+    
+    
 
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container-fluid" >
@@ -348,7 +351,7 @@
     </nav>
 
 
-    <div class="container" id="pbody">
+    <div class="container-fluid" id="pbody">
         <div class="row">
 
             <!--div class="col-md-2 col-sm-2 col-xs-12 well aspect">
@@ -416,17 +419,13 @@
 
                 %>
 
-                <!--div class="btn-group" style="margin-top: 10px">
-                    <button type="button" class="btn btn-primary btn-xs" id="button_aspect">Shared Aspects</button>
-                    <button type="button" class="btn btn-primary btn-xs" id="button_aspect_reset" onclick="clearSelection('1')">Reset</button>
-                </div>
-                <div class="aspect_selection" style="display1:none;height:300px;overflow: auto">
-
+    
                     <form>
                 <%if (myR.size() != 0) {%>
                 <%for (int r = 0; r < e.size(); r++) {%>
                 <%String key = e.get(r);%>
-                <div class="checkbox"><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '1')"><%=key%></label></div>                            
+                <!--div class="checkbox"><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '1')"><%=key%></label></div-->                            
+                 <input type="hidden" value="<%=key%>" class="comparisonaspects">    
                 <%}%>
 
                 <%} else if (productScoresMap.containsKey(s)) {%>
@@ -451,7 +450,8 @@
                 <!--li><%=key%> : <%=a%></li-->
                 <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
                 <!--div class="checkbox"><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label></div-->                            
-                <!--li><%=key%></li-->
+                 <input type="hidden" value="<%=key%>" class="comparisonaspects">    
+<!--li><%=key%></li-->
                 <%--}--%>
                 <%}%>
                 <%}%>
@@ -468,19 +468,19 @@
             <div class="col-md-10 col-sm-10 col-xs-12">
 
 
-                <div class="thumbnail">
+                
                     <div class="well">
                         <!--name container of query product-->
 
                         <!--/name-->
-                        <div class="row thumbnail aspect">
+                        <div class="row thumbnail">
                             <div class="row">
                                 <div class="col-lg-12 text-center">
                                     <h5 style="color:sienna"><em><%=pdqp.getName()%></em></h5>
                                 </div>
                             </div>
                             <div class="col-md-8 col-sm-8 col-xs-8">                                 
-                                <div class="well" style="height:470px;overflow:scroll">
+                                <div class="well" style="height:1000px;overflow:scroll;background: white" >
                                     <p style="color:rgb(10,50,50)"><strong>QUERY PRODUCT</strong></p>
                                     <!--detail of query product-->
                                     <div class="row">
@@ -688,7 +688,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
 
 
             </div>

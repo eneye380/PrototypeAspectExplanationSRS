@@ -248,7 +248,12 @@ public class DBUpdate {
 
     public static void main(String argv[]) throws SQLException {
         DBUpdate d = new DBUpdate();
-        //d.createProductReviewTab();
+        //run to create table
+        d.createProductReviewTab();
+        d.createProductAspectSentimentTab();
+        d.createProductBoughtAfterTab();
+        d.createProductDetailTab();
+        d.createRecommendation();
     }
     
     public static void executeA(int i, String[] s){

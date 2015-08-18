@@ -47,8 +47,8 @@ public class AspectScoreSB implements AspectScoreSBLocal, Serializable {
     private ResultSet rs;
     private PreparedStatement ps, pp;
     DatabaseConnection dbConnect;
-    private ArrayList<String> recommSet;
-    private String prodid;
+    private ArrayList<String> recommSet = null;
+    private String prodid = null;
     private ArrayList<String> myProducts;
     private Map<String, Number> aspectValue;
     private Map<String, Map<String, Number>> aspectSet;

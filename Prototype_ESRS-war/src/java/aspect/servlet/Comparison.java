@@ -5,12 +5,10 @@
  */
 package aspect.servlet;
 
-import aspect.controller_bean.ProductSBLocal;
 import aspect.controller_bean.RecommendationSB;
 import aspect.controller_bean.RecommendationSBLocal;
 import aspect.model.ProductrecommendationPK;
 import aspect.model.Queryproductandrecommendation;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +28,18 @@ import org.json.JSONObject;
  *
  * @author eneye380
  */
-public class ProductComparison extends HttpServlet {
+public class Comparison extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    
     @EJB
     private RecommendationSBLocal recommendationSB;
     private List<String> productForComparison;

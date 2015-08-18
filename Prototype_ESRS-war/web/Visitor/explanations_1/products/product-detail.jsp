@@ -200,7 +200,7 @@
         %>
         <!--jsp:getProperty name="reviewDetail" property="productReviewSet"/-->
         <%--=productScoresMap--%>
-        <body id="body" onload="retrievePRJSONDetail('<%=s%>', '2','detail')">
+        <body id="body" onload="retrievePRJSONDetail('<%=s%>', '2', 'detail')">
 
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
                 <div class="container-fluid" >
@@ -229,7 +229,7 @@
                         </ul>
                         <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
                         <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
-                    <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
+                            <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
                     </div>
                     <!-- /.navbar-collapse -->
                 </div>
@@ -251,7 +251,7 @@
                     }
 
                 }
-                                                                                                                            %>
+                                                                                                                                            %>
             <% ArrayList<Double> l = new ArrayList();%>
 
             <%-- Collections.sort(l); --%>
@@ -275,10 +275,10 @@
 
                     %>
                     <div class="row">
-                            <div class="col-lg-12 text-center">                                
-                                <h5 style="color: whitesmoke"><strong>Product Detail</strong></h5>
-                            </div>
+                        <div class="col-lg-12 text-center">                                
+                            <h5 style="color: whitesmoke"><strong>Product Detail</strong></h5>
                         </div>
+                    </div>
 
                     <div class="btn-group" style="margin-top: 5px;">
                         <button type="button" class="btn btn-primary btn-sm" id="button_category">Category</button>
@@ -298,7 +298,7 @@
                         <button type="button" class="btn btn-primary btn-sm" id="button_aspect">Aspects</button>
                         <button type="button" class="btn btn-primary btn-sm" id="button_aspect_reset" onclick="clearSelection('2')">Reset</button>
                     </div>
-                        <p class='text-primary' style="color:white">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
+                    <p class='text-primary' style="color:white">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
                     <div class="aspect_selection" style="display1:none;height:300px;overflow: auto">
                         <form onclick1="showMe()">
                             <%if (productScoresMap.containsKey(s)) {%>
@@ -323,6 +323,7 @@
                             <!--li><%=key%> : <%=a%></li-->
                             <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
                             <div class="checkbox"><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label></div>                            
+                            <input type="hidden" value="<%=key%>" class="comparisonaspects">                                
                             <!--li><%=key%></li-->
                             <%--}--%>
                             <%}%>
@@ -336,128 +337,131 @@
                 <!--Side Bar End><-->
 
                 <!--Main Content Start><--><!--finding star rating distributions-->
-<%    
-    String rating = "";
-    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
-%>
-<%if (productReviewMap.containsKey(s)) {%>
-<%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
-    Set keyset = productReviews.keySet();
-    Iterator ite = keyset.iterator();
-    Iterator it = keyset.iterator();
-    int w = 0;
-    while (it.hasNext()) {
-        it.next();
-        w++;
-    }
-    
-    while (ite.hasNext()) {
-        String key = (String) ite.next();
-        Map<String, String> value = (Map) productReviews.get(key);
+                <%
+                    String rating = "";
+                    int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0;
+                %>
+                <%if (productReviewMap.containsKey(s)) {%>
+                <%Map<String, Map<String, String>> productReviews = productReviewMap.get(s);
+                    Set keyset = productReviews.keySet();
+                    Iterator ite = keyset.iterator();
+                    Iterator it = keyset.iterator();
+                    int w = 0;
+                    while (it.hasNext()) {
+                        it.next();
+                        w++;
+                    }
 
-        rating = value.get("rating");
+                    while (ite.hasNext()) {
+                        String key = (String) ite.next();
+                        Map<String, String> value = (Map) productReviews.get(key);
 
-        double val = Double.parseDouble(rating);
-        totalcomments++;
-        if (val != 0.0) {
-            totalratings++;
-        }
-        if (val == 5.0) {
-            freq5++;
-        } else if (val == 4.0) {
-            freq4++;
-        } else if (val == 3.0) {
-            freq3++;
-        } else if (val == 2.0) {
-            freq2++;
-        } else if (val == 1.0) {
-            freq1++;
-        }
+                        rating = value.get("rating");
 
-%>
-<%}%>
-<%}%>
+                        double val = Double.parseDouble(rating);
+                        totalcomments++;
+                        if (val != 0.0) {
+                            totalratings++;
+                        }
+                        if (val == 5.0) {
+                            freq5++;
+                        } else if (val == 4.0) {
+                            freq4++;
+                        } else if (val == 3.0) {
+                            freq3++;
+                        } else if (val == 2.0) {
+                            freq2++;
+                        } else if (val == 1.0) {
+                            freq1++;
+                        }
 
-<!--saving star rating value-->
-    <form  class="starsfreq">
-        <input type="hidden" value="<%=s%>" name="prodid">
-        <input type="hidden" value="<%=freq5%>" name="star5">
-        <input type="hidden" value="<%=freq4%>" name="star4">
-        <input type="hidden" value="<%=freq3%>" name="star3">
-        <input type="hidden" value="<%=freq2%>" name="star2">
-        <input type="hidden" value="<%=freq1%>" name="star1">
-        <input type="hidden" value="<%=totalratings%>">
-    </form>
-    <!--/saving-->
-    <!--getting sum of recommendation star rating-->
-    <%Productdetail pdr_5 = null;%>
-    <%if ((d.size() > 1)) {%>
-    <%--for (int m = 0; m < d.size(); m++) {--%>
-    <%for (int m = 0; m < 4; m++) {%>
-    <%if (m != 0) {%>
-    <%pdr_5 = d.get(m);%>
+                %>
+                <%}%>
+                <%}%>
 
-    <%        
-        String rating2 = "";
-        int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
-    %>
-    <%if (productReviewMap.containsKey(pdr_5.getProdid())) {%>
-    <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_5.getProdid());
-        Set keyset = productReviews.keySet();
-        Iterator ite = keyset.iterator();
-        Iterator it = keyset.iterator();
-        int w = 0;
-        while (it.hasNext()) {
-            it.next();
-            w++;
-        }
+                <!--saving star rating value-->
+                <form  class="starsfreq">
+                    <input type="hidden" value="<%=s%>" name="prodid">
+                    <input type="hidden" value="<%=freq5%>" name="star5">
+                    <input type="hidden" value="<%=freq4%>" name="star4">
+                    <input type="hidden" value="<%=freq3%>" name="star3">
+                    <input type="hidden" value="<%=freq2%>" name="star2">
+                    <input type="hidden" value="<%=freq1%>" name="star1">
+                    <input type="hidden" value="<%=totalratings%>">
+                </form>
+                <!--/saving-->
+                <!--getting sum of recommendation star rating-->
+                <%Productdetail pdr_5 = null;%>
+                <%if ((d.size() > 1)) {%>
+                <%--for (int m = 0; m < d.size(); m++) {--%>
+                <%for (int m = 0; m < 4; m++) {%>
+                <%if (m != 0) {%>
+                <%pdr_5 = d.get(m);%>
 
-        while (ite.hasNext()) {
-            String key = (String) ite.next();
-            Map<String, String> value = (Map) productReviews.get(key);
+                <%
+                    String rating2 = "";
+                    int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
+                %>
+                <%if (productReviewMap.containsKey(pdr_5.getProdid())) {%>
+                <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_5.getProdid());
+                    Set keyset = productReviews.keySet();
+                    Iterator ite = keyset.iterator();
+                    Iterator it = keyset.iterator();
+                    int w = 0;
+                    while (it.hasNext()) {
+                        it.next();
+                        w++;
+                    }
 
-            rating2 = value.get("rating");
+                    while (ite.hasNext()) {
+                        String key = (String) ite.next();
+                        Map<String, String> value = (Map) productReviews.get(key);
 
-            double val = Double.parseDouble(rating2);
-            totalcomments1++;
-            if (val != 0.0) {
-                totalratings1++;
-            }
-            if (val == 5.0) {
-                freq51++;
-            } else if (val == 4.0) {
-                freq41++;
-            } else if (val == 3.0) {
-                freq31++;
-            } else if (val == 2.0) {
-                freq21++;
-            } else if (val == 1.0) {
-                freq11++;
-            }
+                        rating2 = value.get("rating");
 
+                        double val = Double.parseDouble(rating2);
+                        totalcomments1++;
+                        if (val != 0.0) {
+                            totalratings1++;
+                        }
+                        if (val == 5.0) {
+                            freq51++;
+                        } else if (val == 4.0) {
+                            freq41++;
+                        } else if (val == 3.0) {
+                            freq31++;
+                        } else if (val == 2.0) {
+                            freq21++;
+                        } else if (val == 1.0) {
+                            freq11++;
+                        }
 
-    %>
-    
-    <%}%>
-    
-    <form  class="starsfreq">
-        <input type="hidden" value="<%=pdr_5.getProdid()%>" name="prodid">
-        <input type="hidden" value="<%=freq51%>" name="star5">
-        <input type="hidden" value="<%=freq41%>" name="star4">
-        <input type="hidden" value="<%=freq31%>" name="star3">
-        <input type="hidden" value="<%=freq21%>" name="star2">
-        <input type="hidden" value="<%=freq11%>" name="star1">
-        <input type="hidden" value="<%=totalratings1%>">
-    </form>
-    <%freq51=0;freq41=0;freq31=0;freq21=0;freq11=0;%>
-    <%}%> 
+                %>
 
-    <%}%>
-    <%}%>
-    <%} else {%>                    
+                <%}%>
 
-    <%}%>
-    <!--/getting-->
+                <form  class="starsfreq">
+                    <input type="hidden" value="<%=pdr_5.getProdid()%>" name="prodid">
+                    <input type="hidden" value="<%=freq51%>" name="star5">
+                    <input type="hidden" value="<%=freq41%>" name="star4">
+                    <input type="hidden" value="<%=freq31%>" name="star3">
+                    <input type="hidden" value="<%=freq21%>" name="star2">
+                    <input type="hidden" value="<%=freq11%>" name="star1">
+                    <input type="hidden" value="<%=totalratings1%>">
+                </form>
+                <%freq51 = 0;
+        freq41 = 0;
+        freq31 = 0;
+        freq21 = 0;
+        freq11 = 0;%>
+                <%}%> 
+
+                <%}%>
+                <%}%>
+                <%} else {%>                    
+
+                <%}%>
+                <!--/getting-->
 
 
                 <div class="col-md-10 col-sm-10 col-xs-12">
@@ -559,7 +563,7 @@
                                             <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="bar">bar</button>                                            
                                             <button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="scatter" onclick="generateScatterGraph('<%=s%>', 'scatter')">scatter</button>
                                             <!--button class="btn btn-success btn-xs" style="color:black;background: gainsboro; border: gainsboro" id="hide">hide</button-->
-                                            
+
                                         </div>
                                         <h5>Sentiment Score</h5>
                                         <div style="height:200px">
@@ -726,7 +730,7 @@
                                 <h4>Customer Review</h4>
                                 <h5>Total Number of Reviews: <%=totalcomments%></h5>
                                 <h5>Total Number of Ratings: <%=totalratings%></h5>
-                                
+
                                 <div class="row">
                                     <div class="col-md-7">
                                         <table>

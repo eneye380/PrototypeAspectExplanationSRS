@@ -66,7 +66,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#" hdref="../admin/">Management Console</a>
+                            <!--a href="#" hdref="../admin/">Management Console</a-->
                         </li>                        
                         <li>
                             <a href="#">About</a>
