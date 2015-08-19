@@ -73,41 +73,41 @@ $(document).ready(function () {
 
 
 function processAspect() {
-    
+
     var mm = document.getElementsByClassName('comparisonaspects');
     formaspects = mm;
-    
-    for (var y = 0; y < formaspects.length; y++) {
-        y++;
 
-        if (y < 10) {
+    for (var y = 0; y < formaspects.length; y++) {
+
+
+        if (y < 5) {
             var v = formaspects[y].value;
             formarraspect.push(v);
         }
 
     }
     isCompare = true;
-     
+
 }
 var formarr = [];
 var formarraspect = [];
 var formaspects;
 var isCompare = false;
 function compare() {
-    
+
     var yy = document.getElementsByClassName('productsid');
     form1 = yy;
     isCompare = true;
 
     for (var t = 0; t < form1.length; t++) {
-       
+
         var v = form1[t].value;
         formarr.push(v);
     }
     var p = form1[0].value;
     cStatus = true;
     retrievePRJSONDet(p, '1', 'compare', 'star');
-     
+
 
 }
 var form = null;
@@ -115,8 +115,8 @@ var form1 = null;
 var formarray;
 
 $(document).ready(function () {
-    
-    
+
+
     var x = document.getElementsByClassName('starsfreq');
     form = x;
 
@@ -170,21 +170,23 @@ function callRatingGraph(p) {
     console.log('M:callRatingGraph()-AG');
 
 
-if(cStatus===true){
-    var graphStat = ratingGraph('sing', p);
-    
+    if (cStatus === true) {
+        var graphStat = ratingGraph('sing', p);
+
     }
-    if(dStatus===true){
-        
-        ratingGraph('sing',p);
-         ratingGraph('mult',p);
-        
+    if (dStatus === true) {
+
+        ratingGraph('sing', p);
+        ratingGraph('mult', p);
+
     }
-    
+
 }
 function ratingGraph(type, p) {
+    max = null;
+    min = null;
     console.log('M:ratingGraph()-AH');
-    
+
     setRatingArr();
     //type - false/true
     var starr = getRatingArr();
@@ -200,22 +202,22 @@ function ratingGraph(type, p) {
 
     //alert("cont: "+form[0].prodid.value+'obj: '+obj[0].getProductID());
     for (var y = 0; y < obj.length; y++) {
-        
+
         var i = obj[y];
-        
+
         for (var w = 0; w < form.length; w++) {
             if (obj[y].getProductID() === form[w].prodid.value) {
-                
+
                 //console.log("cont: " + form[0].prodid.value + 'obj: ' + obj[0].getProductID());
 
                 var data1 = [];
                 var ticks1 = [];
                 ticks1 = starr;
-                
+
                 //alert(form[w].star1.value);
                 //var t = parseInt(form[w].tot.value);
                 var t;
-                if(cStatus===true){
+                if (cStatus === true) {
                     t = parseInt(form[w].tot.value);
                 }
                 var r5 = parseInt(form[w].star5.value);
@@ -224,18 +226,18 @@ function ratingGraph(type, p) {
                 var r2 = parseInt(form[w].star2.value);
                 var r1 = parseInt(form[w].star1.value);
                 setStarRatings(t, r1, r2, r3, r4, r5);
-                
+
                 data1 = getStarRatings();
-                
+
                 if (type === 'sing') {
                     id = obj[0].getProductID();
-                    
+
                     if (p === undefined) {
-                        
+
                         //alert('yes');
                         s = id + '_r';
                     } else if (p === 'star') {
-                        
+
                         id = obj[y].getProductID();
                         s = id + '_r_comp';
                         var r = 'no_r_' + (y + 1);
@@ -243,24 +245,24 @@ function ratingGraph(type, p) {
                     }
                     setOptions(s, data1, ticks1, ytitle, stitle);
                     myChart();
-                    
+
                     if (y === obj.length - 1) {
-                        
+
                         return true;
                     }
 
                 } else if (type === 'mult') {
-                    
+
                     setSeries(data1, y + 1);
 
                     id = obj[0].getProductID();
 
                     s = id + '_r_mult_rating';
-                    
+
                     if (y === obj.length - 1) {
-                        
+
                         setOptionsS(s, ticks1, ytitle);
-                        
+
                         var n = myChartS();
                         //alert(n);                        
                         return true;
@@ -277,7 +279,7 @@ function show(s, id) {
     var g = id + '_mult_sentiment';
     var q = id + '_r';
     var f = id + '_r_mult_rating';
-    document.getElementById("graphtitle").innerHTML = "Aspect Graph (Query Product)";
+    document.getElementById("graphtitle").innerHTML = "Click a graph on the right to view comparison graph";
     document.getElementById(f).style.display = 'none';
     document.getElementById("rss").style.display = 'none';
     document.getElementById(g).style.display = 'none';
@@ -304,7 +306,7 @@ function showMult(m, n) {
     console.log('M:showMult()-AK');
     var id, s;
     var c = document.getElementsByClassName('product_graph_d');
-    m.style.display = 'none';
+    //m.style.display = 'none';
     for (var b = 0; b < c.length; b++) {
         // c[b].style.display = 'none';
     }
@@ -314,7 +316,7 @@ function showMult(m, n) {
         id = m.id.valueOf();
         s = id + '_mult_sentiment';
         var q = id + "_r";
-        document.getElementById(q).style.display = 'none';
+        //document.getElementById(q).style.display = 'none';
         document.getElementById("graphtitler").style.display = 'none';
         //document.getElementById("rss").innerHTML = 'reset';
         document.getElementById("graphtitle").innerHTML = 'Aspect Graph (Comparison)';
@@ -327,7 +329,7 @@ function showMult(m, n) {
     } else if (n === '2') {
         id = m.id.valueOf();
         s = id + '_mult_rating';
-        document.getElementById(queryP).style.display = 'none';
+        //document.getElementById(queryP).style.display = 'none';
         document.getElementById("graphtitler").style.display = 'none';
         document.getElementById("graphtitle").innerHTML = 'Rating Distribution Graph (Comparison)';
     }
@@ -418,7 +420,61 @@ function aspectSelect(asp, s) {
     }
     console.log(window.document.location.search);
 }
-function productSelect(produ){
+$(document).ready(function () {
+
+});
+//onclick img in category box unchecked
+function selectF() {
+    var c = document.getElementsByClassName('productComp');
+
+    for (var b = 0; b < c.length; b++) {
+        c[b].disabled = false;
+        c[b].checked = false;
+    }
+}
+var data = '';
+var ssent = 0;
+function checkSelection(form) {
+    //alert(t);
+    if (t !== 2) {
+        alert ('please select three products');
+        return false;
+    }
+    var url = 'http://localhost:8080/Prototype_ESRS-war/Visitor/explanations_1/products/product-comparison.jsp?';
+    
+    var c = document.getElementsByClassName('productComp');
+
+    for (var b = 0; b < c.length; b++) {
+        c[b].disabled = false;
+        c[b].checked = false;
+    }    
+    
+    url += data;
+   
+    if(t===2){
+        
+        window.location= url;        
+        
+    }
+}
+var myProdSelections = [];
+function selections(input){
+    if(input.checked===true){
+        myProdSelections.push(input.value);
+        alert('1');
+        alert(myProdSelections.toString());
+        
+    }else if(input.checked===false){
+        myProdSelections.pop();
+        alert('2');
+        alert(myProdSelections.toString());
+    }
+}
+var t = 0;
+var chn = 0;
+var selctArr = [];
+function productSelect(produ) {
+
     console.log('M:aspectSelect()-AP');
     var asarrele = [];
     tempobj = produ;
@@ -427,10 +483,11 @@ function productSelect(produ){
 
     asarr.push(aspect);
     tempobj.disabled = true;
-
+    //alert(tempobj.value);
+    selctArr.push(tempobj.value);
     if (asarr.length > 0) {
         if (iii < 2) {
-            
+            t++;
             iii++;
         } else {
             var c = document.getElementsByClassName('productComp');
@@ -440,6 +497,14 @@ function productSelect(produ){
             }
         }
     }
+    
+            if (chn === 0) {
+                data += 's=' + tempobj.value;
+                chn++;
+            } else {
+                data += '&s=' + tempobj.value;
+            }
+       
 }
 
 function clearSelection(a) {
@@ -461,7 +526,7 @@ function clearSelection(a) {
 //var queryP;
 var stat = false;
 function retrievePRJSONDet(queryProduct, opt, page, rate) {
-    
+
     console.log('M:retrievePRJSONDet()-RR');
     var arr = [];
     arr = formarr;
@@ -495,7 +560,7 @@ function retrievePRJSONDet(queryProduct, opt, page, rate) {
             setQRJSONOfProductDetails(msg, queryProduct);
             queryP = queryProduct;
             processAspect();
-            
+
             if (page === 'detail') {
                 console.log('R1');
                 stat = writeMe(opt, null);
@@ -515,23 +580,23 @@ function retrievePRJSONDet(queryProduct, opt, page, rate) {
                 showGraphOnCompare(page);
                 //alert('2');
                 callRatingGraph(rate);
-                
+
                 console.log('R6');
                 console.log('status: ' + status);
-                
+
                 if (stat === true) {
-                   
+
                     console.log('R7');
                     grStatus = showGraphOnCompare(page);
                     console.log('R8');
                     if (grStatus === true) {
-                         
+
                         console.log('R9');
                         if (rate === 'star') {
-                            
+
                             console.log('R10');
                             callRatingGraph(rate);
-                            
+
                             console.log('R11');
                         }
                     }
@@ -571,21 +636,22 @@ function retrievePRJSONDetail(queryProduct, opt, page, rate) {
         datatype: dtype,
         success: function (msg) {
             console.log("Ajax Call Successful");
-
+            console.log(msg);
             queryP = queryProduct;
             setProductJSONDetails(msg);
             setQRArrayOfProductList(msg);
             setQRJSONOfProductDetails(msg, queryProduct);
             processAspect();//overrides the default aspect selections
+
             if (page === 'detail') {
 
                 console.log('R1');
-                
+
                 dStatus = true;
                 status = writeMe(opt, null);
-                
+
                 grStatus = callRatingGraph();
-                
+
                 console.log('R2');
                 if (status === true) {
 
@@ -599,18 +665,18 @@ function retrievePRJSONDetail(queryProduct, opt, page, rate) {
             if (page === 'compare') {
                 console.log('R5');
                 writeMe(opt, null);
-                
+
                 showGraphOnCompare(page);
-                
+
                 cStatus = true;
                 callRatingGraph(rate);
-                
+
                 console.log('R6');
-                
+
                 console.log('status: ' + status);
-                
+
                 if (status === true) {
-                    
+
                     console.log('R7');
                     grStatus = showGraphOnCompare(page);
 
@@ -705,6 +771,8 @@ var tt = " ";
 //alert(isCompare);
 setAspectArr();
 function writeMe(n, as, dID) {
+    max = 1.0;
+    min = -1.0;
     console.log('M:writeMe()-G');
     var ytitle = 'Score';
     var stitle = 'Aspect';
@@ -736,8 +804,8 @@ function writeMe(n, as, dID) {
         for (var k = 0; k < aspectArr.length; k++) {
 
             var q = 0.0;
-            q = value(i.getJsonDetail().aspects[aspectArr[k]].score, s);
-            var v = parseFloat(q);
+            q = value(i.getJsonDetail().aspects[aspectArr[k]].score, s);//nomilised value
+            var v = parseFloat(q);//nomilised value
 
             var ll = i.getJsonDetail().aspects[aspectArr[k]].score;
             var l = parseFloat(ll);
@@ -750,46 +818,46 @@ function writeMe(n, as, dID) {
 
         }
         if (n === "1") {
-           
+
             setSeries(data1, y + 1);
             var id;
             if (dID === undefined) {
-                 
+
                 id = obj[0].getProductID();
             } else {
-                
+
                 id = dID;
             }
             if (y === obj.length - 1) {
-                
+
                 setOptionsS(id, ticks1, ytitle);
                 var st = myChartS();
                 //alert(st);
                 return st;
             }
-            
+
 
         } else if (n === "2") {
-            
+
             if (dID === undefined) {
-                
+
                 setOptions(i.getProductID(), data1, ticks1, ytitle, stitle);
             } else if (dID === 'compare') {
-                
+
                 var id = i.getProductID() + '_comp';
                 //alert(id);
                 setOptions(id, data1, ticks1, ytitle, stitle);
-                
+
             } else {
-                
+
                 setOptions(dID, data1, ticks1, ytitle, stitle);
             }
 
 
             myChart();
-            if(dStatus === true){
+            if (dStatus === true) {
                 return true;
-            }            
+            }
             //exits this loop
             if (y === obj.length - 1) {
 
@@ -896,6 +964,7 @@ function getSeries() {
     series = [];
     return s;
 }
+var max = null, min = null;
 var options;
 function setOptions(placeholder, data, ticks, ytitle, stitle) {
     console.log('M:setOptions()-S');
@@ -906,7 +975,7 @@ function setOptions(placeholder, data, ticks, ytitle, stitle) {
             type: 'column'
         },
         title: {
-            text: ''
+            text: null
         },
         xAxis: {
             categories: ticks
@@ -914,7 +983,9 @@ function setOptions(placeholder, data, ticks, ytitle, stitle) {
         yAxis: {
             title: {
                 text: ytitle
-            }
+            },
+            min: min,
+            max: max
         },
         series: [{
                 name: stitle,

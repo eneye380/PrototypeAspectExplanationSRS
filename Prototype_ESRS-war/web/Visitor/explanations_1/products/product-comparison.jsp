@@ -113,6 +113,13 @@
             "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"};
     %>
 
+    <jsp:useBean id="aspectImport" class="aspect.controller_bean.AspectImportance" scope="request"/>
+<%
+    ArrayList<String> aspImp = aspectImport.getRankedAspects();
+%>
+
+<%--=aspImp--%>
+    
     <%
         //String s1 = request.getParameter("s1");
         //String s2 = request.getParameter("s2");
@@ -293,6 +300,7 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">                                
                         <h5 style="color: whitesmoke"><strong>Product Comparison</strong></h5>
+                        <h6 class="text-uppercase" style="color:rgb(230,240,250)"><%=session.getAttribute("category")%></h6>
                     </div>
                 </div>
 
@@ -325,12 +333,13 @@
                             Set k = qPS.keySet();
                             Iterator i = k.iterator();
                             //count = 0;
-                            while (i.hasNext()) {
-
-                                String key = (String) i.next();
+                            //while (i.hasNext()) {
+                                for(int u = 0;u<aspImp.size();u++){
+                                //String key = (String) i.next();
+                                     String key = aspImp.get(u);
                                 //Map<String, Number> value = (Map) qPS.get(key);
-                                int sent = products.size() - 1;
-                                for (int b = 1; b < products.size(); b++) {
+                                int sent = products.size();
+                                for (int b = 0; b < products.size(); b++) {
                                     Map<String, Map<String, Number>> rPS = productScoresMap.get(products.get(b));
                                     if (rPS.containsKey(key)) {
                                         sent--;
@@ -401,7 +410,7 @@
                                     <!--li><%=key%> : <%=a%></li-->
                                     <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
                                     <!--div class="checkbox"--><label class='checkbox-inline'><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label><!--/div-->                            
-
+                                   
 <!--li><%=key%></li-->
                                     <%--}--%>
                                     <%}%>
@@ -672,7 +681,7 @@
                     <%if ((d.size() > 1)) {%>
                     <%--for (int m = 0; m < d.size(); m++) {--%>
 
-                    <div class="row" id="aspects_table" style="display:">
+                    <!--div class="row" id="aspects_table" style="display:">
                         <div class="col-lg-12">                                
                             <h4 style="color:grey">Table of Aspects</h4>  
 
@@ -726,7 +735,7 @@
                             </table>
 
                         </div>
-                    </div>
+                    </div-->
                 </div>                        
             </div>
         </div>

@@ -50,7 +50,9 @@
 <script src="https://cdn.jsdelivr.net/jquery.flot.tooltip/0.8.4/jquery.flot.tooltip.min.js" type="text/javascript" ></script>
 <script src="http://code.highcharts.com/highcharts.js" type="text/javascript" ></script>
 
-
+<%
+    session.setAttribute("category",request.getParameter("category"));
+%>
 
 
 <div class="container" id="pbody">
@@ -149,11 +151,12 @@
 
 
             <div class="well text-center">   
+                 <form id='prod'>
+                    <input type="button" class='pull-right' form='prod' value="compare" onclick= 'return checkSelection(this.form)'>
                 <div class="caption">
                     <h3 class="text-uppercase" style="color:rgb(10,50,50)"><%=request.getParameter("category")%></h3>
                 </div>
-                <!--form action="product-comparison.jsp" style="display:inline"-->
-                    <!--input type="submit" value="compare"-->
+               
                     <%Productdetail pdr = null;%>
                     <%if ((d.size() > 1)) {%>
                     <%int o = 0;%>
@@ -167,70 +170,40 @@
                         }
 
                     %>
-                    <%if (m == 1 || m == 5 || m == 9) {%>
+                    <%--if (m == 1 || m == 5 || m == 9) {--%>
+                    <%if (m % 4 == 1) {%>
                     <div class="row text-center">
                         <%}%>
 
                         <div class="col-md-3 col-sm-6 col-xs-12 hero-feature">
 
                             <div class="thumbnail">
-                                <p><span class="pull-right" style="color: goldenrod"><%=m%></span></p>
-                                <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img src="../../../img/<%=pdr.getProdid()%>.jpg" alt="" class="img-thumbnail" title="click to view recommendations" style="height:100px;width:50%"></a>
+                                <p><span class="pull-right" style="color: goldenrod"><%--=m--%></span></p>
+                                <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" class="img-thumbnail" title="click to view recommendations" style="height:100px;width:50%" onclick='selectF()'></a>
+                                
                                 <div class="caption">
                                     <!--h3>Canon E0S 60D 18MP</h3-->
                                     <div style="height: 20px;overflow: hidden"><h6><%=pdr.getName()%></h6></div>
+                                     <input type="checkbox" name="s" form="prod" value="<%=pdr.getProdid()%>" class="productComp" onclick="productSelect(this)">
                                     <!--p>Canon E0S 60D 18MP</p-->
                                     <p>
-                                        <!--a href="productview.jsp" class="btn btn-primary">View</a> <a href="#" class="btn btn-default"></a-->
-                                        <!--form action="product-recommendation-detail.jsp" style="display:inline"-->
-                                        <!--input type="checkbox" name="s" id="prod_4" value="<%=pdr.getProdid()%>" class="productComp" onclick="productSelect(this)"-->
-                                        <!--input type="checkbox" name="product" id="prod_4" value="<%=pdr.getProdid()%>" class="productComp" onclick="productSelect(this)"-->
-                                        <!--input type="submit" value="View" class="btn btn-primary" -->
-                                        <!--span>compare</span-->
-                                        <!--/form-->
-                                        <!--form action="product-detail.jsp" style="display:inline">
-                                            <input type="hidden" name="product" id="prod_4" value="<%=pdr.getProdid()%>">
-                                            <input type="submit" value="Detail" class="btn btn-primary" >
-                                        </form-->
+                                        
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <%if (m == 4 || m == 8) {%>
+                        <%--if (m == 4 || m == 8) {--%>
+                        <%if (m % 4 == 0) {%>
                     </div>
                     <%}%>
-                    <!--div class="row recommendataion">
-                    <%=m%>
-                    <h4 class ="rec_prodname_h4" id="rec_prodname_3"><%=pdr.getName()%></h4>
-                    <div class="col-md-12 col-sm-12 col-xs-12">  
-                        <div class="row">                            
-                            <div class="col-md-4 col-sm-6 col-xs-12 thumbnail" >
-                                <p class="nhidden">Product Name<span class="pull-right"></span></p>
-                                <img class="img-responsive" src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdr.getProdid()%>" style="height:180px" id="recomm_prod_img_1">
-                            </div>                                
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 text-center">
-                                <p>
-                                <form action="products.jsp" onsubmit1="return retrievePaR(this)">
-                                    <input type="hidden" name="product" id="prod_4" value="<%=pdr.getProdid()%>">
-                                    <input type="submit" value="View" class="btn btn-primary" >
-                                </form>
-                                </p>
-                            </div>
-                        </div>
-                        <span class="pull-left" style="color:white"></span>
-    
-                    </div>
-                </div-->
-
+                    
                     <!--hr-->
                     <%}%>
                     <%}%>
                     <%} else {%>                    
                     <h4 style="color:red">Sorry No Products Currently Available</h4>
                     <%}%>
-                <!--/form-->
+                </form>
             </div>
         </div>
 </div>

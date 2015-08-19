@@ -166,9 +166,23 @@ public class DBUpdate {
 
         System.out.println(conn);
     }
-    public void insertRecommendation(String[] s) {
+    public void insertRecommendationA(String[] s) {
 
-        String sqlString = "INSERT INTO ProductRecommendation VALUES('" + s[0] + "'," + s[1] + ")";
+        String sqlString = "INSERT INTO ProductRecommendation (queryproduct,recommendation) VALUES('" + s[0] + "','" + s[1] + "')";
+
+        try {
+            conn = dbConnect.getDbConnection();
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sqlString);
+            statement.executeUpdate(sqlString);
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public void insertRecommendation(String s1, String s2) {
+
+        String sqlString = "INSERT INTO ProductRecommendation (queryproduct,recommendation) VALUES('" + s1 + "','" + s2 + "')";
 
         try {
             conn = dbConnect.getDbConnection();
@@ -184,7 +198,7 @@ public class DBUpdate {
     public void insertRecordA(String[] s, File file) {
         //System.out.println("name-|- "+file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf(".")));
         String productid = file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf("."));
-        String sqlString = "INSERT INTO ProductAspectSentiment VALUES('"+productid+"','" + s[0] + "'," + s[1] + "," + s[2] + "," + s[3] + ")";
+        String sqlString = "INSERT INTO ProductAspectSentiment VALUES('"+productid+"','" + s[0] + "','" + s[1] + "','" + s[2] + "','" + s[3] + "')";
 
         try {
             conn = dbConnect.getDbConnection();
@@ -249,10 +263,10 @@ public class DBUpdate {
     public static void main(String argv[]) throws SQLException {
         DBUpdate d = new DBUpdate();
         //run to create table
-        d.createProductReviewTab();
-        d.createProductAspectSentimentTab();
-        d.createProductBoughtAfterTab();
-        d.createProductDetailTab();
+        //d.createProductReviewTab();
+        //d.createProductAspectSentimentTab();
+        //d.createProductBoughtAfterTab();
+        //d.createProductDetailTab();
         d.createRecommendation();
     }
     
