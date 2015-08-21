@@ -683,7 +683,7 @@
 
                         <div class="" style="margin-top: 10px">
                             <button type="button" class="btn btn-primary btn-xs" id="button_aspect">view/hide Aspects</button>
-                            <button type="button" class="btn btn-primary btn-xs" id="button_aspect_reset" onclick="clearSelection('1')">Reset Graph</button>
+                            <button type="button" class="btn btn-primary btn-xs" id="button_aspect_reset" onclick="clearSelection('2')">Reset Graph</button>
                             <span class="pull-right" style="color:black"><%=count%> aspects</span>
                         </div>
                     <p class='text-primary' style="">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>

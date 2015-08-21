@@ -104,11 +104,7 @@ public class RecommendationSB implements RecommendationSBLocal, Serializable {
             while (rs.next()) {
                 //Queryproductandrecommendation p = new Queryproductandrecommendation();
                 ProductrecommendationPK p = new ProductrecommendationPK();
-                //p.setQueryProduct(rs.getString(1));
-                //p.setName(rs.getString(2));
-                //p.setRecommProduct1(rs.getString(3));
-                //p.setRecommProduct2(rs.getString(4));
-                //p.setRecommProduct3(rs.getString(5));
+                
                 p.setQueryproduct(rs.getString(1));
                 p.setRecommendation(rs.getString(2));
                 collec.add(p);

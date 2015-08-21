@@ -5,7 +5,6 @@
  */
 package aspect.db_connection;
 
-import aspect.model.Productdetail;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,15 +17,14 @@ import java.util.ArrayList;
  *
  * @author eneye380
  */
-public class DBUpdate {
-
-    private Connection conn;
+public class DatabaseUpdate {
+     private Connection conn;
     private ResultSet rs;
     private PreparedStatement ps, pp;
     private DatabaseConnection dbConnect;
     private ArrayList<String> tableNames;
 
-    public DBUpdate() throws SQLException {
+    public DatabaseUpdate() throws SQLException {
         dbConnect = new DatabaseConnection();
     }
 
@@ -57,8 +55,8 @@ public class DBUpdate {
         try {
 
             conn = dbConnect.getDbConnection();
-            ps = conn.prepareStatement(sqlString);
-            rs = ps.executeQuery();
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sqlString);
             System.out.println("successfull");
 
         } catch (SQLException e) {
@@ -71,17 +69,17 @@ public class DBUpdate {
     public void createProductDetailTab() {
         String sqlString
                 = "CREATE TABLE IF NOT EXISTS ProductDetail("
-                + "prodid varchar(12), "
-                + "name varchar(64),"
+                + "prodid varchar(15), "
+                + "name text,"
                 + "date varchar(12),"
                 + "rank varchar(10),"
                 + "price varchar(10),"
-                + "category varchar(32),"
+                + "category varchar(64),"
                 + "rating varchar(10),"
                 + "nreviews varchar(10),"
                 + "ncomments varchar(10),"
-                + "nquestions varchar(10),"
-                + "url varchar(128),"
+                + "nquestions LONGBLOB,"
+                + "url text,"
                 + "PRIMARY KEY(prodid)"
                 + ")";
 
@@ -100,11 +98,11 @@ public class DBUpdate {
     public void createProductReviewTab() {
         String sqlString
                 = "CREATE TABLE IF NOT EXISTS ProductReview("
-                + "author varchar(32), "
-                + "prodid varchar(12),"
+                + "author varchar(64), "
+                + "prodid varchar(15),"
                 + "badges varchar(32),"
                 + "helpfulranking varchar(10),"
-                + "title varchar(255),"
+                + "title varchar(512),"
                 + "date varchar(12),"
                 + "rating varchar(10),"
                 + "npeopleuseful varchar(10),"
@@ -131,7 +129,7 @@ public class DBUpdate {
         String sqlString
                 = "CREATE TABLE IF NOT EXISTS ProductBoughtAfter("
                 + "prodid varchar(12), "
-                + "productboughtafterurl varchar(256)"
+                + "productboughtafterurl text"
                 + ")";
 
         try {
@@ -149,9 +147,28 @@ public class DBUpdate {
     public void createRecommendation() {
         String sqlString
                 = "CREATE TABLE IF NOT EXISTS ProductRecommendation("
-                + "queryproduct varchar(12), "
-                + "recommendation varchar(12),"
+                + "queryproduct varchar(15), "
+                + "recommendation varchar(15),"
                 + "PRIMARY KEY(queryproduct,recommendation)"
+                + ")";
+
+        try {
+            conn = dbConnect.getDbConnection();
+            Statement statement = conn.createStatement();
+            statement.executeUpdate(sqlString);
+            System.out.println("successfull");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        System.out.println(conn);
+    }
+    public void createCategory() {
+        String sqlString
+                = "CREATE TABLE IF NOT EXISTS Productcategory("
+                + "category varchar(64), "                
+                + "PRIMARY KEY(category)"
                 + ")";
 
         try {
@@ -175,6 +192,7 @@ public class DBUpdate {
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlString);
             statement.executeUpdate(sqlString);
+            System.out.println("Successfull-");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -189,6 +207,7 @@ public class DBUpdate {
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlString);
             statement.executeUpdate(sqlString);
+            System.out.println("Successfull-");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -197,7 +216,7 @@ public class DBUpdate {
 
     public void insertRecordA(String[] s, File file) {
         //System.out.println("name-|- "+file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf(".")));
-        String productid = file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().indexOf("."));
+        String productid = file.getName().substring( file.getName().lastIndexOf("-")+1, file.getName().lastIndexOf("."));
         String sqlString = "INSERT INTO ProductAspectSentiment VALUES('"+productid+"','" + s[0] + "','" + s[1] + "','" + s[2] + "','" + s[3] + "')";
 
         try {
@@ -205,6 +224,7 @@ public class DBUpdate {
             Statement statement = conn.createStatement();
             statement.executeUpdate(sqlString);
             statement.executeUpdate(sqlString);
+            System.out.println("Successfull-");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -244,9 +264,9 @@ public class DBUpdate {
         }
     }
 
-    public void insertRecordV(String id,String s) {
+    public void insertRecordV(String s) {
 
-        String sqlString = "INSERT INTO ProductBoughtAfter VALUES('" + id + "','" + s + "')";
+        String sqlString = "INSERT INTO ProductBoughtAfter VALUES('B00427Z7NM','" + s + "')";
 
         try {
 
@@ -261,13 +281,14 @@ public class DBUpdate {
     }
 
     public static void main(String argv[]) throws SQLException {
-        DBUpdate d = new DBUpdate();
+        DatabaseUpdate d = new DatabaseUpdate();
         //run to create table
         //d.createProductReviewTab();
         //d.createProductAspectSentimentTab();
-        //d.createProductBoughtAfterTab();
+        //d.createCategory();
+        d.createProductBoughtAfterTab();
         //d.createProductDetailTab();
-        d.createRecommendation();
+        //d.createRecommendation();
     }
     
     public static void executeA(int i, String[] s){

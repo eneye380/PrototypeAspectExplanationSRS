@@ -30,8 +30,8 @@ public class AspectImportance implements AspectImportanceLocal {
     private DBUpdate dbupdate;
 
     public static void main(String argv[]) {
-        AspectImportance ai = new AspectImportance();
-        ai.readRecommendations(null);
+        //AspectImportance ai = new AspectImportance();
+        //ai.readRecommendations(null);
     }
 
     public AspectImportance() {
@@ -46,14 +46,29 @@ public class AspectImportance implements AspectImportanceLocal {
         this.rankedAspects = rankedAspects;
     }
 
+    public void setRankedCategory(String cat) {
+        if (cat.equalsIgnoreCase("digital slr")) {
+            path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\DSLR Aspect Importance List.txt";
+
+        } else if (cat.equalsIgnoreCase("compact")) {
+            path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\Compact cameras Aspect Importance List.txt";
+        } else if (cat.equalsIgnoreCase("laptops")) {
+            path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\Laptops Aspect Importance List.txt";
+        } else if (cat.equalsIgnoreCase("tablets")) {
+            path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\Tablets Aspect Importance List.txt";
+        }
+        this.readAspects(path);
+        path = "";
+    }
+
     public void readAspects(String p) {
         rankedAspects = new ArrayList<>();
         int i = 1;
         int n = 0;
-        path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\DSLR Aspect Importance List.txt";
+        //path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\DSLR Aspect Importance List.txt";
         //path += p;
-        File aspects = new File(path);
-        File count = new File(path);
+        File aspects = new File(p);
+        File count = new File(p);
 
         try {
             Scanner test = new Scanner(count);
@@ -93,7 +108,7 @@ public class AspectImportance implements AspectImportanceLocal {
          }*/
         //uncomment to use
         //dbupdate.insertRecordR(dataValue);
-        System.out.println("LIST" + rankedAspects);
+        //System.out.println("LIST" + rankedAspects);
         path = "";
 
     }
@@ -117,7 +132,7 @@ public class AspectImportance implements AspectImportanceLocal {
             System.out.print("File does not exist");
         }
         //System.out.println(n);
-        String qp="",pr="";
+        String qp = "", pr = "";
         try {
             try (Scanner aspinput = new Scanner(aspects)) {
 
@@ -129,16 +144,16 @@ public class AspectImportance implements AspectImportanceLocal {
                     if (!line.equalsIgnoreCase("")) {
                         String pre = line.substring(0, line.lastIndexOf(":"));
                         String id = line.substring(line.lastIndexOf(":") + 1, line.lastIndexOf(""));
-                        if(pre.equalsIgnoreCase("qp")){
+                        if (pre.equalsIgnoreCase("qp")) {
                             qp = id;
                             //System.out.println(i + "-queryproduct:" + id);
-                        }else if(pre.equalsIgnoreCase("p")){
+                        } else if (pre.equalsIgnoreCase("p")) {
                             pr = id;
                             //System.out.println(i + "-productrecommended:" + id);
-                            System.out.println(i+" -:- "+qp+" : "+pr);
-                            
-                        }                        
-                    }                    
+                            System.out.println(i + " -:- " + qp + " : " + pr);
+
+                        }
+                    }
                     i++;
                     //break;
                 }
@@ -147,7 +162,7 @@ public class AspectImportance implements AspectImportanceLocal {
             System.out.println("File does not exist");
         }
         System.out.println(i);
-        
+
         path = "";
 
     }

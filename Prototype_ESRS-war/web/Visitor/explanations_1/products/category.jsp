@@ -179,7 +179,7 @@
 
                             <div class="thumbnail">
                                 <p><span class="pull-right" style="color: goldenrod"><%--=m--%></span></p>
-                                <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" class="img-thumbnail" title="click to view recommendations" style="height:100px;width:50%" onclick='selectF()'></a>
+                                <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdr.getProdid()%>" class="img-thumbnail" title="click to view recommendations" style="height:100px;width:50%" onclick='selectF()'></a>
                                 
                                 <div class="caption">
                                     <!--h3>Canon E0S 60D 18MP</h3-->

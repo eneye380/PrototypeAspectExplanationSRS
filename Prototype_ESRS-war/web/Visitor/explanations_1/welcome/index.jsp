@@ -76,7 +76,7 @@
                     <p>
                         <!--a href="productview.jsp" class="btn btn-primary">View</a> <a href="#" class="btn btn-default"></a-->
                     <form action="../products/category.jsp" onsubmit1="return retrievePaR(this)">
-                        <input type="hidden" name="category" id="prod_3" value="laptop">
+                        <input type="hidden" name="category" id="prod_3" value="laptops">
                         <input type="submit" value="View" class="btn btn-primary" >
                     </form>
                     </p>
@@ -94,7 +94,7 @@
                     <p>
                         <!--a href="productview.jsp" class="btn btn-primary">View</a> <a href="#" class="btn btn-default"></a-->
                     <form action="../products/category.jsp" onsubmit1="return retrievePaR(this)">
-                        <input type="hidden" name="category" id="prod_4" value="tablet">
+                        <input type="hidden" name="category" id="prod_4" value="tablets">
                         <input type="submit" value="View" class="btn btn-primary" >
                     </form>
                     </p>

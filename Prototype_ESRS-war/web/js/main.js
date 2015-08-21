@@ -197,6 +197,7 @@ function ratingGraph(type, p) {
 
     var ytitle = 'Frequency';
     var stitle = 'Star Rating';
+    //var stitle = null;
     var obj = readMe();
 
 
@@ -243,7 +244,8 @@ function ratingGraph(type, p) {
                         var r = 'no_r_' + (y + 1);
                         document.getElementById(r).innerHTML = t;
                     }
-                    setOptions(s, data1, ticks1, ytitle, stitle);
+                    //setOptions(s, data1, ticks1, ytitle, stitle);
+                    setOptionsF(s, data1, ticks1, ytitle, stitle);
                     myChart();
 
                     if (y === obj.length - 1) {
@@ -279,7 +281,7 @@ function show(s, id) {
     var g = id + '_mult_sentiment';
     var q = id + '_r';
     var f = id + '_r_mult_rating';
-    document.getElementById("graphtitle").innerHTML = "Click a graph on the right to view comparison graph";
+    document.getElementById("graphtitle").innerHTML = "Aspect Graph";
     document.getElementById(f).style.display = 'none';
     document.getElementById("rss").style.display = 'none';
     document.getElementById(g).style.display = 'none';
@@ -306,7 +308,7 @@ function showMult(m, n) {
     console.log('M:showMult()-AK');
     var id, s;
     var c = document.getElementsByClassName('product_graph_d');
-    //m.style.display = 'none';
+    m.style.display = 'none';
     for (var b = 0; b < c.length; b++) {
         // c[b].style.display = 'none';
     }
@@ -316,7 +318,7 @@ function showMult(m, n) {
         id = m.id.valueOf();
         s = id + '_mult_sentiment';
         var q = id + "_r";
-        //document.getElementById(q).style.display = 'none';
+        document.getElementById(q).style.display = 'none';
         document.getElementById("graphtitler").style.display = 'none';
         //document.getElementById("rss").innerHTML = 'reset';
         document.getElementById("graphtitle").innerHTML = 'Aspect Graph (Comparison)';
@@ -329,7 +331,7 @@ function showMult(m, n) {
     } else if (n === '2') {
         id = m.id.valueOf();
         s = id + '_mult_rating';
-        //document.getElementById(queryP).style.display = 'none';
+        document.getElementById(queryP).style.display = 'none';
         document.getElementById("graphtitler").style.display = 'none';
         document.getElementById("graphtitle").innerHTML = 'Rating Distribution Graph (Comparison)';
     }
@@ -437,34 +439,34 @@ var ssent = 0;
 function checkSelection(form) {
     //alert(t);
     if (t !== 2) {
-        alert ('please select three products');
+        alert('please select three products');
         return false;
     }
     var url = 'http://localhost:8080/Prototype_ESRS-war/Visitor/explanations_1/products/product-comparison.jsp?';
-    
+
     var c = document.getElementsByClassName('productComp');
 
     for (var b = 0; b < c.length; b++) {
         c[b].disabled = false;
         c[b].checked = false;
-    }    
-    
+    }
+
     url += data;
-   
-    if(t===2){
-        
-        window.location= url;        
-        
+
+    if (t === 2) {
+
+        window.location = url;
+
     }
 }
 var myProdSelections = [];
-function selections(input){
-    if(input.checked===true){
+function selections(input) {
+    if (input.checked === true) {
         myProdSelections.push(input.value);
         alert('1');
         alert(myProdSelections.toString());
-        
-    }else if(input.checked===false){
+
+    } else if (input.checked === false) {
         myProdSelections.pop();
         alert('2');
         alert(myProdSelections.toString());
@@ -497,14 +499,14 @@ function productSelect(produ) {
             }
         }
     }
-    
-            if (chn === 0) {
-                data += 's=' + tempobj.value;
-                chn++;
-            } else {
-                data += '&s=' + tempobj.value;
-            }
-       
+
+    if (chn === 0) {
+        data += 's=' + tempobj.value;
+        chn++;
+    } else {
+        data += '&s=' + tempobj.value;
+    }
+
 }
 
 function clearSelection(a) {
@@ -776,6 +778,7 @@ function writeMe(n, as, dID) {
     console.log('M:writeMe()-G');
     var ytitle = 'Score';
     var stitle = 'Aspect';
+    //var stitle = null;
     console.log(dID);
     if (as !== null) {
         var aspectArr = as;
@@ -987,7 +990,49 @@ function setOptions(placeholder, data, ticks, ytitle, stitle) {
             min: min,
             max: max
         },
+        credits: {
+            enabled: false
+        },
         series: [{
+                showInLegend: false,               
+                name: stitle,
+                data: data
+            }]
+    };
+
+
+}
+function setOptionsF(placeholder, data, ticks, ytitle, stitle) {
+    console.log('M:setOptions()-S');
+    options = null;
+    options = {
+        chart: {
+            renderTo: placeholder,
+            type: 'column'
+        },
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: ticks
+        },
+        yAxis: {
+            title: {
+                text: ytitle
+            },
+            min: min,
+            max: max
+        },
+        plotOptions: {
+            series: {
+                color: '#FFD300'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+                showInLegend: false,               
                 name: stitle,
                 data: data
             }]
@@ -1025,6 +1070,9 @@ function setOptionsS(placeholder, ticks, ytitle) {
             title: {
                 text: ytitle
             }
+        },
+        credits: {
+            enabled: false
         },
         series: getSeries()
     };
@@ -1131,7 +1179,11 @@ function scatterChart(data, p) {
                 text: 'Frequency'
             }
         },
+        credits: {
+            enabled: false
+        },
         legend: {
+            showInLegend: false,               
             layout: 'vertical',
             align: 'left',
             verticalAlign: 'top',

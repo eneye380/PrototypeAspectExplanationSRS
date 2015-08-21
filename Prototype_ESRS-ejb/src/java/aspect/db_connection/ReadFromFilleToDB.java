@@ -185,7 +185,7 @@ public class ReadFromFilleToDB {
                 while (aspinput.hasNext()) {
                     
                     if(i==n-1){
-                        sentinel  = true;
+                        sentinel  = false;
                     }
                     line = aspinput.nextLine();
                     processAspects(line, file);
@@ -251,14 +251,14 @@ public class ReadFromFilleToDB {
                                 /**
                                  * Inserts into productsboughtafter table
                                  */
-                                //dbupdate.insertRecordV(l[m]);
+                                dbupdate.insertRecordV(dataValue[1],l[m]);
                                 System.out.println(l[m]);
                             } else if (m == 0) {
                                 String s = l[m].substring(20);
                                 /**
                                  * Inserts into productsboughtafter table
                                  */
-                                //dbupdate.insertRecordV(s);
+                                dbupdate.insertRecordV(dataValue[1],s);
                                 System.out.println(s);
                             }
                         }
@@ -276,9 +276,9 @@ public class ReadFromFilleToDB {
         /**
          * Inserts into product details table
          */
-        dbupdate.insertRecordD(dataValue);
+        //dbupdate.insertRecordD(dataValue);
         for (int nn = 0; nn < dataValue.length; nn++) {
-           System.out.println(dataKey[nn] + " : " + dataValue[nn]);
+           System.out.println(nn+ " : "+dataKey[nn] + " : " + dataValue[nn]);
         }
         path = "";
 
@@ -311,7 +311,7 @@ public class ReadFromFilleToDB {
         }
 
         //sentinel = true;
-        if (sentinel == false) {
+        if (sentinel == true) {
             msg += ",\n";
             //sentinel = true;
         } else {

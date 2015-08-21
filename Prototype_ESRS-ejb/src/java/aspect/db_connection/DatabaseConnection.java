@@ -18,7 +18,7 @@ import java.sql.DriverManager;
 public class DatabaseConnection {
 
     private final String db = "db1409777_esrs";
-    private final String url = "jdbc:mysql://localhost:3306/db1409777_esrs";
+    private final String url = "jdbc:mysql://localhost:3306/db1409777_srs";
     private final String username = "root";
     private final String password = "";
     private final Connection conn;

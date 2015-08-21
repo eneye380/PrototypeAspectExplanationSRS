@@ -37,4 +37,8 @@
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <exception-type>org.apache.jasper.JasperException: java.lang.NullPointerException</exception-type>
+        <location>/Visitor/explanations_1/error/errorPage.jsp</location>
+    </error-page>
 </web-app>

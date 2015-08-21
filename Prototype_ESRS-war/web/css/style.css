@@ -17,3 +17,26 @@ footer {
     
    
 }
+
+.label_2{
+    font-weight: bold;
+}
+table.table_1{
+    //border: 1px solid black;
+    //table-layout: fixed;
+    width: 2000px;
+}
+
+table.table_1 th{
+     
+    //border: 1px solid black;
+    overflow: hidden;
+    width: 300px;
+}
+table.table_1 td{
+     
+    //border: 1px solid black;
+    overflow: hidden;
+    width: 300px;
+}
+    

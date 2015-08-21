@@ -92,7 +92,7 @@
                 top:-70px;
             }
             .desc{
-                color:sienna;    
+                color:black;    
                 text-align: center;
             }
             span.stars, span.stars span {
@@ -333,13 +333,13 @@
                             Set k = qPS.keySet();
                             Iterator i = k.iterator();
                             //count = 0;
-                            //while (i.hasNext()) {
-                                for(int u = 0;u<aspImp.size();u++){
-                                //String key = (String) i.next();
-                                     String key = aspImp.get(u);
+                            while (i.hasNext()) {
+                            //    for(int u = 0;u<aspImp.size();u++){
+                                String key = (String) i.next();
+                                //     String key = aspImp.get(u);
                                 //Map<String, Number> value = (Map) qPS.get(key);
-                                int sent = products.size();
-                                for (int b = 0; b < products.size(); b++) {
+                                int sent = products.size()-1;
+                                for (int b = 1; b < products.size(); b++) {
                                     Map<String, Map<String, Number>> rPS = productScoresMap.get(products.get(b));
                                     if (rPS.containsKey(key)) {
                                         sent--;
@@ -362,7 +362,7 @@
                 <div class="well aspect">
                     <div class="thumbnail">
                         <%if (d.size() > 0) {%>
-                        <h6 style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h6>
+                        <h4 style="color:rgb(10,50,50)" ><em>Aspect Sentiment Graph</em></h4>
                         <div id="<%=d.get(0).getProdid()%>" class="explanationbar" style="height:200px"></div>  
                         <%}%>
 
@@ -462,7 +462,7 @@
                                 <%pdr_1 = d.get(m);%>
                                 <!--td-->
                                 <td style="border-bottom:1px solid <%=colors[m]%>;border-right:1px solid <%=colors[m]%>" >        
-                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Star Rating</em></h6><hr>
+                                    <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Star Rating</em></h6><hr>
                                     <div class="caption">                                                         
                                         <!--product rating-->        
                                         <%//star rating
@@ -506,7 +506,7 @@
                                 <%pdr_3 = d.get(m);%>
                                 <!--td-->
                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h6><hr>
+                                    <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h6><hr>
                                     <div class="caption">                                                         
                                         <!--product aspect graph-->        
 
@@ -545,7 +545,7 @@
                                 <%pdr_x = d.get(m);%>
                                 <!--td-->
                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >           
-                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Rating Distribution Graph</em></h6><hr>
+                                    <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Rating Distribution Graph</em></h6><hr>
                                     <div class="caption">                                                         
                                         <!--product aspect graph-->        
 
@@ -576,7 +576,7 @@
                                 <%pd = d.get(m);%>
                                 <!--td-->
                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >
-                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
+                                    <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
                                     <p class="top_m1"><span class="desc">Price: </span><%=pd.getPrice()%></p>
                                     <p class="top_m2"><span class="desc">Rank: </span><%=pd.getRank()%></p>
                                     <p class="top_m3"><span class="desc">Date: </span><%=pd.getDate()%></p>
@@ -605,7 +605,7 @@
                                 <!--td-->
                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >   
                                     <em><span id="no_r_<%=m + 1%>" style="color:rgb(10,50,50)"></span></em>
-                                    <h6 class="text-uppercase" style="color:rgb(10,50,50)"><em>Product Reviews</em></h6><hr>
+                                    <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Product Reviews</em></h6><hr>
                                     <div class="caption" style="height:300px;overflow: scroll">                                                         
                                         <%
                                             //String[] data11 = null;
