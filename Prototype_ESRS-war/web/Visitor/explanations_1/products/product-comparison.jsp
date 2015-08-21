@@ -413,7 +413,7 @@
                             <%} else {%>
                             <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on commonality</span>
                             <%}%>
-                            <div class="aspect_selection" style="height:50px;overflow: auto">
+                            <div class="aspect_selection">
 
                                 <form style='color: rgb(50,50,10)'>
                                     <%if (products.size() != 0) {%>

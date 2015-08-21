@@ -374,7 +374,7 @@
         %>
         <div class="row">
             <div class="col-lg-12 text-center">                                
-                <h5 style="color: whitesmoke"><strong>Product Comparison</strong></h5>
+                <h5 style="color: whitesmoke"><strong>Recommended Product Comparison</strong></h5>
                 <h6 class="text-uppercase" style="color:rgb(230,240,250)"><%=session.getAttribute("category")%></h6>
             </div>
         </div>
