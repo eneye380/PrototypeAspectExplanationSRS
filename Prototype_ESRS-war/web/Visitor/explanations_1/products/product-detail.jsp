@@ -534,7 +534,7 @@
                             <div class="col-md-9 col-sm-6 col-xs-12 text-center thumbnail">
                                 <div class="row">                                
                                     <div class="col-md-3 col-sm-6 col-xs-12 text-center">
-                                        <p class="top_m11"><span class="desc">Price: </span><%=pdqp.getPrice()%></p>
+                                        <p class="top_m11"><span class="desc">Price: </span>&pound;<%=pdqp.getPrice()%></p>
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-12 text-center">
                                         <p><span class="desc">Star Rating: </span><%=pdqp.getRating()%></p>

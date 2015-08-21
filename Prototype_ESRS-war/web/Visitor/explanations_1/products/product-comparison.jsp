@@ -612,7 +612,7 @@
                                 <!--td-->
                                 <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >
                                     <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
-                                    <p class="top_m1"><span class="desc">Price: </span><%=pd.getPrice()%></p>
+                                    <p class="top_m1"><span class="desc">Price: </span>&pound;<%=pd.getPrice()%></p>
                                     <p class="top_m2"><span class="desc">Rank: </span><%=pd.getRank()%></p>
                                     <p class="top_m3"><span class="desc">Date: </span><%=pd.getDate()%></p>
                                     <p class="top_m4"><span class="desc">Category: </span><%=pd.getCategory()%></p>

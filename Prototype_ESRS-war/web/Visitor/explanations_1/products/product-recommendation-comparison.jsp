@@ -829,7 +829,7 @@
                     <!--td-->
                     <td style="border-bottom:1px solid <%=colors[0]%>; border-right:1px solid <%=colors[0]%>" >
                         <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
-                        <p class="top_m1"><span class="desc">Price: </span><%=pdqp.getPrice()%></p>
+                        <p class="top_m1"><span class="desc">Price: </span>&pound;<%=pdqp.getPrice()%></p>
                         <p class="top_m2"><span class="desc">Rank: </span><%=pdqp.getRank()%></p>
                         <p class="top_m3"><span class="desc">Date: </span><%=pdqp.getDate()%></p>
                         <p class="top_m4"><span class="desc">Category: </span><%=pdqp.getCategory()%></p>
@@ -852,7 +852,7 @@
                     <!--td-->
                     <td style="border-bottom:1px solid <%=colors[m]%>; border-right:1px solid <%=colors[m]%>" >
                         <h6 class="text-uppercase label_2" style="color:rgb(10,50,50)"><em>Product Details</em></h6><hr>
-                        <p class="top_m1"><span class="desc">Price: </span><%=pdr_4.getPrice()%></p>
+                        <p class="top_m1"><span class="desc">Price: </span>&pound;<%=pdr_4.getPrice()%></p>
                         <p class="top_m2"><span class="desc">Rank: </span><%=pdr_4.getRank()%></p>
                         <p class="top_m3"><span class="desc">Date: </span><%=pdr_4.getDate()%></p>
                         <p class="top_m4"><span class="desc">Category: </span><%=pdr_4.getCategory()%></p>
