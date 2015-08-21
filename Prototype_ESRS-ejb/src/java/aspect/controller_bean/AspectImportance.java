@@ -47,6 +47,7 @@ public class AspectImportance implements AspectImportanceLocal {
     }
 
     public void setRankedCategory(String cat) {
+        System.out.println("setRanked");
         if (cat.equalsIgnoreCase("digital slr")) {
             path = "C:\\Users\\eneye380\\Documents\\NetBeansProjects\\Prototype_ESRS\\Prototype_ESRS-war\\web\\src\\DSLR Aspect Importance List.txt";
 

@@ -251,7 +251,7 @@
                     }
 
                 }
-                                                                                                                                            %>
+                                                                                                                                                            %>
             <% ArrayList<Double> l = new ArrayList();%>
 
             <%-- Collections.sort(l); --%>
@@ -302,37 +302,37 @@
                     <p class='text-primary' style="color:white">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
                     <div class="aspect_selection" style="display1:none;height:300px;overflow: auto">
                         <form onclick1="showMe()"-->
-                    <%int count =0;%>
-                            <%if (productScoresMap.containsKey(s)) {%>
-                            <%
-                                Map<String, Map<String, Number>> productScores = productScoresMap.get(s);
-                                Set keyset = productScores.keySet();
-                                Iterator ite = keyset.iterator();
-                                
-                            %>
-                            <%while (ite.hasNext()) {%>
-                            <%
-                                String key = (String) ite.next();
-                                Map<String, Number> value = (Map) productScores.get(key);
-                                Number a = value.get("score");
-                                double val = a.doubleValue();
-                                double absVal = Math.abs(val);
-                                double ii = val / absVal;
-                                l.add(val);
-                                count++;
+                    <%int count = 0;%>
+                    <%if (productScoresMap.containsKey(s)) {%>
+                    <%
+                        Map<String, Map<String, Number>> productScores = productScoresMap.get(s);
+                        Set keyset = productScores.keySet();
+                        Iterator ite = keyset.iterator();
 
-                            %>
-                            <%--if (ii == 1.0) {--%>
-                            <!--li><%=key%> : <%=a%></li-->
-                            <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
-                            <!--div class="checkbox"><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label></div-->                            
-                            <!--input type="hidden" value="<%=key%>" class="comparisonaspects"-->                                
-                            <!--li><%=key%></li-->
-                            <%--}--%>
-                            <%}%>
-                            <%}%>
+                    %>
+                    <%while (ite.hasNext()) {%>
+                    <%
+                        String key = (String) ite.next();
+                        Map<String, Number> value = (Map) productScores.get(key);
+                        Number a = value.get("score");
+                        double val = a.doubleValue();
+                        double absVal = Math.abs(val);
+                        double ii = val / absVal;
+                        l.add(val);
+                        count++;
 
-                        <!--/form-->
+                    %>
+                    <%--if (ii == 1.0) {--%>
+                    <!--li><%=key%> : <%=a%></li-->
+                    <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
+                    <!--div class="checkbox"><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label></div-->                            
+                    <!--input type="hidden" value="<%=key%>" class="comparisonaspects"-->                                
+                    <!--li><%=key%></li-->
+                    <%--}--%>
+                    <%}%>
+                    <%}%>
+
+                    <!--/form-->
 
                     <!--/div-->
                 </div>
@@ -453,10 +453,10 @@
                     <input type="hidden" value="<%=totalratings1%>">
                 </form>
                 <%freq51 = 0;
-        freq41 = 0;
-        freq31 = 0;
-        freq21 = 0;
-        freq11 = 0;%>
+                    freq41 = 0;
+                    freq31 = 0;
+                    freq21 = 0;
+                    freq11 = 0;%>
                 <%}%> 
 
                 <%}%>
@@ -678,14 +678,14 @@
                             <%}%>
                             <%}--%>
                     </div>
-                    
+
                     <h5 style="color:rgb(10,50,50)"><em>Aspect Selection</em></h5>
 
-                        <div class="" style="margin-top: 10px">
-                            <button type="button" class="btn btn-primary btn-xs" id="button_aspect">view/hide Aspects</button>
-                            <button type="button" class="btn btn-primary btn-xs" id="button_aspect_reset" onclick="clearSelection('2')">Reset Graph</button>
-                            <span class="pull-right" style="color:black"><%=count%> aspects</span>
-                        </div>
+                    <div class="" style="margin-top: 10px">
+                        <button type="button" class="btn btn-primary btn-xs" id="button_aspect">view/hide Aspects</button>
+                        <button type="button" class="btn btn-primary btn-xs" id="button_aspect_reset" onclick="clearSelection('2')">Reset Graph</button>
+                        <span class="pull-right" style="color:black"><%=count%> aspects</span>
+                    </div>
                     <p class='text-primary' style="">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
                     <div class="aspect_selection" style="height:100px;overflow: auto">
                         <form onclick1="showMe()">
@@ -704,8 +704,8 @@
                                 double val = a.doubleValue();
                                 double absVal = Math.abs(val);
                                 double ii = val / absVal;
-                                if(ii!=-1){
-                                
+                                if (ii != -1) {
+
                                 }
                                 l.add(val);
 
@@ -713,10 +713,10 @@
                             <%--if (ii == 1.0) {--%>
                             <!--li><%=key%> : <%=a%></li-->
                             <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
-                            
+
                             <!--div class="checkbox"--><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label><!--/div-->                            
-                            
-                            <%if(ii==1.0){%>
+
+                            <%if (ii == 1.0) {%>
                             <input type="hidden" value="<%=key%>" class="comparisonaspects">    
                             <%}%>
                             <!--li><%=key%></li-->
@@ -727,7 +727,7 @@
                         </form>
 
                     </div>
-                    
+
                     <div class="well">
                         <div class="btn-group text-center" style="margin-bottom:5px">
                             <button class="btn btn-success btn-xs" style="color:black;background: greenyellow; border:greenyellow" id="table">Table of Aspects</button>

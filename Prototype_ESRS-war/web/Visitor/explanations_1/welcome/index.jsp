@@ -12,7 +12,7 @@
     <!-- Jumbotron Header -->
     <header class="well">
         <h1>Welcome to the E-System</h1>
-        <p>A System that Provides Explanations at Product Aspects Level </p>
+        <p>A Recommender System that Recommend Products with Explanations at Product Aspect Level </p>
         <!--p><a class="btn btn-primary btn-primary" href1="viewproduct.jsp">View Products</a>
         </p-->
     </header>

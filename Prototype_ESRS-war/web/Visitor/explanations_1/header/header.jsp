@@ -69,7 +69,7 @@
                             <!--a href="#" hdref="../admin/">Management Console</a-->
                         </li>                        
                         <li>
-                            <a href="#">About</a>
+                            <a href="../welcome/about.jsp">About</a>
                         </li>
                     </ul>
                     <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>

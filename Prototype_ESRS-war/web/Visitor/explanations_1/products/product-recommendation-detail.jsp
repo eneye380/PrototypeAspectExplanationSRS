@@ -111,9 +111,9 @@
 
 <jsp:useBean id="aspectImport" class="aspect.controller_bean.AspectImportance" scope="request"/>
 <%
-    String catss = (String)session.getAttribute("category");
+    String catss = (String) session.getAttribute("category");
     aspectImport.setRankedCategory(catss);
-    
+
     ArrayList<String> aspImp = aspectImport.getRankedAspects();
 %>
 
@@ -176,7 +176,6 @@
 
 %>
 <!--em><%=aspectJSONDetail%></em-->
-
 
 
 <jsp:useBean id="reviewDetail" class="aspect.controller_bean.ProductReviewSB" scope="request"/>
@@ -369,7 +368,7 @@
             <!--Side Bar Start><-->
 
 
-            <div class="col-md-2 col-sm-2 col-xs-12 well aspect">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 well aspect">
                 <jsp:useBean id="category_1" class="aspect.controller_bean.CategorySB" scope="request"/>
                 <%--jsp:getProperty name="category" property="catSet"/--%>
                 <%
@@ -401,20 +400,22 @@
                 <% ArrayList<Double> l = new ArrayList();%>
                 <%
                     //array storing common aspects
-                    ArrayList<String> e = new ArrayList();%>
+                    ArrayList<String> e = new ArrayList();
+                    boolean importance = true;
+                %>
                 <%
                     Map<String, Map<String, Number>> qPS = productScoresMap.get(s);
                     Set k = qPS.keySet();
                     Iterator i = k.iterator();
                     int count = 0;
-                    while (i.hasNext()) {
-                    //for (int u = 0; u < aspImp.size(); u++) {
-                       String key = (String) i.next();
-                        //String key = aspImp.get(u);
+                    //while (i.hasNext()) {
+                    for (int u = 0; u < aspImp.size(); u++) {
+                        //String key = (String) i.next();
+                        String key = aspImp.get(u);
                         //Map<String, Number> value = (Map) qPS.get(key);
-                        int sent = d.size() - 1;
-                        int sent1 = d.size();
-                        for (int b = 1; b < d.size(); b++) {
+                        int sent = d.size();
+                        //int sent1 = d.size();
+                        for (int b = 0; b < d.size(); b++) {
                             Map<String, Map<String, Number>> rPS = productScoresMap.get(d.get(b).getProdid());
                             if (rPS.containsKey(key)) {
                                 sent--;
@@ -423,6 +424,29 @@
                                 if (!e.contains(key)) {
                                     e.add(key);
                                     count++;
+                                }
+                            }
+                        }
+                    }
+                    if (e.size() < 1) {
+                        importance = false;
+                        while (i.hasNext()) {
+                            //for (int u = 0; u < aspImp.size(); u++) {
+                            String key = (String) i.next();
+                            //String key = aspImp.get(u);
+                            //Map<String, Number> value = (Map) qPS.get(key);
+                            int sent = d.size() - 1;
+                            //int sent1 = d.size();
+                            for (int b = 1; b < d.size(); b++) {
+                                Map<String, Map<String, Number>> rPS = productScoresMap.get(d.get(b).getProdid());
+                                if (rPS.containsKey(key)) {
+                                    sent--;
+                                }
+                                if (sent == 0) {
+                                    if (!e.contains(key)) {
+                                        e.add(key);
+                                        count++;
+                                    }
                                 }
                             }
                         }
@@ -476,7 +500,7 @@
 
             <!--Main Content Start><-->
 
-            <div class="col-md-10 col-sm-10 col-xs-12">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 
 
 
@@ -545,12 +569,14 @@
                                     </div>
                                 </div>
                                 <!--/detail-->
-                                <!-- qp_graph of query product-->
-                                <hr>
-
+                                <!-- qp_graph of query product-->                               
+                               
+                                        
+                                        <hr>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <span id = "graphtitle" style="color:black" class="label_1">Aspect Graph</span>
+                                        
                                         <div id="<%=s%>" id1="container" title="click to view comparison" style="height:195px;background:white" onclick="showMult(this, '1')"></div>  
                                         <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div> 
                                         <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"></div>                            
@@ -573,6 +599,15 @@
                                 <div>
                                     <!--div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div-->                                          
                                 </div>
+                                    <div class="text-info">
+
+                                        <%if (importance == true) {%>
+                                        <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspects importance ranking</em></span>
+                                        <%} else {%>
+                                        <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspect common to all</em></span>
+                                        <%}%>
+
+                                    </div>
                                 <hr>
                                 <!--recommended products-->
                                 <div class="row text-left">
@@ -589,7 +624,7 @@
                                         <p class="" style="position: relative;top: -20px"><a href="product-recommendation-comparison.jsp?product=<%=pdqp.getProdid()%>" class="btn btn-success btn-xs btn- pull-right">Compare</a></p>
                                     </div>
                                 </div>
-                                    <hr>
+                                <hr>
                                 <div class="row" style="position: relative;top: -20px">                            
                                     <div class="col-md-12 col-sm-12 col-xs-12">  
 
@@ -603,7 +638,7 @@
                                         <%if (m % 4 == 1) {%>
                                         <div class="row text-center">
                                             <%}%>
-                                                                                       
+
                                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 thumbnail"  id="23" style="border:1px solid <%=colors[m]%>">
                                                 <!--img src="../../../img/<%=pdr.getProdid()%>.jpg" alt="" class="img-thumbnail" style="height:80px"-->
                                                 <span class="pull-left" style="color:<%=colors[m]%>"><%=(m + 1)%></span> 
@@ -656,67 +691,67 @@
                             </div>                               
                         </div>
                         <!--div class="col-md-4 col-sm-4 col-xs-4"-->
-                            <div class="well">
+                        <div class="well">
 
-                                <!--div class="thumbnail" style="height:195px;overflow:auto">
-                                    <div class="product_graph_d text-center">
-                                        <p style="color:black;font-weight: bold" class="text-uppercase">
-                                            Display of Multi Bar
-                                            Chart by Hovering Over
-                                            the chart on the left
-                                        </p>
-                                    </div>
-                                    <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d"></div>  
-                                    <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"><p>hello</p></div>                            
-                                </div-->
-                                <!--div class='thumbnail'>
-                                    <span id = "" style="color:black">Aspect Graph (Query Product)</span>
-                                     <div id="<%=s%>" id1="container" title="click to view comparison" style="height:200px;background:white" onclick="showMult(this, '1')"></div>  
+                            <!--div class="thumbnail" style="height:195px;overflow:auto">
+                                <div class="product_graph_d text-center">
+                                    <p style="color:black;font-weight: bold" class="text-uppercase">
+                                        Display of Multi Bar
+                                        Chart by Hovering Over
+                                        the chart on the left
+                                    </p>
                                 </div>
-                                <div class='thumbnail'>
-                                    <span id = "" style="color:black">Rating Distribution (Query Product)</span>
-                                     <div id="<%=s%>_r" id1="container" title="click to view comparison" style="height:200px;background:white" onclick="showMult(this, '2')"></div> 
-                                </div-->
-
-                                <div class="thumbnail" style="height:410px;overflow: hidden">
-                                    <h5 style="color:yellowgreen;background: black;text-align: center">Recommended Product Details</h5>
-                                    <div class="product_desc_d text-center">
-                                        <p style="color:black;font-weight: bold" class="text-uppercase">
-                                            Hover Over the 
-                                            Recommended product to view details
-                                        </p>
-                                    </div>
-
-                                    <%Productdetail pdr_1 = null;%>
-                                    <%if ((d.size() > 1)) {%>
-                                    <%--for (int m = 0; m < d.size(); m++) {--%>
-                                    <%for (int m = 0; m < d.size(); m++) {%>
-                                    <%if (m != 0) {%>
-                                    <%pdr_1 = d.get(m);%>
-
-                                    <div style="display:none" id="i_<%=pdr_1.getProdid()%>" class="product_desc_d">
-
-                                        <div style="border:1px solid <%=colors[m]%>">
-                                            <h6 style="color: green"><%=pdr_1.getName()%></h6>
-                                            <p><span class="desc">Rating: </span><%=pdr_1.getRating()%></p>
-                                            <p class="top_m1"><span class="desc">Price: </span><%=pdr_1.getPrice()%></p>
-                                            <p class="top_m2"><span class="desc">Rank: </span><%=pdr_1.getRank()%></p>
-                                            <p class="top_m3"><span class="desc">Date: </span><%=pdr_1.getDate()%></p>
-                                            <p class="top_m4"><span class="desc">Category: </span><%=pdr_1.getCategory()%></p>
-                                            <p class="top_m5"><span class="desc">No. of Questions: </span><%=pdr_1.getNquestions()%></p> 
-                                            <p class="top_m6"><span class="desc">No. of Comments: </span><%=pdr_1.getNcomments()%></p>                                                
-                                            <p class="top_m7"><span class="desc">No. of Reviews: </span><%=pdr_1.getNreviews()%></p>
-                                        </div>
-                                    </div>
-
-                                    <%}%>
-                                    <%}%>
-                                    <%} else {%>                    
-                                    <h5 style="color:red">Sorry No Information</h5>
-                                    <%}%>
-
-                                </div>
+                                <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d"></div>  
+                                <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"><p>hello</p></div>                            
+                            </div-->
+                            <!--div class='thumbnail'>
+                                <span id = "" style="color:black">Aspect Graph (Query Product)</span>
+                                 <div id="<%=s%>" id1="container" title="click to view comparison" style="height:200px;background:white" onclick="showMult(this, '1')"></div>  
                             </div>
+                            <div class='thumbnail'>
+                                <span id = "" style="color:black">Rating Distribution (Query Product)</span>
+                                 <div id="<%=s%>_r" id1="container" title="click to view comparison" style="height:200px;background:white" onclick="showMult(this, '2')"></div> 
+                            </div-->
+
+                            <div class="thumbnail" style="height:410px;overflow: hidden">
+                                <h5 style="color:yellowgreen;background: black;text-align: center">Recommended Product Details</h5>
+                                <div class="product_desc_d text-center">
+                                    <p style="color:black;font-weight: bold" class="text-uppercase">
+                                        Hover Over the 
+                                        Recommended product to view details
+                                    </p>
+                                </div>
+
+                                <%Productdetail pdr_1 = null;%>
+                                <%if ((d.size() > 1)) {%>
+                                <%--for (int m = 0; m < d.size(); m++) {--%>
+                                <%for (int m = 0; m < d.size(); m++) {%>
+                                <%if (m != 0) {%>
+                                <%pdr_1 = d.get(m);%>
+
+                                <div style="display:none" id="i_<%=pdr_1.getProdid()%>" class="product_desc_d">
+
+                                    <div style="border:1px solid <%=colors[m]%>">
+                                        <h6 style="color: green"><%=pdr_1.getName()%></h6>
+                                        <p><span class="desc">Rating: </span><%=pdr_1.getRating()%></p>
+                                        <p class="top_m1"><span class="desc">Price: </span><%=pdr_1.getPrice()%></p>
+                                        <p class="top_m2"><span class="desc">Rank: </span><%=pdr_1.getRank()%></p>
+                                        <p class="top_m3"><span class="desc">Date: </span><%=pdr_1.getDate()%></p>
+                                        <p class="top_m4"><span class="desc">Category: </span><%=pdr_1.getCategory()%></p>
+                                        <p class="top_m5"><span class="desc">No. of Questions: </span><%=pdr_1.getNquestions()%></p> 
+                                        <p class="top_m6"><span class="desc">No. of Comments: </span><%=pdr_1.getNcomments()%></p>                                                
+                                        <p class="top_m7"><span class="desc">No. of Reviews: </span><%=pdr_1.getNreviews()%></p>
+                                    </div>
+                                </div>
+
+                                <%}%>
+                                <%}%>
+                                <%} else {%>                    
+                                <h5 style="color:red">Sorry No Information</h5>
+                                <%}%>
+
+                            </div>
+                        </div>
                         <!--/div-->
                     </div>
                 </div>

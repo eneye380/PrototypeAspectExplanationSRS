@@ -114,12 +114,15 @@
     %>
 
     <jsp:useBean id="aspectImport" class="aspect.controller_bean.AspectImportance" scope="request"/>
-<%
-    ArrayList<String> aspImp = aspectImport.getRankedAspects();
-%>
+    <%
+        String catss = (String) session.getAttribute("category");
+        aspectImport.setRankedCategory(catss);
 
-<%--=aspImp--%>
-    
+        ArrayList<String> aspImp = aspectImport.getRankedAspects();
+    %>
+
+    <%--=aspImp--%>
+
     <%
         //String s1 = request.getParameter("s1");
         //String s2 = request.getParameter("s2");
@@ -146,7 +149,7 @@
 
     <%
         ArrayList<Productdetail> d = detail.retrieveDetail(); //ArrayList of type Productdetail
-%>  
+    %>  
 
 
     <jsp:useBean id="aspectScore" class="aspect.controller_bean.AspectScoreSB" scope="request"/>
@@ -155,7 +158,7 @@
     <%
         Map<String, Map<String, Map<String, Number>>> productScoresMap = new HashMap(); //declares and instantiate a Map object productScoresMap
         productScoresMap = aspectScore.retrieveAspectScores();  //initialise the Map object productScoresMap
-%>
+    %>
 
     <%--=productScoresMap--%>
 
@@ -170,82 +173,82 @@
     <%
         String rating = ""; //declaration and initialization
         int freq1 = 0, freq2 = 0, freq3 = 0, freq4 = 0, freq5 = 0, totalratings = 0, totalcomments = 0; //declaration and initialization
-%>
+    %>
 
 
-<%Productdetail pdr_cr = null;%>
-<%if ((d.size() > 1)) {%>
-<%--for (int m = 0; m < d.size(); m++) {--%>
-<%for (int m = 0; m < d.size(); m++) {%>
+    <%Productdetail pdr_cr = null;%>
+    <%if ((d.size() > 1)) {%>
+    <%--for (int m = 0; m < d.size(); m++) {--%>
+    <%for (int m = 0; m < d.size(); m++) {%>
 
-<%pdr_cr = d.get(m);%>
+    <%pdr_cr = d.get(m);%>
 
-<%
-    String rating2 = "";
-    int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
-%>
-<%if (productReviewMap.containsKey(pdr_cr.getProdid())) {%>
-<%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());   // returns a map of the product reviews details associated with a productid
-    Set keyset = productReviews.keySet();   //retrieves the set of keys representing a particular author
-    Iterator ite = keyset.iterator();
-    Iterator it = keyset.iterator();
-    int w = 0;
-    while (it.hasNext()) {
-        it.next();
-        w++;
-    }
-
-    while (ite.hasNext()) {
-        String key = (String) ite.next();   //sets the authors name
-        Map<String, String> value = (Map) productReviews.get(key);  //returns a authors reviews detail
-
-        rating2 = value.get("rating");
-
-        double val = Double.parseDouble(rating2);
-        totalcomments1++;
-        if (val != 0.0) {
-            totalratings1++;
-        }
-        if (val == 5.0) {
-            freq51++;
-        } else if (val == 4.0) {
-            freq41++;
-        } else if (val == 3.0) {
-            freq31++;
-        } else if (val == 2.0) {
-            freq21++;
-        } else if (val == 1.0) {
-            freq11++;
+    <%
+        String rating2 = "";
+        int freq11 = 0, freq21 = 0, freq31 = 0, freq41 = 0, freq51 = 0, totalratings1 = 0, totalcomments1 = 0;
+    %>
+    <%if (productReviewMap.containsKey(pdr_cr.getProdid())) {%>
+    <%Map<String, Map<String, String>> productReviews = productReviewMap.get(pdr_cr.getProdid());   // returns a map of the product reviews details associated with a productid
+        Set keyset = productReviews.keySet();   //retrieves the set of keys representing a particular author
+        Iterator ite = keyset.iterator();
+        Iterator it = keyset.iterator();
+        int w = 0;
+        while (it.hasNext()) {
+            it.next();
+            w++;
         }
 
-%>
+        while (ite.hasNext()) {
+            String key = (String) ite.next();   //sets the authors name
+            Map<String, String> value = (Map) productReviews.get(key);  //returns a authors reviews detail
 
-<%}%>
+            rating2 = value.get("rating");
 
-<form  class="starsfreq">
-    <input type="hidden" value="<%=pdr_cr.getProdid()%>" name="prodid">
-    <input type="hidden" value="<%=freq51%>" name="star5">
-    <input type="hidden" value="<%=freq41%>" name="star4">
-    <input type="hidden" value="<%=freq31%>" name="star3">
-    <input type="hidden" value="<%=freq21%>" name="star2">
-    <input type="hidden" value="<%=freq11%>" name="star1">
-    <input type="hidden" value="<%=totalcomments1%>" name="tot">
-</form>
-<%freq51 = 0;
-    freq41 = 0;
-    freq31 = 0;
-    freq21 = 0;
-    freq11 = 0;
-    totalcomments1 = 0;
-    totalratings1 = 0;
-%>
-<%}%> 
+            double val = Double.parseDouble(rating2);
+            totalcomments1++;
+            if (val != 0.0) {
+                totalratings1++;
+            }
+            if (val == 5.0) {
+                freq51++;
+            } else if (val == 4.0) {
+                freq41++;
+            } else if (val == 3.0) {
+                freq31++;
+            } else if (val == 2.0) {
+                freq21++;
+            } else if (val == 1.0) {
+                freq11++;
+            }
 
-<%}%>
-<%} else {%>                    
+    %>
 
-<%}%>
-<!--/getting-->
+    <%}%>
+
+    <form  class="starsfreq">
+        <input type="hidden" value="<%=pdr_cr.getProdid()%>" name="prodid">
+        <input type="hidden" value="<%=freq51%>" name="star5">
+        <input type="hidden" value="<%=freq41%>" name="star4">
+        <input type="hidden" value="<%=freq31%>" name="star3">
+        <input type="hidden" value="<%=freq21%>" name="star2">
+        <input type="hidden" value="<%=freq11%>" name="star1">
+        <input type="hidden" value="<%=totalcomments1%>" name="tot">
+    </form>
+    <%freq51 = 0;
+        freq41 = 0;
+        freq31 = 0;
+        freq21 = 0;
+        freq11 = 0;
+        totalcomments1 = 0;
+        totalratings1 = 0;
+    %>
+    <%}%> 
+
+    <%}%>
+    <%} else {%>                    
+
+    <%}%>
+    <!--/getting-->
 
 
     <body onload="compare()">
@@ -324,6 +327,7 @@
                     //array storing common aspects
                     ArrayList<String> e = new ArrayList();
                     int count = 0;
+                    boolean importance = true;
                 %>
 
                 <%
@@ -333,13 +337,13 @@
                             Set k = qPS.keySet();
                             Iterator i = k.iterator();
                             //count = 0;
-                            while (i.hasNext()) {
-                            //    for(int u = 0;u<aspImp.size();u++){
-                                String key = (String) i.next();
-                                //     String key = aspImp.get(u);
+                            for (int u = 0; u < aspImp.size(); u++) {
+                                //String key = (String) i.next();
+                                String key = aspImp.get(u);
                                 //Map<String, Number> value = (Map) qPS.get(key);
-                                int sent = products.size()-1;
-                                for (int b = 1; b < products.size(); b++) {
+                                int sent = products.size();
+                                //int sent1 = d.size();
+                                for (int b = 0; b < products.size(); b++) {
                                     Map<String, Map<String, Number>> rPS = productScoresMap.get(products.get(b));
                                     if (rPS.containsKey(key)) {
                                         sent--;
@@ -348,6 +352,29 @@
                                         if (!e.contains(key)) {
                                             e.add(key);
                                             count++;
+                                        }
+                                    }
+                                }
+                            }
+                            if (e.size() < 1) {
+                                importance = false;
+                                while (i.hasNext()) {
+                                    //for (int u = 0; u < aspImp.size(); u++) {
+                                    String key = (String) i.next();
+                            //String key = aspImp.get(u);
+                                    //Map<String, Number> value = (Map) qPS.get(key);
+                                    int sent = products.size() - 1;
+                                    //int sent1 = d.size();
+                                    for (int b = 1; b < products.size(); b++) {
+                                        Map<String, Map<String, Number>> rPS = productScoresMap.get(products.get(b));
+                                        if (rPS.containsKey(key)) {
+                                            sent--;
+                                        }
+                                        if (sent == 0) {
+                                            if (!e.contains(key)) {
+                                                e.add(key);
+                                                count++;
+                                            }
                                         }
                                     }
                                 }
@@ -371,6 +398,15 @@
                         <%}%>
                     </div>
                     <div class="thumbnail">
+                        <div class="text-info">
+
+                            <%if (importance == true) {%>
+                            <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspects importance ranking</em></span>
+                            <%} else {%>
+                            <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspect common to all</em></span>
+                            <%}%>
+
+                        </div>
                         <div class="">
                             <div class="" style="margin-top: 10px">
                                 <button type="button" class="btn btn-primary btn-xs" id="button_aspect">view/hide Aspects</button>
@@ -410,7 +446,7 @@
                                     <!--li><%=key%> : <%=a%></li-->
                                     <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
                                     <!--div class="checkbox"--><label class='checkbox-inline'><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label><!--/div-->                            
-                                   
+
 <!--li><%=key%></li-->
                                     <%--}--%>
                                     <%}%>
@@ -685,57 +721,57 @@
                         <div class="col-lg-12">                                
                             <h4 style="color:grey">Table of Aspects</h4>  
 
-                            <%for (int n = 0; n < d.size(); n++) {%>
+                    <%for (int n = 0; n < d.size(); n++) {%>
 
-                            <%}%>
-                            <%for (int m = 0; m < d.size(); m++) {%>
-                            <%pd_1 = d.get(m);%>
-                            
-                            <h5><%=pd_1.getName()%></h5>
-                            <table class="table">
-                                <thead>                                        
-                                    <tr>
-                                        <th>Aspect</th>
-                                        <th>Score</th>
-                                        <th>Frequency</th>
-                                        <th>Gini</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="">
-                                    <%if (productScoresMap.containsKey(pd_1.getProdid())) {%>
-                                    <%
-                                        Map<String, Map<String, Number>> productScores = productScoresMap.get(pd_1.getProdid());
-                                        Set keyset = productScores.keySet();
-                                        Iterator ite = keyset.iterator();
-                                    %>
-                                    <%while (ite.hasNext()) {%>
-                                    <%
-                                        String key = (String) ite.next();
-                                        Map<String, Number> value = (Map) productScores.get(key);
-                                        Number a = value.get("score");
-                                        double val = a.doubleValue();
-                                        double absVal = Math.abs(val);
-                                        double ii = val / absVal;
-                                    %>
+                    <%}%>
+                    <%for (int m = 0; m < d.size(); m++) {%>
+                    <%pd_1 = d.get(m);%>
+                    
+                    <h5><%=pd_1.getName()%></h5>
+                    <table class="table">
+                        <thead>                                        
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Score</th>
+                                <th>Frequency</th>
+                                <th>Gini</th>
+                            </tr>
+                        </thead>
+                        <tbody style="">
+                    <%if (productScoresMap.containsKey(pd_1.getProdid())) {%>
+                    <%
+                        Map<String, Map<String, Number>> productScores = productScoresMap.get(pd_1.getProdid());
+                        Set keyset = productScores.keySet();
+                        Iterator ite = keyset.iterator();
+                    %>
+                    <%while (ite.hasNext()) {%>
+                    <%
+                        String key = (String) ite.next();
+                        Map<String, Number> value = (Map) productScores.get(key);
+                        Number a = value.get("score");
+                        double val = a.doubleValue();
+                        double absVal = Math.abs(val);
+                        double ii = val / absVal;
+                    %>
 
-                                    <tr>
-                                        <td><%=key%></td>
-                                        <td><%=value.get("score")%></td>
-                                        <td><%=value.get("freq")%></td>
-                                        <td><%=value.get("gini")%></td>
-                                    </tr>
+                    <tr>
+                        <td><%=key%></td>
+                        <td><%=value.get("score")%></td>
+                        <td><%=value.get("freq")%></td>
+                        <td><%=value.get("gini")%></td>
+                    </tr>
 
-                                    <%}%>
-                                    <%}%>
-                                    <%}%>
-                                    <%} else {%>                    
-                                <td><h6 style="color:red">no products to compare</h6></td>
-                                <%}%> 
-                                </tbody>
-                            </table>
+                    <%}%>
+                    <%}%>
+                    <%}%>
+                    <%} else {%>                    
+                <td><h6 style="color:red">no products to compare</h6></td>
+                    <%}%> 
+                    </tbody>
+                </table>
 
-                        </div>
-                    </div-->
+            </div>
+        </div-->
                 </div>                        
             </div>
         </div>

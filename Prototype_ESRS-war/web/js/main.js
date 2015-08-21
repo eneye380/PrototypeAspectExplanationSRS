@@ -15,6 +15,11 @@ $(document).ready(function () {
 
         $(".category_selection").slideToggle();
     });
+    $("#button_aas").click(function () {
+
+
+        $(".category_aas").slideToggle();
+    });
     $("#button_aspect").click(function () {
 
         $(".aspect_selection").slideToggle();
@@ -439,7 +444,7 @@ var ssent = 0;
 function checkSelection(form) {
     //alert(t);
     if (t !== 2) {
-        alert('please select three products');
+        alert('please select atleast two products');
         return false;
     }
     var url = 'http://localhost:8080/Prototype_ESRS-war/Visitor/explanations_1/products/product-comparison.jsp?';
@@ -994,7 +999,7 @@ function setOptions(placeholder, data, ticks, ytitle, stitle) {
             enabled: false
         },
         series: [{
-                showInLegend: false,               
+                showInLegend: false,
                 name: stitle,
                 data: data
             }]
@@ -1032,7 +1037,7 @@ function setOptionsF(placeholder, data, ticks, ytitle, stitle) {
             enabled: false
         },
         series: [{
-                showInLegend: false,               
+                showInLegend: false,
                 name: stitle,
                 data: data
             }]
@@ -1183,7 +1188,7 @@ function scatterChart(data, p) {
             enabled: false
         },
         legend: {
-            showInLegend: false,               
+            showInLegend: false,
             layout: 'vertical',
             align: 'left',
             verticalAlign: 'top',
