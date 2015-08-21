@@ -50,7 +50,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12 hero-feature">
             <div class="thumbnail">
-                <img src="../../../img/B0035FZJI0.jpg" alt="" class="img-thumbnail" style="height:100px;width:50%">
+                <img src="../../../img/B003MPSING.jpg" alt="" class="img-thumbnail" style="height:100px;width:50%">
                 <div class="caption">
                     <!--h3>Canon E0S Rebel</h3-->
                     <h4>Compact Cameras</h4>
@@ -68,7 +68,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12 hero-feature">
             <div class="thumbnail">
-                <img src="../../../img/B003ZYF42C.jpg" alt="" class="img-thumbnail" style="height:100px;width:50%">
+                <img src="../../../img/B00A9T56KG.jpg" alt="" class="img-thumbnail" style="height:100px;width:50%">
                 <div class="caption">
                     <!--h3>Nikon D3100</h3-->
                     <h4>Laptops</h4>
@@ -86,7 +86,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12 hero-feature">
             <div class="thumbnail">
-                <img src="../../../img/B00427Z7N2.jpg" alt="" class="img-thumbnail" style="height:100px;width:50%">
+                <img src="../../../img/B007KW5FVA.jpg" alt="" class="img-thumbnail" style="height:100px;width:50%">
                 <div class="caption">
                     <!--h3>Pentax K-r</h3-->
                     <h4>Tablets</h4>

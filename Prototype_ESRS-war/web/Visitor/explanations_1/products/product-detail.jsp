@@ -227,8 +227,8 @@
                                 <a href="#" onclick="">About</a>
                             </li-->
                         </ul>
-                        <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
-                        <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                        <!--span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span-->
+                        <p style="color:goldenrod" class="text-right"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
                             <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
                     </div>
                     <!-- /.navbar-collapse -->

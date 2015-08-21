@@ -348,8 +348,8 @@
                         <a href="#" onclick="">About</a>
                     </li-->
                 </ul>
-                <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
-                <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                <!--span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span-->
+                <p style="color:goldenrod" class="text-right"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
                     <span style="color:whitesmoke" class="label_1"><em>Aspect Style Explanation</em></span></p>
             </div>
             <!-- /.navbar-collapse -->
@@ -545,15 +545,18 @@
                                             <tr><th><span class="desc">Price</span></th>
                                                 <th><span class="desc">Rating</span></th>
                                                 <th><span class="desc">Rank</span></th>
-                                                <th><span class="desc">Date</span></th>
+                                                <!--th><span class="desc">Date</span></th-->
+                                                <th><span class="desc">Category</span></th>
                                             </tr>
                                             <tr>
-                                                <td><%=pdqp.getPrice()%></td>
+                                                <td>&pound;<%=pdqp.getPrice()%></td>
                                                 <td><%=pdqp.getRating()%>/5</td>
                                                 <td><%=pdqp.getRank()%></td>
-                                                <td><%=pdqp.getDate()%></td>
+                                                <!--td><%=pdqp.getDate()%></td-->
+                                                <td><%=pdqp.getCategory()%></td>
                                             </tr> 
-                                            <tr><th><span class="desc">Category</span></th>
+                                            <!--tr>
+                                                <th><span class="desc">Category</span></th>
                                                 <th><span class="desc">No. of Questions</span></th>
                                                 <th><span class="desc">No. of Comments</span></th>
                                                 <th><span class="desc">No. of Reviews</span></th>
@@ -563,20 +566,20 @@
                                                 <td><%=pdqp.getNquestions()%></td>
                                                 <td><%=pdqp.getNcomments()%></td>
                                                 <td><%=pdqp.getNreviews()%></td>
-                                            </tr> 
+                                            </tr--> 
                                         </table> 
                                         <!--/description-->                                                                          
                                     </div>
                                 </div>
                                 <!--/detail-->
                                 <!-- qp_graph of query product-->                               
-                               
-                                        
-                                        <hr>
+
+
+                                <hr>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <span id = "graphtitle" style="color:black" class="label_1">Aspect Graph</span>
-                                        
+
                                         <div id="<%=s%>" id1="container" title="click to view comparison" style="height:195px;background:white" onclick="showMult(this, '1')"></div>  
                                         <div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div> 
                                         <div id="<%=s%>_r_mult_rating"  style="height:195px;display:none" class="product_gragh_d"></div>                            
@@ -599,15 +602,15 @@
                                 <div>
                                     <!--div id="<%=s%>_mult_sentiment"  style="height:195px;display:none" class="product_graph_d" ></div-->                                          
                                 </div>
-                                    <div class="text-info">
+                                <div class="text-info">
 
-                                        <%if (importance == true) {%>
-                                        <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspects importance ranking</em></span>
-                                        <%} else {%>
-                                        <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspect common to all</em></span>
-                                        <%}%>
+                                    <%if (importance == true) {%>
+                                    <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on importance ranking</span>
+                                    <%} else {%>
+                                    <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on commonality</span>
+                                    <%}%>
 
-                                    </div>
+                                </div>
                                 <hr>
                                 <!--recommended products-->
                                 <div class="row text-left">
@@ -733,14 +736,41 @@
 
                                     <div style="border:1px solid <%=colors[m]%>">
                                         <h6 style="color: green"><%=pdr_1.getName()%></h6>
-                                        <p><span class="desc">Rating: </span><%=pdr_1.getRating()%></p>
+                                        <!--p><span class="desc">Rating: </span><%=pdr_1.getRating()%></p>
                                         <p class="top_m1"><span class="desc">Price: </span><%=pdr_1.getPrice()%></p>
                                         <p class="top_m2"><span class="desc">Rank: </span><%=pdr_1.getRank()%></p>
                                         <p class="top_m3"><span class="desc">Date: </span><%=pdr_1.getDate()%></p>
                                         <p class="top_m4"><span class="desc">Category: </span><%=pdr_1.getCategory()%></p>
                                         <p class="top_m5"><span class="desc">No. of Questions: </span><%=pdr_1.getNquestions()%></p> 
                                         <p class="top_m6"><span class="desc">No. of Comments: </span><%=pdr_1.getNcomments()%></p>                                                
-                                        <p class="top_m7"><span class="desc">No. of Reviews: </span><%=pdr_1.getNreviews()%></p>
+                                        <p class="top_m7"><span class="desc">No. of Reviews: </span><%=pdr_1.getNreviews()%></p-->
+                                        <table class="table text-center text-info" style="font-size: small;background: white">
+                                            <tr><th><span class="desc">Price</span></th>
+                                                <th><span class="desc">Rating</span></th>
+                                                <th><span class="desc">Rank</span></th>
+                                                <!--th><span class="desc">Date</span></th-->
+                                                <th><span class="desc">Category</span></th>
+                                            </tr>
+                                            <tr>
+                                                <td>&pound;<%=pdr_1.getPrice()%></td>
+                                                <td><%=pdr_1.getRating()%>/5</td>
+                                                <td><%=pdr_1.getRank()%></td>
+                                                <!--td><%=pdr_1.getDate()%></td-->
+                                                <td><%=pdr_1.getCategory()%></td>
+                                            </tr> 
+                                            <!--tr>
+                                                <th><span class="desc">Category</span></th>
+                                                <th><span class="desc">No. of Questions</span></th>
+                                                <th><span class="desc">No. of Comments</span></th>
+                                                <th><span class="desc">No. of Reviews</span></th>
+                                            </tr>
+                                            <tr>
+                                                <td><%=pdqp.getCategory()%></td>
+                                                <td><%=pdqp.getNquestions()%></td>
+                                                <td><%=pdqp.getNcomments()%></td>
+                                                <td><%=pdqp.getNreviews()%></td>
+                                            </tr--> 
+                                        </table> 
                                     </div>
                                 </div>
 

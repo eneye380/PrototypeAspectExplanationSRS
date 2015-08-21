@@ -149,7 +149,7 @@
 
     <%
         ArrayList<Productdetail> d = detail.retrieveDetail(); //ArrayList of type Productdetail
-    %>  
+%>  
 
 
     <jsp:useBean id="aspectScore" class="aspect.controller_bean.AspectScoreSB" scope="request"/>
@@ -158,7 +158,7 @@
     <%
         Map<String, Map<String, Map<String, Number>>> productScoresMap = new HashMap(); //declares and instantiate a Map object productScoresMap
         productScoresMap = aspectScore.retrieveAspectScores();  //initialise the Map object productScoresMap
-    %>
+%>
 
     <%--=productScoresMap--%>
 
@@ -280,8 +280,8 @@
                         </li-->
                     </ul>
 
-                    <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
-                    <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                    <!--span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span-->
+                    <p style="color:goldenrod" class="text-right"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
                         <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -361,7 +361,7 @@
                                 while (i.hasNext()) {
                                     //for (int u = 0; u < aspImp.size(); u++) {
                                     String key = (String) i.next();
-                            //String key = aspImp.get(u);
+                                    //String key = aspImp.get(u);
                                     //Map<String, Number> value = (Map) qPS.get(key);
                                     int sent = products.size() - 1;
                                     //int sent1 = d.size();
@@ -389,7 +389,7 @@
                 <div class="well aspect">
                     <div class="thumbnail">
                         <%if (d.size() > 0) {%>
-                        <h4 style="color:rgb(10,50,50)" ><em>Aspect Sentiment Graph</em></h4>
+                        <h4 style="color:rgb(10,50,50)" >Aspect Sentiment Graph</h4>
                         <div id="<%=d.get(0).getProdid()%>" class="explanationbar" style="height:200px"></div>  
                         <%}%>
 
@@ -400,12 +400,6 @@
                     <div class="thumbnail">
                         <div class="text-info">
 
-                            <%if (importance == true) {%>
-                            <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspects importance ranking</em></span>
-                            <%} else {%>
-                            <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspect common to all</em></span>
-                            <%}%>
-
                         </div>
                         <div class="">
                             <div class="" style="margin-top: 10px">
@@ -413,7 +407,12 @@
                                 <button type="button" class="btn btn-primary btn-xs" id="button_aspect_reset" onclick="clearSelection('1')">Reset Graph</button>
                                 <span class="pull-right" style="color:black"><%=count%> common aspects</span>
                             </div>
-                            <p class='text-primary'>Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
+                            <p class='text-primary'> choose aspects to display, maximum of 10 allowed <span class='text-danger '></span></p>
+                            <%if (importance == true) {%>
+                            <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on importance ranking</span>
+                            <%} else {%>
+                            <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on commonality</span>
+                            <%}%>
                             <div class="aspect_selection" style="height:50px;overflow: auto">
 
                                 <form style='color: rgb(50,50,10)'>

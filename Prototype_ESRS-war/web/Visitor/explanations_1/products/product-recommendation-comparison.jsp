@@ -336,8 +336,8 @@
                     </li-->
                 </ul>
 
-                <span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span>
-                <p style="color:goldenrod" class="text-center"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
+                <!--span class="pull-right" style="color:rgb(255,247,217)"><%=dd%></span-->
+                <p style="color:goldenrod" class="text-right"><strong>EXPLANATIONS IN SOCIAL RECOMMENDER SYSTEMS</strong><br>
                     <span style="color:whitesmoke"><em>Aspect Style Explanation</em></span></p>
             </div>
             <!-- /.navbar-collapse -->
@@ -513,22 +513,16 @@
 
 
             <div class="thumbnail" style="">
-                <h4 style="color:rgb(10,50,50)"><em>Aspect Sentiment Graph</em></h4>
+                <h4 style="color:rgb(10,50,50)">Aspect Sentiment Graph</h4>
                 <div id="<%=s%>" class="explanationbar" style="height:300px"></div>  
             </div>
             <!--aspect selection-->
 
             <div class="thumbnail">
-                <div class="text-info">
-
-                    <%if (importance == true) {%>
-                    <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspects importance ranking</em></span>
-                    <%} else {%>
-                    <span id = "graphtitle" style="color:black" class="label_1"><em>Aspects selection by aspect common to all</em></span>
-                    <%}%>
+                <div class="">
 
                 </div>
-                <h4 style="color:rgb(10,50,50)"><em>Aspect Selection</em></h4>
+                <h5 style="color:rgb(10,50,50)">Aspect Selection</h5>
 
                 <div class="" style="margin-top: 10px">
                     <button type="button" class="btn btn-primary btn-xs" id="button_aspect">view/hide Aspects</button>
@@ -539,8 +533,13 @@
                     <span class="pull-right" style="color:black"><%=count%> aspects</span>
                     <%}%>
                 </div>
-                <p class='text-primary'>Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
-                <div class="aspect_selection" style="height:50px;overflow: auto">
+                <p class='text-primary'> choose aspects to display, maximum of 10 allowed <span class='text-danger '></span></p>
+                <%if (importance == true) {%>
+                    <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on importance ranking</span>
+                    <%} else {%>
+                    <span id = "graphtitle" style="color:black" class="label_1">Aspects selected based on commonality</span>
+                    <%}%>
+                <div class="aspect_selection">
 
                     <form style='color: rgb(50,50,10)'>
                         <%if (myR.size() != 0) {%>
