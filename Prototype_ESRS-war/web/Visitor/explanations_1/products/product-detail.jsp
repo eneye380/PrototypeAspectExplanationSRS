@@ -118,6 +118,16 @@
 
 <div class="container" id="pbody">
 
+
+    <jsp:useBean id="aspectImport" class="aspect.controller_bean.AspectImportance" scope="request"/>
+    <%
+        String catss = (String) session.getAttribute("category");
+        aspectImport.setRankedCategory(catss);
+
+        ArrayList<String> aspImp = aspectImport.getRankedAspects();
+    %>
+
+
     <jsp:useBean id="recommend" class="aspect.controller_bean.ProductSetSB" scope="request"/>
     <jsp:setProperty name="recommend" property="queryProduct" param="product" />
     <%
@@ -251,7 +261,7 @@
                     }
 
                 }
-                                                                                                                                                            %>
+                                                                                                                                                                                                                                                                            %>
             <% ArrayList<Double> l = new ArrayList();%>
 
             <%-- Collections.sort(l); --%>
@@ -510,7 +520,7 @@
                                                 <%pdr1 = d.get(m);%>
 
                                                 <div class="thumbnaill" >
-                                                    <a href="product-detail.jsp?product=<%=pdr1.getProdid()%>"><img src="../../../img/<%=pdr1.getProdid()%>.jpg" alt="" class="img-thumbnail" style="height:50px;">
+                                                    <a href="product-detail.jsp?product=<%=pdr1.getProdid()%>"><img src="../../../img/<%=pdr1.getProdid()%>.jpg" title="click to view recommendations" alt="image of <%=pdr1.getProdid()%>" class="img-thumbnail" style="height:50px;">
                                                     </a>
                                                     <div class="caption">                                            
                                                         <div style="height: 20px;overflow: hidden"><h6 style="color:grey"><%=pdr1.getName()%></h6></div>                                            
@@ -689,6 +699,12 @@
                     <p class='text-primary' style="">Select aspect's from the check box below to change graph (<span class='text-danger '>maximum:10</span>)</p>
                     <div class="aspect_selection" style="height:100px;overflow: auto">
                         <form onclick1="showMe()">
+                            <%
+                                //array storing common aspects
+                                ArrayList<String> e = new ArrayList();
+                                boolean importance = true;
+                                int count1 = 0;
+                            %>
                             <%if (productScoresMap.containsKey(s)) {%>
                             <%
                                 Map<String, Map<String, Number>> productScores = productScoresMap.get(s);
@@ -696,26 +712,49 @@
                                 Iterator ite = keyset.iterator();
 
                             %>
-                            <%while (ite.hasNext()) {%>
-                            <%
-                                String key = (String) ite.next();
-                                Map<String, Number> value = (Map) productScores.get(key);
-                                Number a = value.get("score");
-                                double val = a.doubleValue();
-                                double absVal = Math.abs(val);
-                                double ii = val / absVal;
-                                if (ii != -1) {
+                            <%--while (ite.hasNext()) {--%>
+                            <%                                for (int u = 0; u < aspImp.size(); u++) {
+                                    //String key = (String) i.next();
+                                    String key = aspImp.get(u);
+                                    //Map<String, Number> value = (Map) qPS.get(key);
+
+                                    //int sent1 = d.size();
+                                    //count1++;
+                                    Map<String, Map<String, Number>> rPS = productScoresMap.get(s);
+                                    if (rPS.containsKey(key)) {
+                                        e.add(key);
+                                        count1++;
+                                    }
 
                                 }
-                                l.add(val);
 
+                                /*String key = (String) ite.next();
+                                 Map<String, Number> value = (Map) productScores.get(key);
+                                 Number a = value.get("score");
+                                 double val = a.doubleValue();
+                                 double absVal = Math.abs(val);
+                                 double ii = val / absVal;
+                                 if (ii != -1) {
+
+                                 }
+                                 l.add(val);*/
+                                for (int q = 0; q < e.size(); q++) {
+                                    String key1 = (String) ite.next();
+                                    Map<String, Number> value = (Map) productScores.get(e.get(q));
+                                    Number a = value.get("score");
+                                    double val = a.doubleValue();
+                                    double absVal = Math.abs(val);
+                                    double ii = val / absVal;
+                                    if (ii != -1) {
+
+                                    }
+                                    l.add(val);
+
+                                    String key = e.get(q);
                             %>
-                            <%--if (ii == 1.0) {--%>
-                            <!--li><%=key%> : <%=a%></li-->
-                            <!--label class='checkbox-inline'><input type="checkbox" value="<%=key%>"><%=key%></label-->
-
-                            <!--div class="checkbox"--><label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label><!--/div-->                            
-
+                            <!--label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label-->                         
+                            <label><input type="checkbox" value="<%=key%>" name="aspect<%=key%>" class="aspect_cb" onclick="aspectSelect(this, '2')"><%=key%></label>                         
+                              
                             <%if (ii == 1.0) {%>
                             <input type="hidden" value="<%=key%>" class="comparisonaspects">    
                             <%}%>

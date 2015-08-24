@@ -184,8 +184,11 @@
                                 <div class="caption">
                                     <!--h3>Canon E0S 60D 18MP</h3-->
                                     <div style="height: 20px;overflow: hidden"><h6><%=pdr.getName()%></h6></div>
+                                    
                                      <input type="checkbox" name="s" form="prod" value="<%=pdr.getProdid()%>" class="productComp" onclick="productSelect(this)">
-                                    <!--p>Canon E0S 60D 18MP</p-->
+                                    <br>
+                                     <span class="text-primary" title="select 2 - 3 products to compare">Compare</span>
+                                     <!--p>Canon E0S 60D 18MP</p-->
                                     <p>
                                         
                                     </p>

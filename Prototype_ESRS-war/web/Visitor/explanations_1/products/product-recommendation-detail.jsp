@@ -645,7 +645,7 @@
                                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 thumbnail"  id="23" style="border:1px solid <%=colors[m]%>">
                                                 <!--img src="../../../img/<%=pdr.getProdid()%>.jpg" alt="" class="img-thumbnail" style="height:80px"-->
                                                 <span class="pull-left" style="color:<%=colors[m]%>"><%=(m + 1)%></span> 
-                                                <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" name="<%=pdr.getProdid()%>" src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
+                                                <a href="product-recommendation-detail.jsp?product=<%=pdr.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" title="click to view recommendations" name="<%=pdr.getProdid()%>" src="../../../img/<%=pdr.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
                                                 <div class="caption">     
 
                                                     <div style="height: 20px;overflow: hidden"><h6><%=pdr.getName()%></h6></div>

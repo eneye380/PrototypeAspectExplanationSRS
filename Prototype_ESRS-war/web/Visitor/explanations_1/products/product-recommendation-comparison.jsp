@@ -624,7 +624,7 @@
                     <!--td-->
                     <td style="border-bottom:1px solid <%=colors[0]%>;border-right:1px solid <%=colors[0]%>">
                         <span class="pull-left" style="color:<%=colors[0]%>">1</span>
-                        <a href="product-recommendation-detail.jsp?product=<%=pdqp.getProdid()%>"><img class="img-responsive " onmouseover="showDes(this)" name="<%=pdqp.getProdid()%>" src="../../../img/<%=pdqp.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
+                        <a href="product-recommendation-detail.jsp?product=<%=pdqp.getProdid()%>"><img class="img-responsive " title="click to view recommendations" onmouseover="showDes(this)" name="<%=pdqp.getProdid()%>" src="../../../img/<%=pdqp.getProdid()%>.jpg" alt="image of <%=pdqp.getProdid()%>" id="query_prod_img" style="height:85px"></a>
                         <div class="caption"> 
                             <div style=""><h6><%=pdqp.getName()%></h6></div>                                                                                                          
                         </div>
